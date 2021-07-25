@@ -81,36 +81,3 @@ So we were able to write a few rules:
 |`$ yarn storybook`| Start Storybook with the stories imported |
 |`$ yarn flow`| Validate the flow types |
 
-
-## Libraries
-
-- Webpack
-  - CSS Loader
-  - SVG Sprite loader
-  - File loader 
-- Flow types
-- Storybook
-  - Storybook Info
-- CSS
-  - Autoprefixer
-  - Import
-  - Nested
-  - Variables
-  - Inline SVG
-- Babel
-  - Loader
-  - Preset ES2015
-- Project
-  - Atomic Design styles folder structure
-  - ESLint
-  - Prettier
-
-
-## Contributors
-[@danilowoz](https://github.com/danilowoz/)
-
-[@dleitee](https://github.com/dleitee/)
-
-### License
-MIT
-
