@@ -14,9 +14,6 @@ Feel free to test, change e adapt everything.
   - [Pages](https://github.com/danilowoz/react-atomic-design#pages)
 - [React+Atomic Design](https://github.com/danilowoz/react-atomic-design#react--atomic-design)
 - [Scripts](https://github.com/danilowoz/react-atomic-design#scripts)
-- [Libraries](https://github.com/danilowoz/react-atomic-design#libraries)
-- [Contributors](https://github.com/danilowoz/react-atomic-design#contributors)
-- [License](https://github.com/danilowoz/react-atomic-design#license)
 
 ## What is Atomic Design?
 
