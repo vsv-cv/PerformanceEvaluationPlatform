@@ -13,9 +13,8 @@
         "build-storybook": "build-storybook",
         "eslint": "eslint --fix src webpack",
         "stylelint": "stylelint ./src/**/*.css",
-        "flow": "flow check",
-        "precommit": "npm run eslint && npm run stylelint && npm run flow",
-        "prepush": "npm run eslint && npm run stylelint && npm run flow"
+        "precommit": "npm run eslint && npm run stylelint",
+        "prepush": "npm run eslint && npm run stylelint"
     },
     "dependencies": {
         "@storybook/addon-info": "^3.2.13",
