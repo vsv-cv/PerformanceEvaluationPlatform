@@ -1,19 +1,11 @@
-import React, { useState } from 'react'
+import { Button, ButtonTheme, ButtonType, ButtonSize, ButtonForm } from "./components/atoms/Button";
 
-import Button from './components/atoms/Button'
-
-const App = () => {
-  const [number, setNumber] = useState(0)
-
+function App() {
   return (
-    <div>
-      <div>Number: {number}</div>
-      <button onClick={() => setNumber(number + 1)}>Increase number</button>
-      <div>
-        <Button>Button</Button>
-      </div>
+    <div className="App">
+      <Button theme={ButtonTheme.DEFAULT} type={ButtonType.BUTTON} size={ButtonSize.MEDIUM}>Button</Button>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
