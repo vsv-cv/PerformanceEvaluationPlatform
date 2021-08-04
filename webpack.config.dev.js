@@ -7,7 +7,7 @@ const resolve = require('./webpack/resolve.js')
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
-  entry: ['webpack-hot-middleware/client', './src/index'],
+  entry: ['webpack-hot-middleware/client', './src/index.js'],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
