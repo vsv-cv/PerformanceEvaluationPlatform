@@ -18,7 +18,6 @@ module.exports = (initialHtml = '', paths = DEFAULT_PATHS) =>
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="theme-color" content="#FFFFFF">
   <title>React Atomic Design</title>
-  <link rel="manifest" href="/static/manifest.json">
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link media="all" href="https://fonts.googleapis.com/css?family=Montserrat:400,600|Prompt:300,500" rel="stylesheet">
   <link rel="stylesheet" media="all" href="/static/${paths.styles.path}" integrity="${paths.styles
