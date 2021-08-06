@@ -41,22 +41,22 @@ const Input = ({ icon, type, name, value, label, disabled, required, handleChang
 Input.propTypes = {
   icon: PropTypes.string,
   type: PropTypes.string,
+  disabled: PropTypes.bool,
+  required: PropTypes.bool,
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  disabled: PropTypes.bool,
-  required: PropTypes.bool,
   handleChange: PropTypes.func.isRequired,
 }
 
 Input.defaultProps = {
   icon: '',
-  type: 'button',
   name: '',
-  value: PropTypes.string.isRequired,
   label: '',
-  disabled: false,
+  type: 'button',
   required: true,
+  disabled: false,
+  value: PropTypes.string.isRequired,
 }
 
 export default Input
