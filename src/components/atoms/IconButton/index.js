@@ -2,24 +2,24 @@ import React from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
-import styles from './iconButton.scss'
+import styles from "./iconButton.module.scss";
 
-export const ButtonType = {
+export const IconType = {
   BUTTON: 'button',
   RESET: 'reset',
   SUBMIT: 'submit',
 }
 
-export const ButtonTheme = {
-  DEFAULT: 'default',
-  ROUNDED: 'rounded',
-}
+export const IconTheme = {
+  DEFAULT: "default",
+  ROUNDED: "rounded",
+};
 
-export const ButtonSize = {
-  SMALL: 'small',
-  MEDIUM: 'medium',
-  LARGE: 'large',
-}
+export const IconSize = {
+  SMALL: "small",
+  MEDIUM: "medium",
+  LARGE: "large",
+};
 
 const IconButton = ({ icon, type, onClick, theme, size, className, disabled }) => {
   const iconChildren = <i className={icon} />
@@ -44,13 +44,13 @@ IconButton.propTypes = {
 }
 
 IconButton.defaultProps = {
-  icon: '',
-  className: '',
+  icon: "",
+  className: "",
   disabled: false,
   onClick: () => {},
-  size: ButtonSize.MEDIUM,
-  type: ButtonType.BUTTON,
-  theme: ButtonTheme.DEFAULT,
-}
+  size: IconSize.MEDIUM,
+  type: IconType.BUTTON,
+  theme: IconTheme.DEFAULT,
+};
 
-export default IconButton
+export  { IconButton }

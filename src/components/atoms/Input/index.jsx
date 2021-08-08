@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
-import classes from './input.scss'
+import classes from './input.module.scss'
 
 const Input = ({ icon, type, name, value, label, disabled, required, handleChange }) => {
   const iconElement = (
