@@ -5,14 +5,17 @@ import PropTypes from 'prop-types'
 import styles from './button.module.scss'
 
 export const ButtonType = {
-  BUTTON: 'button',
   RESET: 'reset',
+  BUTTON: 'button',
   SUBMIT: 'submit',
 }
 
 export const ButtonTheme = {
+  SUCCESS:'success',
   DEFAULT: 'default',
   ROUNDED: 'rounded',
+  PRIMARY: 'primary',
+  SECONDARY: 'secondary',
 }
 
 export const ButtonForm = {
@@ -25,10 +28,10 @@ export const ButtonSize = {
   LARGE: 'large',
 }
 
-const Button = ({ icon, type, onClick, children, theme, form, size, className, disabled }) => {
+const Button = ({ icon, width, type, onClick, children, theme, form, size, className, disabled }) => {
   const iconChildren = <i className={icon} />
 
-  const classProps = classNames(styles.button, styles[theme], styles[size], styles[form], className)
+  const classProps = classNames(styles.button, styles[theme], styles[size], styles[form], styles[width], className)
 
   return (
     <button type={type} onClick={onClick} disabled={disabled} className={classProps}>
@@ -43,6 +46,7 @@ Button.propTypes = {
   type: PropTypes.string,
   form: PropTypes.string,
   size: PropTypes.string,
+  width: PropTypes.string,
   theme: PropTypes.string,
   disabled: PropTypes.bool,
   children: PropTypes.string,
@@ -54,6 +58,7 @@ Button.defaultProps = {
   icon: '',
   form: '',
   size: '',
+  width: '',
   children: '',
   className: '',
   disabled: false,

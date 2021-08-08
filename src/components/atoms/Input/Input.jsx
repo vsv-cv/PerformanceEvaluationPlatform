@@ -4,20 +4,33 @@ import PropTypes from 'prop-types'
 
 import classes from './input.module.scss'
 
-const Input = ({ icon, type, name, value, label, disabled, required, handleChange }) => {
+const Input = ({
+    icon,
+    type,
+    name,
+    value,
+    label,
+    disabled,
+    required,
+    handleChange
+  }) => {
   const iconElement = (
     <div className={classes.icon}>
       <i className={icon} />
     </div>
   )
 
-  const labelClasses = classNames([classes.formInput__label], {
-    [classes.formInput__label_up]: value.length > 0,
-  })
-
   const containerClasses = classNames([classes.conteiner], {
     [classes.disabled]: disabled,
   })
+
+  const labelClasses = classNames([classes.formInput__label], {
+    [classes.formInput__label_up]: value.length > 0,
+  })
+  
+  // const formInputClasses = classNames([classes.formInput], 
+  //   classes[width]
+  // )
 
   return (
     <div className={containerClasses}>
@@ -59,4 +72,4 @@ Input.defaultProps = {
   value: PropTypes.string.isRequired,
 }
 
-export  {Input}
+export  { Input }

@@ -1,7 +1,12 @@
 $main-color: #007cc7;
-$withe-color: #fff;
+$primary-hover: #1769aa;
+$secondary-color: #ff1744;
+$secondary-hover: #b2102f;
+$success-color: #00a152;
+$success-hover: #018f49;
 $grey-light-color: #ededed;
 $grey-darc-color: #919191;
+$withe-color: #fff;
 $base-font-family: sans-serif;
 
 .button {
@@ -11,10 +16,10 @@ $base-font-family: sans-serif;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   font-family: $base-font-family;
-  font-size: 0.9em;
-  font-weight: 600;
+  font-size: 0.8em;
+  font-weight: 550;
   text-transform: uppercase;
   border-radius: 3px;
   cursor: pointer;
@@ -34,23 +39,28 @@ $base-font-family: sans-serif;
 
 /* Form Icon Button */
 .circle {
-  height: 2.7rem;
-  width: 2.7rem;
+  height: 2.2rem;
+  width: 2.2rem;
   border-radius: 50%;
   display: inline-block;
 }
 
+/* Width Button */
+.width{
+ width:100%
+}
+
 /* Size Button */
 .small {
-  padding: 0.5em 0.5em;
+  padding: 0.4em 0.5em;
 }
 
 .medium {
-  padding: 0.8em 1.1em;
+  padding: 0.6em 0.9em;
 }
 
 .large {
-  padding: 1.7em 2.4em;
+  padding: 1.4em 1.6em;
 }
 
 /* Theme */
@@ -69,6 +79,63 @@ $base-font-family: sans-serif;
   &:hover {
     color: $withe-color;
     background: $main-color;
+  }
+
+  &:disabled {
+    color: $grey-darc-color;
+    background: $withe-color;
+    border-color: $grey-light-color;
+    cursor: default;
+  }
+}
+
+.primary{
+  color: $withe-color;
+  background: $main-color;
+  border: 1px solid $main-color;
+  transition: color 0.3s ease, background 0.3s ease;
+
+  &:hover {
+    color: $withe-color;
+    background: $primary-hover;
+  }
+
+  &:disabled {
+    color: $grey-darc-color;
+    background: $withe-color;
+    border-color: $grey-light-color;
+    cursor: default;
+  }
+}
+
+.secondary{
+  color: $withe-color;
+  background: $secondary-color;
+  border: 1px solid $secondary-color;
+  transition: color 0.3s ease, background 0.3s ease;
+
+  &:hover {
+    color: $withe-color;
+    background: $secondary-hover;
+  }
+
+  &:disabled {
+    color: $grey-darc-color;
+    background: $withe-color;
+    border-color: $grey-light-color;
+    cursor: default;
+  }
+}
+
+.success{
+  color: $withe-color;
+  background: $success-color;
+  border: 1px solid $success-color;
+  transition: color 0.3s ease, background 0.3s ease;
+
+  &:hover {
+    color: $withe-color;
+    background: $success-hover;
   }
 
   &:disabled {

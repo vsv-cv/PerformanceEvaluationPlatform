@@ -21,7 +21,15 @@ export const IconSize = {
   LARGE: 'large',
 }
 
-export const IconButton = ({ icon, type, onClick, theme, size, className, disabled }) => {
+export const IconButton = ({
+  icon,
+  size,
+  type,
+  theme,
+  onClick,
+  disabled,
+  className,
+}) => {
   const iconChildren = <i className={icon} />
 
   const classProps = classNames(styles.button, styles[theme], styles[size], className)
