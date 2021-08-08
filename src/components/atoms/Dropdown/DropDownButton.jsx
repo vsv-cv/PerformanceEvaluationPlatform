@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { getSelectedOptionsTitle } from './utils';
 import PropTypes from 'prop-types'
 
-export const DropDownButton = React.forwardRef((
+export const DropdownButton = React.forwardRef((
   {
     title,
     disabled,
@@ -38,3 +38,16 @@ export const DropDownButton = React.forwardRef((
     </button>
   )
 })
+
+DropdownButton.propTypes = {
+  title: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      text: PropTypes.string,
+    })
+  ).isRequired,
+  keys: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])).isRequired,
+  disabled: PropTypes.bool.isRequired,
+  handleDropdownButtonClick: PropTypes.func.isRequired
+}

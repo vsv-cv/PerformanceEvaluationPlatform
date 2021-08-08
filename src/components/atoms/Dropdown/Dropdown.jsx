@@ -1,20 +1,24 @@
-import React, { useRef, useCallback, useState } from 'react'
+import React, { useRef, useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { DropdownPortal } from './DropdownPortal';
 import { DropdownContent } from './DropdownContent';
-import DropDownButton from './DropDownButton';
+import { DropdownButton } from './DropdownButton';
 
 export const Dropdown = (
   {
     title,
     options,
     keys,
-    setKeys,
+    onSelect,
     disabled,
     multiselect = false
   }
 ) => {
-  const [isOpened, setIsOpened] = useState(false);
+  if (!multiselect && keys.length > 1) {
+    throw new Error('Expected only one selected option in dropdown')
+  }
+
+  const [isOpen, setIsOpen] = useState(false);
   const dropdownButtonRef = useRef(null);
   const underlineRef = useRef(null);
 
@@ -44,24 +48,24 @@ export const Dropdown = (
     underlineRef.current.style.opacity = 0;
   }
 
-  const handleDropdownButtonClick = useCallback((e) => {
+  const handleDropdownButtonClick = e => {
     if (disabled) {
       return;
     }
 
     createPortalContainer();
 
-    setIsOpened(true);
-  }, [disabled])
-
-  const handleClose = () => {
-    document.querySelector('.dropdown-portal')?.remove();
-    setIsOpened(false);
+    setIsOpen(true);
   }
+
+  const handleClose = useCallback(() => {
+    document.querySelector('.dropdown-portal')?.remove();
+    setIsOpen(false);
+  }, [setIsOpen])
 
   return (
     <>
-      <DropDownButton
+      <DropdownButton
         ref={{
           dropdownButtonRef,
           underlineRef,
@@ -78,14 +82,14 @@ export const Dropdown = (
         }}
       />
 
-      { isOpened &&
+      { isOpen &&
         <DropdownPortal>
           <DropdownContent
             options={options}
             callingComponent={dropdownButtonRef.current}
             handleClose={handleClose}
             keys={keys}
-            setKeys={setKeys}
+            onSelect={onSelect}
             multiselect={multiselect}
           />
         </DropdownPortal>
@@ -102,12 +106,8 @@ Dropdown.propTypes = {
       text: PropTypes.string,
     })
   ).isRequired,
-  keys: PropTypes.arrayOf(PropTypes.string).isRequired,
-  setKeys: PropTypes.func.isRequired,
+  keys: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])).isRequired,
+  onSelect: PropTypes.func.isRequired,
   disabled: PropTypes.bool.isRequired,
   multiselect: PropTypes.bool,
-}
-
-Dropdown.defaultProps = {
-  multiselect: false,
 }

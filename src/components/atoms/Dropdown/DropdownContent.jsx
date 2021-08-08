@@ -10,33 +10,27 @@ export const DropdownContent = (
     handleClose,
     options,
     keys,
-    setKeys,
+    onSelect,
     multiselect
   }
 ) => {
   const style = getDropdownContentStyle(callingComponent);
 
-  const handleClickOnBackground = () => {
-    handleClose();
+  const manageMultiselectKeys = (prev, key) => {
+    return prev.includes(key)
+      ? removeValueFromArray(key, prev)
+      : [...prev, key].sort();
   }
 
-  const handleClickOnOption = e => {
+  const handleClickOnOption = (e, key) => {
     e.stopPropagation();
-    const key = e.target.dataset.key;
 
     if (multiselect) {
-      setKeys(prev => {
-        if (prev.includes(key)) {
-          return removeValueFromArray(key, prev);
-        } else {
-          return [...prev, key].sort();
-        }
-      })
-      return;
+      onSelect(prev => manageMultiselectKeys(prev, key))
+    } else {
+      onSelect([key]);
+      handleClose();
     }
-
-    setKeys([key]);
-    handleClose();
   }
 
   useEffect(() => {
@@ -44,13 +38,13 @@ export const DropdownContent = (
     return () => {
       document.removeEventListener('click', handleClose);
     }
-  }, [])
+  }, [handleClose])
 
   return (
     <div
       className={classes.content}
       style={style}
-      onClick={handleClickOnBackground}
+      onClick={() => handleClose()}
     >
       <ul className={classes.content__list}>
         {options.map(option => 
@@ -58,12 +52,11 @@ export const DropdownContent = (
           return (
           <li
             key={option.key}
-            data-key={option.key}
             className={classNames(
               classes.content__option,{
                 [classes.content__option_selected]: keys.includes(option.key)
               })}
-            onClick={handleClickOnOption}
+            onClick={e => handleClickOnOption(e, option.key)}
           >
             {option.text}
           </li>
@@ -71,4 +64,19 @@ export const DropdownContent = (
       </ul>
     </div>
   )
+}
+
+
+DropdownContent.propTypes = {
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      text: PropTypes.string,
+    })
+  ).isRequired,
+  keys: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])).isRequired,
+  onSelect: PropTypes.func.isRequired,
+  multiselect: PropTypes.bool,
+  handleClose: PropTypes.func.isRequired,
+  callingComponent: PropTypes.instanceOf(Element).isRequired
 }

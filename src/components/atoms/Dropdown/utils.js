@@ -28,7 +28,7 @@ const getDropdownContentMaxWidth = left => {
 };
 
 const getDropdownContentOffsetTop = ({ top, height }) => {
-  return top + height + 8;
+  return top + height + 4;
 };
 
 export const getDropdownContentStyle = callingComponent => {
@@ -44,6 +44,6 @@ export const getDropdownContentStyle = callingComponent => {
 
 export const removeValueFromArray = (value, array) => {
   return array.filter(element => { 
-    return element != value; 
+    return element !== value; 
 });
 }
