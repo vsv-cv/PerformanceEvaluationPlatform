@@ -59,4 +59,4 @@ Input.defaultProps = {
   value: PropTypes.string.isRequired,
 }
 
-export default Input
+export  {Input}

@@ -2,55 +2,64 @@ import React from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
-import styles from './iconButton.module.scss'
+import styles from './button.module.scss'
 
-export const IconType = {
+export const ButtonType = {
   BUTTON: 'button',
   RESET: 'reset',
   SUBMIT: 'submit',
 }
 
-export const IconTheme = {
+export const ButtonTheme = {
   DEFAULT: 'default',
   ROUNDED: 'rounded',
 }
 
-export const IconSize = {
+export const ButtonForm = {
+  CIRCLE: 'circle',
+}
+
+export const ButtonSize = {
   SMALL: 'small',
   MEDIUM: 'medium',
   LARGE: 'large',
 }
 
-const IconButton = ({ icon, type, onClick, theme, size, className, disabled }) => {
+const Button = ({ icon, type, onClick, children, theme, form, size, className, disabled }) => {
   const iconChildren = <i className={icon} />
 
-  const classProps = classNames(styles.button, styles[theme], styles[size], className)
+  const classProps = classNames(styles.button, styles[theme], styles[size], styles[form], className)
 
   return (
     <button type={type} onClick={onClick} disabled={disabled} className={classProps}>
       {icon && iconChildren}
+      {children}
     </button>
   )
 }
 
-IconButton.propTypes = {
+Button.propTypes = {
   icon: PropTypes.string,
   type: PropTypes.string,
+  form: PropTypes.string,
   size: PropTypes.string,
   theme: PropTypes.string,
   disabled: PropTypes.bool,
+  children: PropTypes.string,
   className: PropTypes.string,
   onClick: PropTypes.func.isRequired,
 }
 
-IconButton.defaultProps = {
+Button.defaultProps = {
   icon: '',
+  form: '',
+  size: '',
+  children: '',
   className: '',
   disabled: false,
   onClick: () => {},
-  size: IconSize.MEDIUM,
-  type: IconType.BUTTON,
-  theme: IconTheme.DEFAULT,
+  type: ButtonType.BUTTON,
+  theme: ButtonTheme.DEFAULT,
 }
 
-export default IconButton
+export { Button }

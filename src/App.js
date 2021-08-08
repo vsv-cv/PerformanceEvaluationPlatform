@@ -5,13 +5,13 @@ import {
   ButtonType,
   ButtonSize,
 } from "./components/atoms/Button";
-import Input from "./components/atoms/Input/index"
+import {Input} from "./components/atoms/Input"
 import {
   IconButton,
   IconTheme,
   IconType,
   IconSize,
-} from "./components/atoms/IconButton/index";
+} from "./components/atoms/IconButton";
 
 function App() {
   const [name, setName] = useState("");
