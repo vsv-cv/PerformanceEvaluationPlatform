@@ -6,16 +6,15 @@ import PropTypes from 'prop-types'
 
 export const DropdownButton = React.forwardRef((
   {
+    isOpen,
     title,
     disabled,
     handleDropdownButtonClick,
-    handleMouseEnter,
-    handleMouseLeave,
     options,
     keys,
   }, ref
 ) => {
-  const { dropdownButtonRef, underlineRef } = ref;
+  const { dropdownButtonRef } = ref;
   const selectedOptionsTitle = getSelectedOptionsTitle({ options, keys });
   return (
     <button
@@ -23,8 +22,6 @@ export const DropdownButton = React.forwardRef((
       disabled={disabled}
       ref={dropdownButtonRef}
       onClick={handleDropdownButtonClick}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
       className={classes.dropdown}
     >
       <div className={classNames(classes.dropdown__title, {
@@ -32,8 +29,20 @@ export const DropdownButton = React.forwardRef((
       })}>
         {selectedOptionsTitle.length ? selectedOptionsTitle : title}
       </div>
+
+      <svg
+        className={classNames(classes.arrowIcon, {
+          [classes.arrowIcon_open]: isOpen
+        })}
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path d="M7 10l5 5 5-5z" />
+      </svg>
+
+
       <div className={classes.dropdown__underlineWrapper}>
-        <span ref={underlineRef} className={classes.dropdown__underline} />
+        <span className={classes.dropdown__underline} />
       </div>
     </button>
   )

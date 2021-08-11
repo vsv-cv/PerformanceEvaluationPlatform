@@ -10,8 +10,13 @@
   border-radius: 0.25em .25em 0 0;
   font-size: inherit;
 
+  &:hover &__underline {
+    opacity: 1;
+  }
+
   &__title {
     padding: 0.75em;
+    padding-right: 2em;
     color: rgba(0, 0, 0, 0.6);
     line-height: 1.125;
     font-size: inherit;
@@ -50,5 +55,23 @@
     width: 100%;
     pointer-events: none;
     background-color: rgba(0, 0, 0, 0.87);
+  }
+}
+
+.arrowIcon {
+  top: calc(50% - 12px);
+  color: rgba(0, 0, 0, 0.54);
+  right: 0;
+  position: absolute;
+  pointer-events: none;
+  fill: currentColor;
+  width: 1.5em;
+  height: 1em;
+  display: inline-block;
+  font-size: 1.5rem;
+  user-select: none;
+
+  &_open {
+    transform: rotate(0.5turn);
   }
 }

@@ -20,7 +20,6 @@ export const Dropdown = (
 
   const [isOpen, setIsOpen] = useState(false);
   const dropdownButtonRef = useRef(null);
-  const underlineRef = useRef(null);
 
   const createPortalContainer = () => {
     if (document.querySelector('.dropdown-portal')) {
@@ -30,22 +29,6 @@ export const Dropdown = (
     portalContainer.className='dropdown-portal';
 
     document.body.appendChild(portalContainer);
-  }
-
-  const handleMouseEnter = () => {
-    if (!underlineRef.current) {
-      return;
-    }
-
-    underlineRef.current.style.opacity = 1;
-  }
-
-  const handleMouseLeave = () => {
-    if (!underlineRef.current) {
-      return;
-    }
-
-    underlineRef.current.style.opacity = 0;
   }
 
   const handleDropdownButtonClick = e => {
@@ -68,15 +51,13 @@ export const Dropdown = (
       <DropdownButton
         ref={{
           dropdownButtonRef,
-          underlineRef,
         }}
 
         {...{
+          isOpen,
           title,
           disabled,
           handleDropdownButtonClick,
-          handleMouseEnter,
-          handleMouseLeave,
           options,
           keys,
         }}
