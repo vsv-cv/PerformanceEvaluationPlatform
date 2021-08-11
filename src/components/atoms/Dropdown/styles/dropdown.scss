@@ -10,7 +10,11 @@
   border-radius: 0.25em .25em 0 0;
   font-size: inherit;
 
-  &:hover &__underline {
+  &_disabled {
+    cursor: not-allowed;
+  }
+
+  &:hover &__underline:not(.dropdown__underline_disabled) {
     opacity: 1;
   }
 
@@ -27,6 +31,10 @@
     &_selected {
       color: #000;
     }
+
+    &_disabled {
+      color: rgba(0, 0, 0, 0.38);
+    }
   }
 
   &__underlineWrapper {
@@ -42,6 +50,10 @@
       height: 1px;
       width: 100%;
       background-color: rgba(0, 0, 0, 0.42);
+    }
+
+    &_disabled::before {
+      background-color: rgba(0, 0, 0, 0.15);
     }
   }
 
@@ -73,5 +85,9 @@
 
   &_open {
     transform: rotate(0.5turn);
+  }
+
+  &_disabled {
+    color: rgba(0, 0, 0, 0.38);
   }
 }

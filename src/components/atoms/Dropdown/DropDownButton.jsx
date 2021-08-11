@@ -22,17 +22,21 @@ export const DropdownButton = React.forwardRef((
       disabled={disabled}
       ref={dropdownButtonRef}
       onClick={handleDropdownButtonClick}
-      className={classes.dropdown}
+      className={classNames(classes.dropdown, {
+        [classes.dropdown_disabled]: disabled
+      })}
     >
       <div className={classNames(classes.dropdown__title, {
-        [classes.dropdown__title_selected]: keys.length !== 0
+        [classes.dropdown__title_selected]: keys.length !== 0,
+        [classes.dropdown__title_disabled]: disabled
       })}>
         {selectedOptionsTitle.length ? selectedOptionsTitle : title}
       </div>
 
       <svg
         className={classNames(classes.arrowIcon, {
-          [classes.arrowIcon_open]: isOpen
+          [classes.arrowIcon_open]: isOpen,
+          [classes.arrowIcon_disabled]: disabled
         })}
         viewBox="0 0 24 24"
         aria-hidden="true"
@@ -41,8 +45,12 @@ export const DropdownButton = React.forwardRef((
       </svg>
 
 
-      <div className={classes.dropdown__underlineWrapper}>
-        <span className={classes.dropdown__underline} />
+      <div className={classNames(classes.dropdown__underlineWrapper, {
+        [classes.dropdown__underlineWrapper_disabled]: disabled
+      })}>
+        <span className={classNames(classes.dropdown__underline, {
+          [classes.dropdown__underline_disabled]: disabled
+        })} />
       </div>
     </button>
   )
