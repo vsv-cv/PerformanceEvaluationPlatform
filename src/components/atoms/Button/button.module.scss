@@ -7,7 +7,7 @@ $success-hover: #018f49;
 $grey-light-color: #ededed;
 $grey-darc-color: #919191;
 $withe-color: #fff;
-$base-font-family: sans-serif;
+$base-font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 
 .button {
   -webkit-appearance: none;
@@ -19,11 +19,12 @@ $base-font-family: sans-serif;
   justify-content: space-around;
   font-family: $base-font-family;
   font-size: 0.8em;
-  font-weight: 550;
-  text-transform: uppercase;
+  font-weight: 540;
+  line-height: 1.75;
   border-radius: 3px;
+  letter-spacing: 0.03857em;
+  text-transform: uppercase;
   cursor: pointer;
-  position: relative;
 
   &:hover {
     color: $main-color;
@@ -38,11 +39,22 @@ $base-font-family: sans-serif;
 }
 
 /* Form Icon Button */
-.circle {
-  height: 2.2rem;
-  width: 2.2rem;
+.circleSmall {
+  height: 1.9rem;
+  width: 1.9rem;
   border-radius: 50%;
-  display: inline-block;
+}
+
+.circleMedium {
+  height: 2.1rem;
+  width: 2.1rem;
+  border-radius: 50%;
+}
+
+.circleLarge {
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
 }
 
 /* Width Button */
@@ -52,15 +64,15 @@ $base-font-family: sans-serif;
 
 /* Size Button */
 .small {
-  padding: 0.4em 0.5em;
+  padding: 0.2em 0.4em;
 }
 
 .medium {
-  padding: 0.6em 0.9em;
+  padding: 0.3em 0.7em;
 }
 
 .large {
-  padding: 1.4em 1.6em;
+  padding: 0.5em 1em;
 }
 
 /* Theme */
@@ -117,6 +129,7 @@ $base-font-family: sans-serif;
   &:hover {
     color: $withe-color;
     background: $secondary-hover;
+    border: 1px solid $secondary-hover;
   }
 
   &:disabled {
@@ -144,4 +157,13 @@ $base-font-family: sans-serif;
     border-color: $grey-light-color;
     cursor: default;
   }
+}
+
+.hideText{
+  font-size: 0;
+  z-index: -1000;
+  // text-align: left; 
+  // white-space: nowrap;
+  // overflow: hidden;
+  // text-indent: -9999px;
 }

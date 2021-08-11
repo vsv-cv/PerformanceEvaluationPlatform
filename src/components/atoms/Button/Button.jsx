@@ -18,36 +18,57 @@ export const ButtonTheme = {
   SECONDARY: 'secondary',
 }
 
-export const ButtonForm = {
-  CIRCLE: 'circle',
-}
-
 export const ButtonSize = {
   SMALL: 'small',
   MEDIUM: 'medium',
   LARGE: 'large',
 }
 
-const Button = ({ icon, width, type, onClick, children, theme, form, size, className, disabled }) => {
-  const iconChildren = <i className={icon} />
+const Button = ({
+  icon,
+  type,
+  size,
+  theme,
+  width,
+  onClick,
+  children,
+  disabled,
+  iconType,
+  className,
+}) => {
 
-  const classProps = classNames(styles.button, styles[theme], styles[size], styles[form], styles[width], className)
+  const sizeType = {
+    'small': iconType ? 'circleSmall' : 'small',
+    'medium': iconType ? 'circleMedium' : 'medium',
+    'large': iconType ? 'circleLarge' : 'large',
+  }
+
+  const classProps = classNames(styles.button, styles[theme], styles[sizeType[size]], styles[width], className)
 
   return (
-    <button type={type} onClick={onClick} disabled={disabled} className={classProps}>
-      {icon && iconChildren}
-      {children}
-    </button>
+    <>
+      {!iconType ?
+        <button type={type} onClick={onClick} disabled={disabled} className={classProps}>
+          {icon && <i className={icon} />}
+          {children}
+        </button>
+        :
+        <button type={type} onClick={onClick} disabled={disabled} className={classProps}>
+          {icon && <i className={icon} />}
+          {/* <div className={styles.hideText}>{children}</div> */}
+        </button>
+      }
+    </>
   )
 }
 
 Button.propTypes = {
   icon: PropTypes.string,
   type: PropTypes.string,
-  form: PropTypes.string,
   size: PropTypes.string,
   width: PropTypes.string,
   theme: PropTypes.string,
+  iconType: PropTypes.bool,
   disabled: PropTypes.bool,
   children: PropTypes.string,
   className: PropTypes.string,
@@ -56,13 +77,13 @@ Button.propTypes = {
 
 Button.defaultProps = {
   icon: '',
-  form: '',
-  size: '',
   width: '',
   children: '',
   className: '',
+  iconType: false,
   disabled: false,
   onClick: () => {},
+  size: ButtonSize.SMALL,
   type: ButtonType.BUTTON,
   theme: ButtonTheme.DEFAULT,
 }
