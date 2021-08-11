@@ -1,7 +1,7 @@
-import { DropdownUsageExample } from './components/atoms/Dropdown/DropdownUsageExample'
+import { TextareaUsageExample } from './components/atoms/Textarea/TextareaUsageExample';
 
 function App() {
-  return <DropdownUsageExample />
+  return <TextareaUsageExample />
 }
 
 export default App;
