@@ -1,50 +1,76 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import styles from './list.module.scss'
 import PropTypes from 'prop-types'
+
+import descendingSortIcon from './descending-sort.svg'
+import ascendingSortIcon from './ascending-sort.svg'
+import { getDataForTable } from './tools'
+
+export const sortUp = 'up';
+export const sortDown = 'down';
 
 export default function List({
   columns,
   rows,
-  onScroll
+  sortedColumn,
+  onScrollToGetNewData,
+  onSortChange
 }) {
-  let grid = [];
-  for (let i = 0; i < rows.length; i++) {
-    grid[i] = {};
-    grid[i].items = {};
-    grid[i].id = rows[i].id
-    for (let j = 0; j < columns.length; j++) {
-      grid[i].items[columns[j].id] = '';
+  const [isDataLoad, setIsDataLoad] = useState(true);
+  useEffect(() => {
+    setIsDataLoad(true);
+  }, [rows.length]);
+
+  const onClickSort = id => {
+    let newSorting = {columnId: id};
+    if(sortedColumn.columnId === id){
+      newSorting.type = sortedColumn.type === sortUp ? sortDown : sortUp;
+    }
+    else{
+      newSorting.type = sortUp;
+    }
+    onSortChange(newSorting);
+  }
+
+  const onTableScroll = (e) => {
+    const {clientHeight, scrollHeight, scrollTop} = e.target;
+    const space = 50;
+    if((clientHeight + scrollTop >= scrollHeight - space) && isDataLoad){
+      setIsDataLoad(false);
+      onScrollToGetNewData()
     }
   }
-  let rowIndex = 0;
-  rows.forEach(row => {
-    row.items.forEach(gridEl => {
-      grid[rowIndex].items[gridEl.columnId] = gridEl.value;
-    });
-    rowIndex++;
-  });
-  // console.log(grid);
+
+  const grid = getDataForTable(columns, rows);
+
   return (
-    <div className={styles.table_responsive} onScroll={(e) => onScroll(e.target.scrollHeight, e.target.scrollTop)}>
-      <table className={styles['table'] + " " + styles['table-hover']}>
-        <thead className={styles['table-primary-1']}>
+    <div className={styles.table__container} onScroll={onTableScroll}>
+      <table className={styles['table']} style={{gridTemplateColumns: 'repeat(' + columns.length + ', minmax(100px, auto))'}}>
+        <thead>
           <tr>
             {columns.map(item => {
               const {id, name, sort} = item;
-              return (
-                <th key={id}>
-                  {sort ? (
-                    <div style={{cursor: 'pointer'}}>
-                      <span>{name}</span>
-                    </div>
-                  ) : (
-                    <div>
-                      {name}
-                    </div>
+              return sort ? (
+                <th key={id} className={styles.sort_column} onClick={() => onClickSort(id)}>
+                  <span>{name}</span>
+                  {sortedColumn.columnId === id && (
+                    sortedColumn.type === sortUp ? (
+                      <span className={styles.sort_icon}>
+                        <img src={descendingSortIcon} alt="" />
+                      </span>
+                    ) :
+                    sortedColumn.type === sortDown && (
+                      <span className={styles.sort_icon}>
+                        <img src={ascendingSortIcon} alt="" />
+                      </span>
+                    )
                   )}
-                  
                 </th>
-              );
+              ) : (
+                <th key={id}>
+                  <span>{name}</span>
+                </th>
+              )
             })}
           </tr>
         </thead>
@@ -54,8 +80,9 @@ export default function List({
               return (
                 <tr key={row.id}>
                   {columns.map(column => {
+                    const key = row.id + " " + column.id;
                     return (
-                      <td key={row.id + " " + row.items[column.id]}>{row.items[column.id]}</td>
+                      <td key={key}>{row.items[column.id]}</td>
                     );
                   })}
                 </tr>
@@ -64,6 +91,7 @@ export default function List({
           }
 				</tbody>
       </table>
+      {!isDataLoad && (<span>LOADING...</span>)}
     </div>
   )
 }
@@ -85,7 +113,12 @@ List.propTypes = {
     })),
     id: PropTypes.string
   })),
-  onScroll: PropTypes.func
+  onScrollToGetNewData: PropTypes.func,
+  onSortChange: PropTypes.func,
+  sortedColumn: PropTypes.shape({
+    columnId: PropTypes.string,
+    type: PropTypes.oneOf([sortUp, sortDown])
+  })
 }
 
 List.defaultProps = {
