@@ -1,7 +1,7 @@
-import { TextareaUsageExample } from './components/atoms/Textarea/TextareaUsageExample';
+import { CheckboxUsageExample } from './components/atoms/Checkbox/CheckboxUsageExample';
 
 function App() {
-  return <TextareaUsageExample />
+  return <CheckboxUsageExample />
 }
 
 export default App;
