@@ -1,0 +1,10 @@
+.content{
+    font-size: 14px;
+	box-sizing: border-box;
+	position: fixed;
+	z-index: 999999;
+    top: 12px;
+	left: 12px;
+	transition: transform .6s ease-in;
+	animation: toast-in-left .7s;
+  }

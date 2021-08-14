@@ -1,11 +1,11 @@
 import React from "react";
-import InputButtonIconButtonExample from "./components/atoms/InputButtonIconButtonExample";
+import Example from "./components/atoms/Example";
 
 
 function App() {
   return (
     <div className="App">
-      <InputButtonIconButtonExample />
+      <Example />
     </div>
   );
 }

@@ -24,7 +24,7 @@ export const ButtonSize = {
   LARGE: 'large',
 }
 
-const Button = ({
+export const Button = ({
   icon,
   type,
   size,
@@ -88,4 +88,4 @@ Button.defaultProps = {
   theme: ButtonTheme.DEFAULT,
 }
 
-export { Button }
+

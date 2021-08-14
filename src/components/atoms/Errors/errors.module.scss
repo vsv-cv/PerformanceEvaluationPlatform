@@ -1,0 +1,10 @@
+.errors{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.error{
+    color: #ff1744;
+    margin: 5px;
+    font-size: x-small;
+}

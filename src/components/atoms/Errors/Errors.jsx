@@ -1,11 +1,22 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-const Errors = () => {
+import styles from './errors.module.scss'
+
+export const Errors = ({errors}) => {
     return (
-        <div>
-            error
+        <div className={styles.errors}>
+            {errors.map(e => {
+                return (
+                    <div key={e.id} className={styles.error} >{e.message}</div>
+                )
+            })} 
         </div>
     )
 }
 
-export default Errors
+Errors.propTypes = {
+    errors: PropTypes.array.isRequired,
+}
+
+

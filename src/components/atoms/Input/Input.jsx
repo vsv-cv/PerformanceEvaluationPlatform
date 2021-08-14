@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import styles from './input.module.scss'
 
-const Input = ({
+export const Input = ({
   icon,
   type,
   name,
@@ -60,4 +60,4 @@ Input.defaultProps = {
   disabled: false,
 }
 
-export { Input }
+
