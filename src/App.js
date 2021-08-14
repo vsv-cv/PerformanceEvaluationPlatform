@@ -1,9 +1,11 @@
-import { Button, ButtonTheme, ButtonType, ButtonSize, ButtonForm } from "./components/atoms/Button";
+import React from "react";
+import Example from "./components/atoms/Example";
+
 
 function App() {
   return (
     <div className="App">
-      <Button theme={ButtonTheme.DEFAULT} type={ButtonType.BUTTON} size={ButtonSize.MEDIUM}>Button</Button>
+      <Example />
     </div>
   );
 }
