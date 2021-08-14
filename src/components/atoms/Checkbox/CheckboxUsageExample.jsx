@@ -8,7 +8,7 @@ export const CheckboxUsageExample = () => {
       label="Checkbox"
       checked={checked}
       onChange={() => setChecked(prev => !prev)}
-      disabled={false}
+      disabled={true}
     />
   )
 }

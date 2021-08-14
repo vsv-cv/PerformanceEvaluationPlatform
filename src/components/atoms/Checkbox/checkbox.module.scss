@@ -6,6 +6,11 @@
   font-size: inherit;
   user-select: none;
 
+  &_disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
   & input {
     position: absolute;
     opacity: 0;
@@ -40,6 +45,10 @@
 
 .container:hover input ~ .checkmark {
   background-color: #ccc;
+}
+
+.container_disabled:hover input ~ .checkmark {
+  background-color: #eee;
 }
 
 .container input:checked ~ .checkmark {

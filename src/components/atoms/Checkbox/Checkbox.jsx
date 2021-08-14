@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import classes from './checkbox.module.scss'
 
 const Checkbox = (
@@ -12,14 +13,16 @@ const Checkbox = (
 ) => {
   return (
     <label
-      className={classes.container}
-      disabled={disabled}
+      className={classNames(classes.container, {
+        [classes.container_disabled]: disabled
+      })}
     >
       {label}
       <input
         type="checkbox"
         checked={checked}
         onChange={onChange}
+        disabled={disabled}
       />
       <span className={classes.checkmark} />
     </label>
