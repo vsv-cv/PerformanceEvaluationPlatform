@@ -1,0 +1,113 @@
+$grey-color: grey;
+$black-color: black;
+$focus-color: #1976d2;
+$main-color: #007cc7;
+$primary-hover: #1769aa;
+
+@mixin upLabel {
+  top: -4px;
+  font-size: 10px;
+  color: $black-color;
+}
+
+.conteiner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .icon {
+    padding-top: 1px;
+  }
+
+  &:focus.formInput__label {
+    color: $primary-hover;
+  }
+
+  .formInput {
+    position: relative;
+    margin: 7px 0;
+    width: 100%;
+
+    &:before {
+        left: 0;
+        right: 0;
+        bottom: 0;
+        content: "\00a0";
+        position: absolute;
+        transition: border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+        pointer-events: none;
+      }
+
+      &:after {
+        left: 0;
+        right: 0;
+        bottom: 0;
+        content: "";
+        color: black;
+        position: absolute;
+        transform: scaleX(0);
+        transition: transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+        border-bottom: 2px solid #1976d2;
+        pointer-events: none;
+      }
+
+      &:focus-within.formInput:after{
+        transform: scaleX(1);
+      }
+
+      // &:hover.formInput:after{
+      //   transform: scaleX(1); 
+      //   border-bottom: 2px solid rgba(0, 0, 0, 0.87);
+      // }
+
+    .formInput__input {
+      background: none;
+      background-color: white;
+      color: $grey-color;
+      font-size: 14px;
+      padding: 9px 9px 2px 5px;
+      display: block;
+      border: none;
+      border-radius: 0;
+      margin: 3px 0;
+
+      &:focus {
+        outline: none;
+      }
+
+      &:focus ~ .formInput__label {
+        @include upLabel();
+        color: $focus-color;
+      }
+    }
+
+    input[type="password"] {
+      letter-spacing: 0.3em;
+    }
+
+    .formInput__label {
+      color: $grey-color;
+      font-size: 12px;
+      font-weight: 450;
+      position: absolute;
+      pointer-events: none;
+      left: 5px;
+      top: 14px;
+      transition: 300ms ease all;
+
+      &.formInput__label_up {
+        @include upLabel();
+      }
+    }
+  }
+}
+
+.disabled {
+  .icon {
+    color: gray;
+  }
+}
+
+
+
