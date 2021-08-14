@@ -1,7 +1,11 @@
-import { CheckboxUsageExample } from './components/atoms/Checkbox/CheckboxUsageExample';
+import React from "react";
 
 function App() {
-  return <CheckboxUsageExample />
+  return (
+    <div className="App">
+      Hello World!
+    </div>
+  );
 }
 
 export default App;
