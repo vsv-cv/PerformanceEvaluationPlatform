@@ -14,11 +14,11 @@ export const ListWithFilters = (
   return (
     <div className={classes.grid}>
       <div className={classNames(classes.grid__heading, classes.heading)}>
-        <div className={classes.heading__title}>
+        <h1 className={classes.heading__title}>
           {title}
-        </div>
+        </h1>
         {button && (
-          <div className={classes.heading__title}>
+          <div className={classes.heading__button}>
             {button}
           </div>
         )}
@@ -27,7 +27,7 @@ export const ListWithFilters = (
       <div className={classes.grid__list}>
         {list}
       </div>
-      <div className={classes.grid__sidebar}>
+      <div className={classNames(classes.grid__sidebar, classes.sidebar)}>
         {sidebar}
       </div>
       

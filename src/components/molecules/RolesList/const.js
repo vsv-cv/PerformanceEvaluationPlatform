@@ -1,5 +1,5 @@
-export const fetchUrl = 'https://pepwebappqa.azurewebsites.net/roles';
-export const columns = [
+export const FETCH_URL = 'https://pepwebappqa.azurewebsites.net/roles';
+export const LIST_COLUMNS = [
   {
     id: 'title',
     name: 'Title',
@@ -16,3 +16,10 @@ export const columns = [
     sort: true
   }
 ];
+
+export const DEFAULT_FILTER_VALUES = {
+  searchValue: '',
+  isPrimaryOnly: false,
+  countFrom: '1',
+  countTo: '100'
+}
