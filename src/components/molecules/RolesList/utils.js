@@ -1,3 +1,10 @@
+export const formatData = data => data?.map(item => ({
+  ...item, 
+  isPrimary: item?.isPrimary
+    ? 'yes'
+    : 'no'
+}));
+
 export const getRows = rows => rows?.map(row => {
   const items = Object
     .entries(row)
@@ -13,4 +20,4 @@ export const getRows = rows => rows?.map(row => {
     id: String(row.id),
     items: items
   })
-})
+});

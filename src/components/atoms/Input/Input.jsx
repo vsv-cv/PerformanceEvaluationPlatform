@@ -19,7 +19,7 @@ export const Input = ({
   })
 
   const labelClasses = classNames([styles.formInput__label], {
-    [styles.formInput__label_up]: value.length > 0,
+    [styles.formInput__label_up]: value?.length > 0,
   })
 
   return (

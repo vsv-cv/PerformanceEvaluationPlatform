@@ -10,7 +10,7 @@ export const useFetch = url => {
       setState({ isLoading: true });
 
       try {
-        const data = await fetch(url).then(res => res.json());
+        const data = await (await fetch(url)).json();
         if (!_isMounted) return;
         setState({ isSuccess: true, data });
       } catch(error) {

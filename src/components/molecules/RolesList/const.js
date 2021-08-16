@@ -1,4 +1,6 @@
-export const FETCH_URL = 'https://pepwebappqa.azurewebsites.net/roles';
+import { BASE_API_URL } from "../../api/const";
+
+export const QUERY_URL = `${BASE_API_URL}/roles`;
 export const LIST_COLUMNS = [
   {
     id: 'title',
@@ -18,8 +20,12 @@ export const LIST_COLUMNS = [
 ];
 
 export const DEFAULT_FILTER_VALUES = {
-  searchValue: '',
-  isPrimaryOnly: false,
-  countFrom: '1',
-  countTo: '100'
+  Search: '',
+  IsPrimary: null,
+  UsersCountFrom: '1',
+  UsersCountTo: '100',
 }
+
+export const DEFAULT_TITLE_SORT_ORDER_VALUE = 1;
+
+export const DEFAULT_TAKE_VALUE = 20;

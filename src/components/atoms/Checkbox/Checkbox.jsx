@@ -6,7 +6,7 @@ import classes from './checkbox.module.scss'
 export const Checkbox = (
   {
     label,
-    checked,
+    checked = false,
     onChange,
     disabled,
   }
@@ -31,7 +31,7 @@ export const Checkbox = (
 
 Checkbox.propTypes = {
   label: PropTypes.string.isRequired,
-  checked: PropTypes.bool.isRequired,
+  checked: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool
 }
