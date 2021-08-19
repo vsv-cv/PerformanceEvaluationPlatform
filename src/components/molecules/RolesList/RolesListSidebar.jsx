@@ -6,13 +6,13 @@ import { Button } from '../../atoms/Button'
 
 const RolesListSidebar = (
   {
-    filterValues: {
+    fetchParams: {
       Search,
       IsPrimary,
       UsersCountFrom,
       UsersCountTo
     },
-    setFilterValues,
+    setFetchParams,
     isLoading,
     onCleanFilterValues
   }
@@ -25,12 +25,13 @@ const RolesListSidebar = (
   });
 
   const handleApplyFilterValues = () => {
-    setFilterValues({
+    setFetchParams(prev => ({
+      ...prev,
       Search: filterInputValues.search,
       IsPrimary: filterInputValues.isPrimary,
       UsersCountFrom: filterInputValues.countFrom,
       UsersCountTo: filterInputValues.countTo
-    })
+    }))
   }
   
   return (
@@ -52,7 +53,7 @@ const RolesListSidebar = (
       <Checkbox
         label="Primary only"
         checked={filterInputValues.isPrimary}
-        onChange={e => setFilterInputValues(prev => ({
+        onChange={()=> setFilterInputValues(prev => ({
             ...prev,
             isPrimary: !prev.isPrimary ? true : null
           })
@@ -110,13 +111,13 @@ const RolesListSidebar = (
 }
 
 RolesListSidebar.propTypes = {
-  filterValues: PropTypes.shape({
+  fetchParams: PropTypes.shape({
     Search: PropTypes.string,
     IsPrimary: PropTypes.bool,
     UsersCountFrom: PropTypes.string,
     UsersCountTo: PropTypes.string,
   }).isRequired,
-  setFilterValues: PropTypes.func.isRequired,
+  setFetchParams: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
   onCleanFilterValues: PropTypes.func.isRequired,
 }
