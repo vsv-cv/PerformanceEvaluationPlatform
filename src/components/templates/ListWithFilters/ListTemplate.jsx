@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classes from './styles/index.module.scss'
 import classNames from 'classnames'
 
-export const ListWithFilters = (
+export const ListTemplate = (
   {
     title,
     button,
@@ -35,7 +35,7 @@ export const ListWithFilters = (
   )
 }
 
-ListWithFilters.propTypes = {
+ListTemplate.propTypes = {
   title: PropTypes.string.isRequired,
   button: PropTypes.node, // React Component
   list: PropTypes.node.isRequired, // React Component

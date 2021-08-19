@@ -1,49 +1,43 @@
 import React, { useState, useEffect } from 'react'
 import {
+  ROLES_LIST_QUERY_KEY,
   LIST_COLUMNS,
-  QUERY_URL,
-  DEFAULT_FILTER_VALUES,
-  DEFAULT_TITLE_SORT_ORDER_VALUE,
-  DEFAULT_TAKE_VALUE
+  DEFAULT_FETCH_PARAMS
 } from './const'
 import { formatData, getRows } from './utils'
 import { ListWithFilters } from '../../templates/ListWithFilters'
 import { Button } from '../../atoms/Button'
 import List from '../../atoms/List'
 import RolesListSidebar from './RolesListSidebar'
-import axios from 'axios'
-import { useQuery } from 'react-query'
+import { useDataQuery } from './hooks/useDataQuery'
 
 export const RolesList = () => {
-  const [filterValues, setFilterValues] = useState(DEFAULT_FILTER_VALUES);
-  const [titleSortOrder, setTitleSortOrder] = useState(DEFAULT_TITLE_SORT_ORDER_VALUE);
-  const fetchRolesList = () => axios
-    .get(QUERY_URL, {
-      params: {
-        ...filterValues,
-        TitleSortOrder: titleSortOrder,
-        Take: DEFAULT_TAKE_VALUE,
-      }
-    })
-    .then(res => res.data);
+  const [fetchParams, setFetchParams] = useState(DEFAULT_FETCH_PARAMS);
 
-  const { data, isLoading, isFetching, refetch } = useQuery('roles', fetchRolesList);
+  const {
+    data,
+    isLoading,
+    isFetching,
+    refetch,
+    fetchNextPage
+  } = useDataQuery(fetchParams);
+
   const formattedData = formatData(data);
   const listRows = getRows(formattedData);
 
   const handleCleanFilterValues = () => {
-    setFilterValues(DEFAULT_FILTER_VALUES);
+    setFetchParams(DEFAULT_FETCH_PARAMS);
   }
   const handleClickOnSort = () => {
-    setTitleSortOrder(prev => prev === 1 ? 2 : 1);
-  }
-  const handleScrollPagination = () => {
-    console.log('handleScrollPagination');
+    setFetchParams(prev => ({
+      ...prev, 
+      TitleSortOrder: prev.TitleSortOrder === 1 ? 2 : 1
+    }));
   }
 
   useEffect(() => {
-    refetch('roles');
-  }, [filterValues, titleSortOrder]); // eslint-disable-line
+    refetch(ROLES_LIST_QUERY_KEY);
+  }, [fetchParams]); // eslint-disable-line
 
   return isLoading
     ? 'Loading...'
@@ -62,7 +56,7 @@ export const RolesList = () => {
           <List
             columns={LIST_COLUMNS}
             rows={listRows}
-            onScrollToGetNewData={handleScrollPagination}
+            onScrollToGetNewData={fetchNextPage}
             onSortChange={handleClickOnSort}
             sortedColumn={{
               columnId: 'title',
@@ -72,14 +66,12 @@ export const RolesList = () => {
         }
         sidebar={
           <RolesListSidebar
-            filterValues={filterValues}
-            setFilterValues={setFilterValues}
+          fetchParams={fetchParams}
+            setFetchParams={setFetchParams}
             isLoading={isFetching}
             onCleanFilterValues={handleCleanFilterValues}
           />
         }
       />
   );
-
-
 }

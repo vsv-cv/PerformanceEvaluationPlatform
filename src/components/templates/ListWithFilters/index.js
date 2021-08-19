@@ -1,1 +1,1 @@
-export { ListWithFilters } from './ListWithFilters';
+export { ListTemplate as ListWithFilters } from './ListTemplate';
