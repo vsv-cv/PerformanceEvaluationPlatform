@@ -1,0 +1,1 @@
+export { ListTemplate as ListWithFilters } from './ListTemplate';
