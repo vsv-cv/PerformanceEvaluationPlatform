@@ -33,8 +33,8 @@ export const DropdownUsageExample = () => {
       }
     ],
     onSelect: keys => setKeys(keys),
-    disabled: true,
-    // multiselect: true
+    disabled: false,
+    multiselect: true
   }
 
   return (
