@@ -14,7 +14,8 @@ export default function List({
   rows,
   sortedColumn,
   onScrollToGetNewData,
-  onSortChange
+  onSortChange,
+  hasNextPage = true
 }) {
   const [isDataLoad, setIsDataLoad] = useState(true);
   useEffect(() => {
@@ -91,7 +92,7 @@ export default function List({
           }
 				</tbody>
       </table>
-      {!isDataLoad && (<span>LOADING...</span>)}
+      {hasNextPage && !isDataLoad && (<span>LOADING...</span>)}
     </div>
   )
 }
