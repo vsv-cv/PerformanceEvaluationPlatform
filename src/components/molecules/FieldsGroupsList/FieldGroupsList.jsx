@@ -8,10 +8,10 @@ import { formatData, getRows } from './utils'
 import { ListWithFilters } from '../../templates/ListWithFilters'
 import { Button } from '../../atoms/Button'
 import List from '../../atoms/List'
-import RolesListSidebar from './RolesListSidebar'
+import { FieldGroupsListSidebar } from './FieldGroupsListSidebar'
 import { useDataQuery } from './hooks/useDataQuery'
 
-export const RolesList = () => {
+export const FieldGroupsList = () => {
   const [fetchParams, setFetchParams] = useState(DEFAULT_FETCH_PARAMS);
   const [sortingParams, setSortingParams] = useState({});
 
@@ -31,8 +31,8 @@ export const RolesList = () => {
   }
   const handleClickOnSort = ({ columnId, type }) => {
     const sortingConfig = {
-      'title': 'TitleSortOrder',
-      'isPrimary': 'IsPrimarySortOrder',
+      'title': 'TitleSetOrder',
+      'fieldCount': 'FieldCountSetOrder',
     }
 
     const sortingType = sortingConfig[columnId];
@@ -42,7 +42,7 @@ export const RolesList = () => {
       [sortingType]: prev[sortingType] === 1 ? 2 : 1,
     }))
 
-    setSortingParams({ columnId, type });
+    setSortingParams({ columnId, type});
   }
 
   useEffect(() => {
@@ -53,13 +53,13 @@ export const RolesList = () => {
     ? 'Loading...'
     : (
       <ListWithFilters
-        title="Roles"
+        title="Field Groups"
         button={
           <Button
             size="large"
             onClick={()=> console.log('Click on add role!')}
           >
-            add role
+            add
           </Button>
         }
         list={
@@ -72,8 +72,8 @@ export const RolesList = () => {
           />
         }
         sidebar={
-          <RolesListSidebar
-          fetchParams={fetchParams}
+          <FieldGroupsListSidebar
+            fetchParams={fetchParams}
             setFetchParams={setFetchParams}
             isLoading={isFetching}
             onCleanFilterValues={handleCleanFilterValues}

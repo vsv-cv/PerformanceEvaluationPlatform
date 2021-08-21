@@ -16,7 +16,7 @@ export const LIST_COLUMNS = [
   {
     id: 'usersCount',
     name: 'User count',
-    sort: true
+    sort: false
   }
 ];
 
@@ -26,5 +26,6 @@ export const DEFAULT_FETCH_PARAMS = {
   UsersCountFrom: '1',
   UsersCountTo: '100',
   Take: 20,
-  TitleSortOrder: 1
+  TitleSortOrder: 1,
+  IsPrimarySortOrder: 1,
 }
