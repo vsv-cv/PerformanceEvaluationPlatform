@@ -11,7 +11,8 @@ import List from '../../atoms/List'
 import RolesListSidebar from './RolesListSidebar'
 import { useDataQuery } from './hooks/useDataQuery'
 
-export const RolesList = () => {
+export const ProjectsList = () => {
+
   const [fetchParams, setFetchParams] = useState(DEFAULT_FETCH_PARAMS);
 
   const {

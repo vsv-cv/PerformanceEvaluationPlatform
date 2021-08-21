@@ -84,36 +84,11 @@ $base-font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 
 .large {
   font-size: 1.1rem;
-  padding: 0.4em 0.9em;
+  padding: 0.5em 1.3em;
 }
 
 
 /* Theme */
-.default {
-  color: $withe-color;
-  background: $main-color;
-  border: 1px solid $main-color;
-}
-
-.rounded {
-  color: $main-color;
-  background: $withe-color;
-  border: 1px solid $main-color;
-  transition: color 0.3s ease, background 0.3s ease;
-
-  &:hover {
-    color: $withe-color;
-    background: $main-color;
-  }
-
-  &:disabled {
-    color: $grey-darc-color;
-    background: $withe-color;
-    border-color: $grey-light-color;
-    cursor: default;
-  }
-}
-
 .primary {
   color: $withe-color;
   background: $main-color;

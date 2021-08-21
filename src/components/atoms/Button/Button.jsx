@@ -12,8 +12,6 @@ export const ButtonType = {
 
 export const ButtonTheme = {
   SUCCESS: 'success',
-  // DEFAULT: 'default',
-  // ROUNDED: 'rounded',
   PRIMARY: 'primary',
   SECONDARY: 'secondary',
 }
