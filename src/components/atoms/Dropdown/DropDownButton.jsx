@@ -57,7 +57,7 @@ export const DropdownButton = React.forwardRef((
 })
 
 DropdownButton.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

@@ -9,6 +9,7 @@
   &__list {
     margin: 0;
     padding: 0.5rem 0;
+    min-height: calc(1em + 1rem);
     box-sizing: border-box;
     font-size: inherit;
     list-style: none;

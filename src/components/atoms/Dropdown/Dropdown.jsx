@@ -80,7 +80,7 @@ export const Dropdown = (
 }
 
 Dropdown.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
