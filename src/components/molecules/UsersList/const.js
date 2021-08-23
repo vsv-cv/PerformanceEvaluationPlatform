@@ -1,45 +1,56 @@
-import { BASE_API_URL } from "../../api/const";
+export const USERS_LIST_QUERY_KEY = 'users';
 
-export const ROLES_LIST_QUERY_KEY = "rolesList";
-export const QUERY_URL = `${BASE_API_URL}/roles`;
+export const DEFAULT_FETCH_PARAMS = {
+  EmailOrName: "",
+  UserName: 1,
+  UserNextPE: 1,
+  UserPreviousPE: 1,
+  Take: 20,
+};
+
 export const LIST_COLUMNS = [
   {
-    id: "Formatted",
-    name: "Formatted",
+    id: "firstName",
+    name: "FirstName",
     sort: true,
   },
   {
-    id: "Email",
+    id: "lastName",
+    name: "LastName",
+    sort: false,
+  },
+  {
+    id: "email",
     name: "Email",
     sort: false,
   },
   {
-    id: "Team Name",
+    id: "teamName",
     name: "Team Name",
     sort: false,
   },
   {
-    id: "Role",
+    id: "roleName",
     name: "Role",
     sort: false,
   },
   {
-    id: "Level",
+    id: "levelName",
     name: "Level",
     sort: false,
   },
   {
-    id: "Previous PE date",
+    id: "previousPEDate",
     name: "Previous PE date",
     sort: true,
   },
   {
-    id: "Next PE date",
+    id: "nextPEDate",
     name: "Next PE date",
     sort: true,
   },
   {
-    id: "State",
+    id: "stateName",
     name: "State",
     sort: false,
   },

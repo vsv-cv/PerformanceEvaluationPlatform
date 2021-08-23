@@ -1,7 +1,7 @@
 import React from "react";
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
-import { ProjectsList } from './components/molecules/ProjectsList';
+import { RolesList } from "./components/molecules/RolesList";
 import { UsersList } from './components/molecules/UsersList/UsersList';
 
 const queryClient = new QueryClient({

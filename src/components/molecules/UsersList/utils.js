@@ -1,18 +1,3 @@
-export const formatData = data => {
-  if (!data) return;
-
-  const allPages = data?.pages?.reduce((acc, page) => {
-    return acc.concat(page);
-  }, []);
-
-  return allPages?.map(item => ({
-    ...item, 
-    isPrimary: item?.isPrimary
-      ? 'yes'
-      : 'no'
-  }))
-};
-
 export const getRows = rows => rows?.map(row => {
   const items = Object
     .entries(row)
