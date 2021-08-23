@@ -15,6 +15,7 @@ export default function List({
   sortedColumn,
   onScrollToGetNewData,
   onSortChange,
+  onRowClick,
   hasNextPage = true
 }) {
   const [isDataLoad, setIsDataLoad] = useState(true);
@@ -42,6 +43,12 @@ export default function List({
     }
   }
 
+  const rowClick = (id) => {
+    if(onRowClick){
+      onRowClick(id);
+    }
+  }
+
   const grid = getDataForTable(columns, rows);
 
   return (
@@ -54,7 +61,7 @@ export default function List({
               return sort ? (
                 <th key={id} className={styles.sort_column} onClick={() => onClickSort(id)}>
                   <span>{name}</span>
-                  {sortedColumn.columnId === id && (
+                  {sortedColumn.columnId === id ? (
                     sortedColumn.type === sortUp ? (
                       <span className={styles.sort_icon}>
                         <img src={descendingSortIcon} alt="" />
@@ -65,6 +72,10 @@ export default function List({
                         <img src={ascendingSortIcon} alt="" />
                       </span>
                     )
+                  ) : (
+                    <span className={styles.sort_icon + ' ' + styles.sort_icon_uncheck}>
+                      <img src={ascendingSortIcon} alt="" />
+                    </span>
                   )}
                 </th>
               ) : (
@@ -79,7 +90,7 @@ export default function List({
           {
             grid.map(row => {
               return (
-                <tr key={row.id}>
+                <tr key={row.id} onClick={(e) => rowClick(row.id, e)}>
                   {columns.map(column => {
                     const key = row.id + " " + column.id;
                     return (
