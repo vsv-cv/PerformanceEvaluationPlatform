@@ -24,13 +24,16 @@ export const DropdownContent = (
 
   const handleClickOnOption = (e, key) => {
     e.stopPropagation();
+    let nextKeys;
 
     if (multiselect) {
-      onSelect(prev => manageMultiselectKeys(prev, key))
+      nextKeys = manageMultiselectKeys(keys, key);
     } else {
-      onSelect([key]);
+      nextKeys = [key];
       handleClose();
     }
+
+    onSelect(nextKeys);
   }
 
   useEffect(() => {
