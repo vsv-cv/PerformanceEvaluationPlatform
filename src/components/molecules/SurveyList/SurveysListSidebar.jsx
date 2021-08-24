@@ -47,9 +47,9 @@ export const SurveysListSidebar = ({
     setFetchParams(prev => ({
       ...prev,
       Search: filterInputValues.search,
-      IsNotEmptyOnly: filterInputValues.isNotEmptyOnly,
-      CountFrom: filterInputValues.countFrom,
-      CountTo: filterInputValues.countTo,
+      StateIds: filterInputValues.stateIds,
+      AssigneeIds: filterInputValues.assigneeIds,
+      SupervisorIds: filterInputValues.supervisorIds,
       AppointmentDateFrom: filterInputValues.appointmentDateFrom,
       AppointmentDateTo: filterInputValues.appointmentDateTo,
     }));
