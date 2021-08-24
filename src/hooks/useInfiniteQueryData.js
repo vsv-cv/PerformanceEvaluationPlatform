@@ -1,14 +1,9 @@
-import { useCallback } from 'react'
 import axios from 'axios'
 import { useInfiniteQuery } from 'react-query'
-import {
-  ROLES_LIST_QUERY_KEY,
-  QUERY_URL,
-} from '../const'
 
-export const useDataQuery = (fetchParams = {}) => {
-  const handleFetch = useCallback(async ({ pageParam }) => {
-    const response = await axios.get(QUERY_URL, {
+export const useInfiniteQueryData = (queryKey, queryUrl, fetchParams = {}) => {
+  const handleFetch = async ({ pageParam }) => {
+    const response = await axios.get(queryUrl, {
       params: {
         ...fetchParams,
         ...pageParam
@@ -16,10 +11,10 @@ export const useDataQuery = (fetchParams = {}) => {
     });
   
     return response.data;
-  }, [fetchParams]);
+  };
 
   const query = useInfiniteQuery(
-    ROLES_LIST_QUERY_KEY,
+    queryKey,
     handleFetch,
     {
       getNextPageParam: (lastPage, allPages) => {
