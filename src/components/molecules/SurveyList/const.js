@@ -1,32 +1,36 @@
-import { BASE_API_URL } from "../../api/const";
+import { BASE_API_URL } from '../../api/const';
 
-export const ROLES_LIST_QUERY_KEY = 'surveysList';
-export const QUERY_URL = `${BASE_API_URL}/surveys`;
+export const SURVEYS_STATES_QUERY_KEY = 'surveysStates';
+export const SURVEYS_STATES_QUERY_URL = `${BASE_API_URL}/surveys/states`;
+
+export const SURVEY_LIST_QUERY_KEY = 'surveysList';
+export const SURVEY_LIST_QUERY_URL = `${BASE_API_URL}/surveys`;
+
 export const LIST_COLUMNS = [
   {
     id: 'formName',
     name: 'Form Name',
-    sort: true
+    sort: true,
   },
   {
     id: 'assignee',
     name: 'Assignee',
-    sort: true
+    sort: true,
   },
   {
     id: 'supervisor',
     name: 'Supervisor',
-    sort: false
+    sort: false,
   },
   {
     id: 'appointmentDate',
     name: 'Appointment date',
-    sort: false
+    sort: false,
   },
   {
     id: 'state',
     name: 'State',
-    sort: false
+    sort: false,
   },
 ];
 
@@ -37,7 +41,7 @@ export const DEFAULT_FETCH_PARAMS = {
   AssigneeIds: [],
   SupervisorIds: [],
   FormNameSortOrder: 1,
-  AssigneeSortOrder: 1,
+  AssigneeSortOrder: null,
   Take: 20,
   Search: '',
-}
+};

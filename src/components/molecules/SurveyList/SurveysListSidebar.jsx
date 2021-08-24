@@ -1,23 +1,34 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
-import { Input } from '../../atoms/Input/Input'
-import { Dropdown } from '../../atoms/Dropdown'
-import { Button } from '../../atoms/Button'
-import classes from './styles/index.module.scss'
+import React, { useRef, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { Input } from '../../atoms/Input/Input';
+import { Dropdown } from '../../atoms/Dropdown';
+import { Button } from '../../atoms/Button';
 
-export const SurveysListSidebar = (
-  {
-    fetchParams: {
-      Search,
-    },
-    setFetchParams,
-    isLoading,
-    onCleanFilterValues
-  }
-) => {
+export const SurveysListSidebar = ({
+  fetchParams: { Search, StateIds, AssigneeIds, SupervisorIds },
+  setFetchParams,
+  isLoading,
+  states,
+  asignees,
+  supervisors,
+}) => {
   const [filterInputValues, setFilterInputValues] = useState({
     search: Search,
+    stateIds: StateIds,
+    assigneeIds: AssigneeIds,
+    supervisorIds: SupervisorIds,
   });
+  const shouldCleanFiltersRef = useRef(false);
+
+  const cleanInputValues = () => {
+    shouldCleanFiltersRef.current = true;
+    setFilterInputValues({
+      search: '',
+      stateIds: null,
+      assigneeIds: null,
+      supervisorIds: null,
+    });
+  };
 
   const handleApplyFilterValues = () => {
     setFetchParams(prev => ({
@@ -25,19 +36,26 @@ export const SurveysListSidebar = (
       Search: filterInputValues.search,
       IsNotEmptyOnly: filterInputValues.isNotEmptyOnly,
       CountFrom: filterInputValues.countFrom,
-      CountTo: filterInputValues.countTo
-    }))
-  }
+      CountTo: filterInputValues.countTo,
+    }));
+  };
+
+  useEffect(() => {
+    if (!shouldCleanFiltersRef.current) return;
+
+    handleApplyFilterValues();
+    shouldCleanFiltersRef.current = false;
+  }, [filterInputValues]); //eslint-disable-line
 
   return (
     <>
       <Input
         value={filterInputValues.search}
         label="Search by email or name"
-        handleChange={
-          e => setFilterInputValues(prev => ({
-            ...prev, 
-            search: e.target.value
+        handleChange={e =>
+          setFilterInputValues(prev => ({
+            ...prev,
+            search: e.target.value,
           }))
         }
         type="search"
@@ -45,24 +63,37 @@ export const SurveysListSidebar = (
         disabled={isLoading}
       />
 
-      <h3 className={classes.label}>Role</h3>
-
       <Dropdown
-        title="Developer"
-        options={[]}
-        keys={[]}
-        onSelect={() => {}}
-        disabled={false}
+        label="State"
+        title="Choose state..."
+        options={states}
+        keys={filterInputValues.stateIds}
+        onSelect={keys =>
+          setFilterInputValues(prev => ({ ...prev, stateIds: keys }))
+        }
+        multiselect
       />
 
-      <h3 className={classes.label}>Level</h3>
+      <Dropdown
+        label="Assignee"
+        title="Choose assignee..."
+        options={asignees}
+        keys={filterInputValues.assigneeIds}
+        onSelect={keys =>
+          setFilterInputValues(prev => ({ ...prev, assigneeIds: keys }))
+        }
+        multiselect
+      />
 
       <Dropdown
-        title="Senior"
-        options={[]}
-        keys={[]}
-        onSelect={() => {}}
-        disabled={false}
+        label="Supervisor"
+        title="Choose supervisor..."
+        options={supervisors}
+        keys={filterInputValues.supervisorIds}
+        onSelect={keys =>
+          setFilterInputValues(prev => ({ ...prev, supervisorIds: keys }))
+        }
+        multiselect
       />
 
       <Button
@@ -76,15 +107,15 @@ export const SurveysListSidebar = (
 
       <Button
         width="width"
-        onClick={onCleanFilterValues}
+        onClick={cleanInputValues}
         size="medium"
         disabled={isLoading}
       >
         Clean Filters
       </Button>
     </>
-  )
-}
+  );
+};
 
 SurveysListSidebar.propTypes = {
   fetchParams: PropTypes.shape({
@@ -95,5 +126,5 @@ SurveysListSidebar.propTypes = {
   }).isRequired,
   setFetchParams: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
-  onCleanFilterValues: PropTypes.func.isRequired,
-}
+  asignees: PropTypes.array,
+};

@@ -1,4 +1,4 @@
-import { BASE_API_URL } from "../../api/const";
+import { BASE_API_URL } from '../../api/const';
 
 export const ROLES_LIST_QUERY_KEY = 'rolesList';
 export const QUERY_URL = `${BASE_API_URL}/roles`;
@@ -6,26 +6,26 @@ export const LIST_COLUMNS = [
   {
     id: 'title',
     name: 'Title',
-    sort: true
+    sort: true,
   },
   {
     id: 'isPrimary',
     name: 'isPrimary',
-    sort: true
+    sort: true,
   },
   {
     id: 'usersCount',
     name: 'User count',
-    sort: false
-  }
+    sort: false,
+  },
 ];
 
 export const DEFAULT_FETCH_PARAMS = {
   Search: '',
   IsPrimary: null,
-  UsersCountFrom: '1',
-  UsersCountTo: '100',
+  UsersCountFrom: '',
+  UsersCountTo: '',
   Take: 20,
   TitleSortOrder: 1,
-  IsPrimarySortOrder: 1,
-}
+  IsPrimarySortOrder: null,
+};
