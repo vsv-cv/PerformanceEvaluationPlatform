@@ -1,21 +1,21 @@
-import React, { useRef, useState, useCallback } from 'react'
-import PropTypes from 'prop-types'
+import React, { useRef, useState, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { DropdownPortal } from './DropdownPortal';
 import { DropdownContent } from './DropdownContent';
 import { DropdownButton } from './DropdownButton';
+import classes from './styles/index.module.scss';
 
-export const Dropdown = (
-  {
-    title,
-    options,
-    keys,
-    onSelect,
-    disabled,
-    multiselect = false
-  }
-) => {
+export const Dropdown = ({
+  label,
+  title,
+  options,
+  keys,
+  onSelect,
+  disabled,
+  multiselect = false,
+}) => {
   if (!multiselect && keys.length > 1) {
-    throw new Error('Expected only one selected option in dropdown')
+    throw new Error('Expected only one selected option in dropdown');
   }
 
   const [isOpen, setIsOpen] = useState(false);
@@ -26,10 +26,10 @@ export const Dropdown = (
       return;
     }
     const portalContainer = document.createElement('div');
-    portalContainer.className='dropdown-portal';
+    portalContainer.className = 'dropdown-portal';
 
     document.body.appendChild(portalContainer);
-  }
+  };
 
   const handleDropdownButtonClick = e => {
     if (disabled) {
@@ -39,21 +39,23 @@ export const Dropdown = (
     createPortalContainer();
 
     setIsOpen(true);
-  }
+  };
 
   const handleClose = useCallback(() => {
     document.querySelector('.dropdown-portal')?.remove();
     setIsOpen(false);
-  }, [setIsOpen])
+  }, [setIsOpen]);
 
   return (
-    <>
+    <div>
+      {label && <label className={classes.label}>{label}</label>}
+
       <DropdownButton
         ref={{
           dropdownButtonRef,
         }}
-
         {...{
+          label,
           isOpen,
           title,
           disabled,
@@ -63,7 +65,7 @@ export const Dropdown = (
         }}
       />
 
-      { isOpen &&
+      {isOpen && (
         <DropdownPortal>
           <DropdownContent
             options={options}
@@ -74,21 +76,24 @@ export const Dropdown = (
             multiselect={multiselect}
           />
         </DropdownPortal>
-      }
-    </>
-  )
-}
+      )}
+    </div>
+  );
+};
 
 Dropdown.propTypes = {
-  title: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  title: PropTypes.string,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       text: PropTypes.string,
     })
-  ).isRequired,
-  keys: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])).isRequired,
+  ),
+  keys: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  ),
   onSelect: PropTypes.func.isRequired,
-  disabled: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool,
   multiselect: PropTypes.bool,
-}
+};

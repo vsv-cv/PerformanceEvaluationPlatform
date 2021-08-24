@@ -1,20 +1,13 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import classes from './checkbox.module.scss'
+import React from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import classes from './checkbox.module.scss';
 
-export const Checkbox = (
-  {
-    label,
-    checked = false,
-    onChange,
-    disabled,
-  }
-) => {
+export const Checkbox = ({ label, checked = false, onChange, disabled }) => {
   return (
     <label
       className={classNames(classes.container, {
-        [classes.container_disabled]: disabled
+        [classes.container_disabled]: disabled,
       })}
     >
       {label}
@@ -26,12 +19,12 @@ export const Checkbox = (
       />
       <span className={classes.checkmark} />
     </label>
-  )
-}
+  );
+};
 
 Checkbox.propTypes = {
   label: PropTypes.string.isRequired,
   checked: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
-  disabled: PropTypes.bool
-}
+  disabled: PropTypes.bool,
+};

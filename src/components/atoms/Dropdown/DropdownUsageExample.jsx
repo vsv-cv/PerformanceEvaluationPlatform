@@ -1,4 +1,4 @@
-import { Dropdown } from './index'
+import { Dropdown } from './index';
 import { useState } from 'react';
 
 export const DropdownUsageExample = () => {
@@ -30,19 +30,16 @@ export const DropdownUsageExample = () => {
       {
         key: '6',
         text: 'Bar',
-      }
+      },
     ],
     onSelect: keys => setKeys(keys),
     disabled: false,
-    multiselect: true
-  }
+    multiselect: true,
+  };
 
   return (
-    <div style={{width: '300px'}}>
-      <Dropdown
-        keys={keys}
-        {...fakeDropdownProps}
-      />
+    <div style={{ width: '300px' }}>
+      <Dropdown keys={keys} {...fakeDropdownProps} />
     </div>
   );
-}
+};

@@ -1,7 +1,7 @@
-import React from "react";
-import { QueryClient, QueryClientProvider } from 'react-query'
-import { ReactQueryDevtools } from 'react-query/devtools'
-import { FieldGroupsList } from "./components/molecules/FieldsGroupsList";
+import React from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import { FieldGroupsList } from './components/molecules/FieldsGroupsList/FieldGroupsList';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -9,7 +9,7 @@ const queryClient = new QueryClient({
       refetchOnWindowFocus: false,
     },
   },
-})
+});
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
       <FieldGroupsList />
       <ReactQueryDevtools initialIsOpen />
     </QueryClientProvider>
-  )
+  );
 }
 
 export default App;

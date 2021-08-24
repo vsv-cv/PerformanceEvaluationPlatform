@@ -1,19 +1,22 @@
 import React, { useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Input } from '../../atoms/Input/Input';
-import { Checkbox } from '../../atoms/Checkbox';
+import { Dropdown } from '../../atoms/Dropdown';
 import { Button } from '../../atoms/Button';
 
-export const FieldGroupsListSidebar = ({
-  fetchParams: { Search, IsNotEmptyOnly, CountFrom, CountTo },
+export const SurveysListSidebar = ({
+  fetchParams: { Search, StateIds, AssigneeIds, SupervisorIds },
   setFetchParams,
   isLoading,
+  states,
+  asignees,
+  supervisors,
 }) => {
   const [filterInputValues, setFilterInputValues] = useState({
     search: Search,
-    isNotEmptyOnly: IsNotEmptyOnly,
-    countFrom: CountFrom,
-    countTo: CountTo,
+    stateIds: StateIds,
+    assigneeIds: AssigneeIds,
+    supervisorIds: SupervisorIds,
   });
   const shouldCleanFiltersRef = useRef(false);
 
@@ -21,9 +24,9 @@ export const FieldGroupsListSidebar = ({
     shouldCleanFiltersRef.current = true;
     setFilterInputValues({
       search: '',
-      isNotEmptyOnly: false,
-      countFrom: '',
-      countTo: '',
+      stateIds: null,
+      assigneeIds: null,
+      supervisorIds: null,
     });
   };
 
@@ -31,7 +34,7 @@ export const FieldGroupsListSidebar = ({
     setFetchParams(prev => ({
       ...prev,
       Search: filterInputValues.search,
-      IsNotEmptyOnly: filterInputValues.isNotEmptyOnly || null,
+      IsNotEmptyOnly: filterInputValues.isNotEmptyOnly,
       CountFrom: filterInputValues.countFrom,
       CountTo: filterInputValues.countTo,
     }));
@@ -48,7 +51,7 @@ export const FieldGroupsListSidebar = ({
     <>
       <Input
         value={filterInputValues.search}
-        label="Search by title"
+        label="Search by email or name"
         handleChange={e =>
           setFilterInputValues(prev => ({
             ...prev,
@@ -60,44 +63,37 @@ export const FieldGroupsListSidebar = ({
         disabled={isLoading}
       />
 
-      <Checkbox
-        label="Only not empty"
-        checked={filterInputValues.isNotEmptyOnly}
-        onChange={() =>
-          setFilterInputValues(prev => ({
-            ...prev,
-            isNotEmptyOnly: !prev.isNotEmptyOnly,
-          }))
+      <Dropdown
+        label="State"
+        title="Choose state..."
+        options={states}
+        keys={filterInputValues.stateIds}
+        onSelect={keys =>
+          setFilterInputValues(prev => ({ ...prev, stateIds: keys }))
         }
-        disabled={isLoading}
+        multiselect
       />
 
-      <Input
-        value={filterInputValues.countFrom}
-        label="Count from"
-        handleChange={e =>
-          setFilterInputValues(prev => ({
-            ...prev,
-            countFrom: e.target.value,
-          }))
+      <Dropdown
+        label="Assignee"
+        title="Choose assignee..."
+        options={asignees}
+        keys={filterInputValues.assigneeIds}
+        onSelect={keys =>
+          setFilterInputValues(prev => ({ ...prev, assigneeIds: keys }))
         }
-        type="number"
-        name="UsersCountFrom"
-        disabled={isLoading}
+        multiselect
       />
 
-      <Input
-        value={filterInputValues.countTo}
-        label="Count to"
-        handleChange={e =>
-          setFilterInputValues(prev => ({
-            ...prev,
-            countTo: e.target.value,
-          }))
+      <Dropdown
+        label="Supervisor"
+        title="Choose supervisor..."
+        options={supervisors}
+        keys={filterInputValues.supervisorIds}
+        onSelect={keys =>
+          setFilterInputValues(prev => ({ ...prev, supervisorIds: keys }))
         }
-        type="number"
-        name="UsersCountTo"
-        disabled={isLoading}
+        multiselect
       />
 
       <Button
@@ -121,7 +117,7 @@ export const FieldGroupsListSidebar = ({
   );
 };
 
-FieldGroupsListSidebar.propTypes = {
+SurveysListSidebar.propTypes = {
   fetchParams: PropTypes.shape({
     Search: PropTypes.string,
     IsPrimary: PropTypes.bool,
@@ -130,4 +126,5 @@ FieldGroupsListSidebar.propTypes = {
   }).isRequired,
   setFetchParams: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
+  asignees: PropTypes.array,
 };
