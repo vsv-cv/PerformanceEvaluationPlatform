@@ -6,12 +6,12 @@ import { Button } from '../../atoms/Button';
 import { Datepicker } from '../../atoms/Datepicker';
 import { formatDateToIsoDate } from '../../../utils';
 
-export const SurveysListSidebar = ({
+export const FormsListSidebar = ({
   fetchParams: {
     Search,
     StateIds,
     AssigneeIds,
-    SupervisorIds,
+    ReviewersIds,
     AppointmentDateFrom,
     AppointmentDateTo,
   },
@@ -25,7 +25,7 @@ export const SurveysListSidebar = ({
     search: Search,
     stateIds: StateIds,
     assigneeIds: AssigneeIds,
-    supervisorIds: SupervisorIds,
+    reviewersIds: ReviewersIds,
     appointmentDateFrom: AppointmentDateFrom,
     appointmentDateTo: AppointmentDateTo,
   });
@@ -37,7 +37,7 @@ export const SurveysListSidebar = ({
       search: '',
       stateIds: null,
       assigneeIds: null,
-      supervisorIds: null,
+      reviewersIds: null,
       appointmentDateFrom: '',
       appointmentDateTo: '',
     });
@@ -49,7 +49,7 @@ export const SurveysListSidebar = ({
       Search: filterInputValues.search,
       StateIds: filterInputValues.stateIds,
       AssigneeIds: filterInputValues.assigneeIds,
-      SupervisorIds: filterInputValues.supervisorIds,
+      ReviewersIds: filterInputValues.reviewersIds,
       AppointmentDateFrom: filterInputValues.appointmentDateFrom,
       AppointmentDateTo: filterInputValues.appointmentDateTo,
     }));
@@ -66,7 +66,7 @@ export const SurveysListSidebar = ({
     <>
       <Input
         value={filterInputValues.search}
-        label="Search by email or name"
+        label="Search by Form name, Assignee or Reviewer"
         handleChange={e =>
           setFilterInputValues(prev => ({
             ...prev,
@@ -104,9 +104,9 @@ export const SurveysListSidebar = ({
         label="Supervisor"
         title="Choose a supervisor..."
         options={supervisors}
-        keys={filterInputValues.supervisorIds}
+        keys={filterInputValues.reviewersIds}
         onSelect={keys =>
-          setFilterInputValues(prev => ({ ...prev, supervisorIds: keys }))
+          setFilterInputValues(prev => ({ ...prev, reviewersIds: keys }))
         }
         multiselect
       />
@@ -164,7 +164,7 @@ export const SurveysListSidebar = ({
   );
 };
 
-SurveysListSidebar.propTypes = {
+FormsListSidebar.propTypes = {
   fetchParams: PropTypes.shape({
     Search: PropTypes.string,
     IsPrimary: PropTypes.bool,
