@@ -1,1 +1,1 @@
-export { SurveysList } from './SurveysList'
+export { SurveysList } from './SurveysList';
