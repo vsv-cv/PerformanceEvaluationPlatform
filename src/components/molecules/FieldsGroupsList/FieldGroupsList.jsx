@@ -1,84 +1,79 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import {
-  ROLES_LIST_QUERY_KEY,
+  FIELD_GROUPS_LIST_QUERY_KEY,
+  FIELD_GROUPS_LIST_QUERY_URL,
   LIST_COLUMNS,
-  DEFAULT_FETCH_PARAMS
-} from './const'
-import { formatData, getRows } from './utils'
-import { ListWithFilters } from '../../templates/ListWithFilters'
-import { Button } from '../../atoms/Button'
-import List from '../../atoms/List'
-import { FieldGroupsListSidebar } from './FieldGroupsListSidebar'
-import { useDataQuery } from './hooks/useDataQuery'
+  DEFAULT_FETCH_PARAMS,
+} from './const';
+import { formatData } from './utils';
+import { getRows, getSortingParam } from '../../../utils';
+import { ListWithFilters } from '../../templates/ListWithFilters';
+import { Button } from '../../atoms/Button';
+import List from '../../atoms/List';
+import { FieldGroupsListSidebar } from './FieldGroupsListSidebar';
+import { useInfiniteQueryData } from '../../../hooks/useInfiniteQueryData';
 
 export const FieldGroupsList = () => {
   const [fetchParams, setFetchParams] = useState(DEFAULT_FETCH_PARAMS);
-  const [sortingParams, setSortingParams] = useState({});
+  const [sortingParams, setSortingParams] = useState({
+    columnId: 'title',
+    type: 'up',
+  });
 
-  const {
-    data,
-    isLoading,
-    isFetching,
-    refetch,
-    fetchNextPage
-  } = useDataQuery(fetchParams);
+  const { data, isLoading, isFetching, refetch, fetchNextPage } =
+    useInfiniteQueryData(
+      FIELD_GROUPS_LIST_QUERY_KEY,
+      FIELD_GROUPS_LIST_QUERY_URL,
+      fetchParams
+    );
 
   const formattedData = formatData(data);
   const listRows = getRows(formattedData);
 
   const handleCleanFilterValues = () => {
     setFetchParams(DEFAULT_FETCH_PARAMS);
-  }
-  const handleClickOnSort = ({ columnId, type }) => {
-    const sortingConfig = {
-      'title': 'TitleSetOrder',
-      'fieldCount': 'FieldCountSetOrder',
-    }
-
-    const sortingType = sortingConfig[columnId];
-
+  };
+  const handleClickOnSort = sortingConfig => {
     setFetchParams(prev => ({
       ...prev,
-      [sortingType]: prev[sortingType] === 1 ? 2 : 1,
-    }))
+      TitleSetOrder: getSortingParam(sortingConfig, 'title'),
+      FieldCountSetOrder: getSortingParam(sortingConfig, 'fieldCount'),
+    }));
 
-    setSortingParams({ columnId, type});
-  }
+    setSortingParams(sortingConfig);
+  };
 
   useEffect(() => {
-    refetch(ROLES_LIST_QUERY_KEY);
+    refetch(FIELD_GROUPS_LIST_QUERY_KEY);
   }, [fetchParams]); // eslint-disable-line
 
-  return isLoading
-    ? 'Loading...'
-    : (
-      <ListWithFilters
-        title="Field Groups"
-        button={
-          <Button
-            size="large"
-            onClick={()=> console.log('Click on add role!')}
-          >
-            add
-          </Button>
-        }
-        list={
-          <List
-            columns={LIST_COLUMNS}
-            rows={listRows}
-            onScrollToGetNewData={fetchNextPage}
-            onSortChange={handleClickOnSort}
-            sortedColumn={sortingParams}
-          />
-        }
-        sidebar={
-          <FieldGroupsListSidebar
-            fetchParams={fetchParams}
-            setFetchParams={setFetchParams}
-            isLoading={isFetching}
-            onCleanFilterValues={handleCleanFilterValues}
-          />
-        }
-      />
+  return isLoading ? (
+    'Loading...'
+  ) : (
+    <ListWithFilters
+      title="Field Groups"
+      button={
+        <Button size="large" onClick={() => console.log('Click on add role!')}>
+          add
+        </Button>
+      }
+      list={
+        <List
+          columns={LIST_COLUMNS}
+          rows={listRows}
+          onScrollToGetNewData={fetchNextPage}
+          onSortChange={handleClickOnSort}
+          sortedColumn={sortingParams}
+        />
+      }
+      sidebar={
+        <FieldGroupsListSidebar
+          fetchParams={fetchParams}
+          setFetchParams={setFetchParams}
+          isLoading={isFetching}
+          onCleanFilterValues={handleCleanFilterValues}
+        />
+      }
+    />
   );
-}
+};

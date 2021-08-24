@@ -1,1 +1,1 @@
-export { FieldGroupsList } from './FieldGroupsList'
+export { FieldGroupsList } from './FieldGroupsList';

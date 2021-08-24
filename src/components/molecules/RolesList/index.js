@@ -1,1 +1,1 @@
-export { RolesList } from './RolesList'
+export { RolesList } from './RolesList';

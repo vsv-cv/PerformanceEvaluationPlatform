@@ -1,26 +1,17 @@
 export const getSelectedOptionsTitle = ({ options, keys }) => {
-  const selectedOptions = [];
-
-  options.forEach(option => {
-    if (keys.includes(option.key)) {
-      const title = selectedOptions.length
-        ? option.text.toLowerCase()
-        : option.text;
-      selectedOptions.push(title);
-    }
-  });
-
-  return selectedOptions.join(', ');
-}
-
-const getDropdownContentMaxHeight = bottom => {
-  return Math.min(window.innerHeight - bottom - 58, 250);
+  return options
+    ?.reduce((acc, option) => {
+      return keys?.includes(option.key) ? [...acc, option.text] : acc;
+    }, [])
+    .join(', ');
 };
 
 const getElementFontSize = element => {
-  const style = window.getComputedStyle(element, null).getPropertyValue('font-size');
-  const fontSize = parseFloat(style); 
-  return `${fontSize}px`
+  const style = window
+    .getComputedStyle(element, null)
+    .getPropertyValue('font-size');
+  const fontSize = parseFloat(style);
+  return `${fontSize}px`;
 };
 
 const getDropdownContentMaxWidth = left => {
@@ -31,19 +22,25 @@ const getDropdownContentOffsetTop = ({ top, height }) => {
   return top + height + 4;
 };
 
+const getTopScroll = () =>
+  window.pageYOffset !== undefined
+    ? window.pageYOffset
+    : (document.documentElement || document.body.parentNode || document.body)
+        .scrollTop;
+
 export const getDropdownContentStyle = callingComponent => {
-  const { width, height, top, left, bottom } = callingComponent.getBoundingClientRect();
+  const { width, height, top, left } = callingComponent.getBoundingClientRect();
   return {
     minWidth: width,
-    maxWidth: getDropdownContentMaxWidth(left),maxHeight: getDropdownContentMaxHeight(bottom),
-    top: getDropdownContentOffsetTop({ top, height }),
+    maxWidth: getDropdownContentMaxWidth(left),
+    top: getDropdownContentOffsetTop({ top, height }) + getTopScroll(),
     fontSize: getElementFontSize(callingComponent),
-    left
-  }
-}
+    left,
+  };
+};
 
 export const removeValueFromArray = (value, array) => {
-  return array.filter(element => { 
-    return element !== value; 
-});
-}
+  return array.filter(element => {
+    return element !== value;
+  });
+};

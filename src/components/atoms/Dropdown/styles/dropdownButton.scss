@@ -10,15 +10,16 @@
   border-radius: 0.25em .25em 0 0;
   font-size: inherit;
 
-  &_disabled {
-    cursor: not-allowed;
+  &_withLabel {
+    margin-top: 0.6em;
   }
 
-  &:hover &__underline:not(.dropdown__underline_disabled) {
+  &:hover &__underline {
     opacity: 1;
   }
 
   &__title {
+    min-height: 1em;
     padding: 0.75em;
     padding-right: 2em;
     color: rgba(0, 0, 0, 0.6);
@@ -30,10 +31,6 @@
 
     &_selected {
       color: #000;
-    }
-
-    &_disabled {
-      color: rgba(0, 0, 0, 0.38);
     }
   }
 
@@ -50,10 +47,6 @@
       height: 1px;
       width: 100%;
       background-color: rgba(0, 0, 0, 0.42);
-    }
-
-    &_disabled::before {
-      background-color: rgba(0, 0, 0, 0.15);
     }
   }
 
@@ -86,8 +79,25 @@
   &_open {
     transform: rotate(0.5turn);
   }
+}
 
-  &_disabled {
+// disabled styles
+.dropdown_disabled {
+  cursor: not-allowed;
+
+  & .dropdown__underline {
+    opacity: 0 !important;
+  }
+
+  & .dropdown__title {
     color: rgba(0, 0, 0, 0.38);
+  }
+
+  & .arrowIcon {
+    color: rgba(0, 0, 0, 0.38);
+  }
+
+  & .underlineWrapper {
+    background-color: rgba(0, 0, 0, 0.15);
   }
 }
