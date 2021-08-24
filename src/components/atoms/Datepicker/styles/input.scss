@@ -1,0 +1,88 @@
+.inputWrapper {
+  position: relative;
+
+  &:hover .underline {
+    opacity: 1;
+  }
+}
+
+.input {
+  min-height: 1em;
+  padding: 0.75em;
+  padding-right: 2.3em;
+  font: inherit;
+  background: transparent;
+  border: none;
+  outline: none;
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  vertical-align: bottom;
+  text-align: inherit;
+  box-sizing: border-box;
+  border-radius: 0.25em 0.25em 0 0;
+  background-color: rgba(0, 0, 0, 0.04);
+
+  &::placeholder {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.underlineWrapper {
+  position: absolute;
+  width: 100%;
+  pointer-events: none;
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    height: 1px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.42);
+  }
+}
+
+.underline {
+  opacity: 0;
+  transition: opacity 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+  bottom: 0;
+  height: 2px;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  background-color: rgba(0, 0, 0, 0.87);
+}
+
+.calendarSvgIcon {
+  top: calc(50% - 12px);
+  color: rgba(0, 0, 0, 0.54);
+  right: 0;
+  position: absolute;
+  pointer-events: none;
+  fill: currentColor;
+  width: 1.5em;
+  height: 1em;
+  display: inline-block;
+  font-size: 1.5rem;
+  user-select: none;
+}
+
+.inputWrapper[disabled] {
+  & input {
+    cursor: not-allowed;
+  }
+
+  & input::placeholder,
+  & .calendarSvgIcon {
+    color: rgba(0, 0, 0, 0.38);
+  }
+
+  & .underline {
+    opacity: 0 !important;
+  }
+}

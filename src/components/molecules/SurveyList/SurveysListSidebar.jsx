@@ -3,9 +3,18 @@ import PropTypes from 'prop-types';
 import { Input } from '../../atoms/Input/Input';
 import { Dropdown } from '../../atoms/Dropdown';
 import { Button } from '../../atoms/Button';
+import { Datepicker } from '../../atoms/Datepicker';
+import { formatDateToIsoDate } from '../../../utils';
 
 export const SurveysListSidebar = ({
-  fetchParams: { Search, StateIds, AssigneeIds, SupervisorIds },
+  fetchParams: {
+    Search,
+    StateIds,
+    AssigneeIds,
+    SupervisorIds,
+    AppointmentDateFrom,
+    AppointmentDateTo,
+  },
   setFetchParams,
   isLoading,
   states,
@@ -17,6 +26,8 @@ export const SurveysListSidebar = ({
     stateIds: StateIds,
     assigneeIds: AssigneeIds,
     supervisorIds: SupervisorIds,
+    appointmentDateFrom: AppointmentDateFrom,
+    appointmentDateTo: AppointmentDateTo,
   });
   const shouldCleanFiltersRef = useRef(false);
 
@@ -27,6 +38,8 @@ export const SurveysListSidebar = ({
       stateIds: null,
       assigneeIds: null,
       supervisorIds: null,
+      appointmentDateFrom: '',
+      appointmentDateTo: '',
     });
   };
 
@@ -37,6 +50,8 @@ export const SurveysListSidebar = ({
       IsNotEmptyOnly: filterInputValues.isNotEmptyOnly,
       CountFrom: filterInputValues.countFrom,
       CountTo: filterInputValues.countTo,
+      AppointmentDateFrom: filterInputValues.appointmentDateFrom,
+      AppointmentDateTo: filterInputValues.appointmentDateTo,
     }));
   };
 
@@ -65,7 +80,7 @@ export const SurveysListSidebar = ({
 
       <Dropdown
         label="State"
-        title="Choose state..."
+        title="Choose a state..."
         options={states}
         keys={filterInputValues.stateIds}
         onSelect={keys =>
@@ -76,7 +91,7 @@ export const SurveysListSidebar = ({
 
       <Dropdown
         label="Assignee"
-        title="Choose assignee..."
+        title="Choose an assignee..."
         options={asignees}
         keys={filterInputValues.assigneeIds}
         onSelect={keys =>
@@ -87,13 +102,45 @@ export const SurveysListSidebar = ({
 
       <Dropdown
         label="Supervisor"
-        title="Choose supervisor..."
+        title="Choose a supervisor..."
         options={supervisors}
         keys={filterInputValues.supervisorIds}
         onSelect={keys =>
           setFilterInputValues(prev => ({ ...prev, supervisorIds: keys }))
         }
         multiselect
+      />
+
+      <Datepicker
+        label="Appointment date from"
+        placeholderText="Choose an appointment date from..."
+        selected={
+          filterInputValues.appointmentDateFrom
+            ? new Date(filterInputValues.appointmentDateFrom)
+            : null
+        }
+        onChange={date =>
+          setFilterInputValues(prev => ({
+            ...prev,
+            appointmentDateFrom: formatDateToIsoDate(date),
+          }))
+        }
+      />
+
+      <Datepicker
+        label="Appointment date to"
+        placeholderText="Choose an appointment date to..."
+        selected={
+          filterInputValues.appointmentDateTo
+            ? new Date(filterInputValues.appointmentDateTo)
+            : null
+        }
+        onChange={date =>
+          setFilterInputValues(prev => ({
+            ...prev,
+            appointmentDateTo: formatDateToIsoDate(date),
+          }))
+        }
       />
 
       <Button

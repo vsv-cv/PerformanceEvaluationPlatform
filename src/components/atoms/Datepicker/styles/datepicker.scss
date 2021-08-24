@@ -1,0 +1,8 @@
+.label {
+  font-size: 1.2em;
+  font-weight: 700;
+}
+
+.wrapper > *:not(:first-child) {
+  margin-top: 0.6em;
+}

@@ -46,7 +46,9 @@ const DropdownButtonInner = (
   );
 };
 
-DropdownButtonInner.propTypes = {
+export const DropdownButton = React.forwardRef(DropdownButtonInner);
+
+DropdownButton.propTypes = {
   title: PropTypes.string,
   options: PropTypes.arrayOf(
     PropTypes.shape({
@@ -60,5 +62,3 @@ DropdownButtonInner.propTypes = {
   disabled: PropTypes.bool,
   handleDropdownButtonClick: PropTypes.func.isRequired,
 };
-
-export const DropdownButton = React.forwardRef(DropdownButtonInner);
