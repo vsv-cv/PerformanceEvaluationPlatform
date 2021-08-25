@@ -1,7 +1,10 @@
-import React from 'react';
+import React from "react";
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { SurveysList } from './components/molecules/SurveyList';
+import {FieldGroupsList} from './components/molecules/FieldsGroupsList';
+import { FormTemplatesList } from "./components/molecules/FormTemplatesList/FormTemplatesList";
+import {SurveysList} from './components/molecules/SurveyList';
+import { TeamsList } from "./components/molecules/TeamsList/TeamsList";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -14,7 +17,10 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <SurveysList />
+      <FieldGroupsList />
+      <FormTemplatesList/>
+      <SurveysList/>
+      <TeamsList/>
       <ReactQueryDevtools initialIsOpen />
     </QueryClientProvider>
   );
