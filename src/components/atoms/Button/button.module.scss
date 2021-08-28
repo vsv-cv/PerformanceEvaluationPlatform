@@ -7,7 +7,7 @@ $success-hover: #018f49;
 $grey-light-color: #ededed;
 $grey-darc-color: #919191;
 $withe-color: #fff;
-$base-font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+$base-font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
 
 .button {
   -webkit-appearance: none;
@@ -15,9 +15,9 @@ $base-font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   outline: 0;
   box-sizing: border-box;
   transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
-  box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
-  border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   font-weight: 500;
   line-height: 1.75;
   border-radius: 4px;
@@ -46,14 +46,14 @@ $base-font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 
 /* Form Icon Button */
 .circleSmall {
-   font-size: 0.8rem;
+  font-size: 0.8rem;
   height: 1.9rem;
   width: 1.9rem;
   border-radius: 50%;
 }
 
 .circleMedium {
-   font-size: 0.875rem;
+  font-size: 0.875rem;
   height: 2.1rem;
   width: 2.1rem;
   border-radius: 50%;
@@ -78,7 +78,7 @@ $base-font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 
 .medium {
   padding: 0.3em 0.7em;
-   font-size: 0.875rem;
+  font-size: 0.875rem;
 }
 
 .large {
@@ -176,4 +176,15 @@ $base-font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   // white-space: nowrap;
   // overflow: hidden;
   // text-indent: -9999px;
+}
+
+.btn_icon {
+  height: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn_icon img {
+  height: 100%;
 }
