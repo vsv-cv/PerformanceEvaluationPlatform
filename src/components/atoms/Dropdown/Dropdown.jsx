@@ -1,4 +1,10 @@
-import React, { useMemo, useRef, useState, useCallback } from 'react';
+import React, {
+  useMemo,
+  useRef,
+  useState,
+  useCallback,
+  useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
 import { DropdownPortal } from './DropdownPortal';
 import { DropdownContent } from './DropdownContent';
@@ -53,6 +59,15 @@ export const Dropdown = ({
     setSearchValue('');
     setIsOpen(false);
   }, [setIsOpen]);
+
+  useEffect(() => {
+    const cleanup = window.addEventListener('keyup', e => {
+      if (e.key === 'Escape' || (keys?.length > 0 && e.key === 'Enter')) {
+        handleClose();
+      }
+    });
+    return cleanup;
+  }, [handleClose, keys]);
 
   return (
     <div>

@@ -10,6 +10,10 @@
   border-radius: 0.25em 0.25em 0 0;
   font-size: inherit;
 
+  &:focus-visible {
+    outline: none;
+  }
+
   &_withLabel {
     margin-top: 0.6em;
   }
