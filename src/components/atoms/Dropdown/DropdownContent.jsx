@@ -11,6 +11,7 @@ export const DropdownContent = ({
   keys,
   onSelect,
   multiselect,
+  setSearchValue,
 }) => {
   const style = getDropdownContentStyle(callingComponent);
 
@@ -27,6 +28,7 @@ export const DropdownContent = ({
     let nextKeys;
 
     if (multiselect) {
+      setSearchValue('');
       nextKeys = manageMultiselectKeys(keys, key);
     } else {
       nextKeys = [key];
@@ -50,19 +52,25 @@ export const DropdownContent = ({
       onClick={() => handleClose()}
     >
       <ul className={classes.content__list}>
-        {options.map(option => {
-          return (
-            <li
-              key={option.key}
-              className={classNames(classes.content__option, {
-                [classes.content__option_selected]: keys?.includes(option.key),
-              })}
-              onClick={e => handleClickOnOption(e, option.key)}
-            >
-              {option.text}
-            </li>
-          );
-        })}
+        {options?.length > 0 ? (
+          options.map(option => {
+            return (
+              <li
+                key={option.key}
+                className={classNames(classes.content__option, {
+                  [classes.content__option_selected]: keys?.includes(
+                    option.key
+                  ),
+                })}
+                onClick={e => handleClickOnOption(e, option.key)}
+              >
+                {option.text}
+              </li>
+            );
+          })
+        ) : (
+          <span className={classes.content_nothingFound}>No items found</span>
+        )}
       </ul>
     </div>
   );
@@ -82,4 +90,5 @@ DropdownContent.propTypes = {
   multiselect: PropTypes.bool,
   handleClose: PropTypes.func.isRequired,
   callingComponent: PropTypes.instanceOf(Element).isRequired,
+  setSearchValue: PropTypes.func,
 };

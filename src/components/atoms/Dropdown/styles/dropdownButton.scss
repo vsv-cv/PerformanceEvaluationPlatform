@@ -7,7 +7,7 @@
   box-sizing: border-box;
   text-align: left;
   border: none;
-  border-radius: 0.25em .25em 0 0;
+  border-radius: 0.25em 0.25em 0 0;
   font-size: inherit;
 
   &_withLabel {
@@ -40,7 +40,7 @@
     pointer-events: none;
 
     &::before {
-      content: "";
+      content: '';
       display: block;
       position: absolute;
       bottom: 0;

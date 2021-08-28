@@ -79,6 +79,7 @@ export const SurveysListSidebar = ({
           setFetchParams(prev => ({ ...prev, AssigneeIds: keys }))
         }
         multiselect
+        hasSearch
       />
 
       <Dropdown
@@ -90,6 +91,7 @@ export const SurveysListSidebar = ({
           setFetchParams(prev => ({ ...prev, SupervisorIds: keys }))
         }
         multiselect
+        hasSearch
       />
 
       <Datepicker
