@@ -8,17 +8,50 @@ import {
 import { Errors } from "./Errors/Errors";
 import { Input } from "./Input"
 import { Toaster } from "./Toaster";
+import { useToastsContext } from './../../hooks/useToastsContext';
 
-const errors = [
-    { id: 1, icon: 'fa fa-user fa-lg fa-fw', message: 'Error', handleClick: true, type: 'error' },
-    { id: 2, icon: 'fa fa-user fa-lg fa-fw', message: 'This is a success toast component', handleClick: true, type: 'info' },
-    { id: 3, icon: 'fa fa-user fa-lg fa-fw', message: '1111111', time: '1000' , type: 'success' },
-    { id: 5, icon: 'fa fa-user fa-lg fa-fw', message: '222222222', time: '1000' , type: 'warning' },
-    { id: 7, icon: 'fa fa-user fa-lg fa-fw', message: '33333333', time: '1000' , type: 'error' },
-    { id: 8, icon: 'fa fa-user fa-lg fa-fw', message: '4444444', time: '2000' , type: 'success' },
-  ]
 
-function InputButtonIconButon() {
+
+let errors = [
+    {
+        id: 1,
+        icon: 'fa fa-user fa-lg fa-fw',
+        message: '11111',
+        time: '1000',
+        type: 'error',
+    },
+    {
+        id: 3,
+        icon: 'fa fa-user fa-lg fa-fw',
+        message: '3333',
+        time: '3000',
+        type: 'success',
+    },
+    {
+        id: 5,
+        icon: 'fa fa-user fa-lg fa-fw',
+        message: '5555',
+        time: '5000',
+        type: 'warning',
+    },
+    {
+        id: 7,
+        icon: 'fa fa-user fa-lg fa-fw',
+        message: '11111',
+        time: '1000',
+        type: 'error',
+    },
+    {
+        id: 8,
+        icon: 'fa fa-user fa-lg fa-fw',
+        message: '111111',
+        handleClick: true,
+        type: 'success',
+    },
+]
+
+function Example() {
+    const { addToast, toastsList, deleteToastOnClick, deleteToastOnSetTime} = useToastsContext();
     const [name, setName] = useState("");
 
     const handleChange = (e) => {
@@ -28,9 +61,13 @@ function InputButtonIconButon() {
 
     return (
         <div className='buttons'>
-            {/* <Toaster toasts={errors} /> */}
+            <Toaster
+                toasts={toastsList}
+                deleteToastOnClick={deleteToastOnClick}
+                deleteToastOnSetTime={deleteToastOnSetTime} 
+            />
             <div>
-                <Button icon="fa fa-user fa-lg fa-fw" iconType size={ButtonSize.SMALL} theme={ButtonTheme.SUCCESS}>
+                <Button  icon="fa fa-user fa-lg fa-fw" iconType size={ButtonSize.SMALL} theme={ButtonTheme.SUCCESS}>
                     Button
                 </Button>
             </div>
@@ -64,10 +101,14 @@ function InputButtonIconButon() {
                 </Button>
             </div>
             <div>
-                <Button className='size' theme={ButtonTheme.PRIMARY}  size={ButtonSize.LARGE} icon="fa fa-user fa-lg fa-fw">Button</Button>
+                <Button onClick={() => addToast({
+                    id: 7,
+                    icon: 'fa fa-user fa-lg fa-fw',
+                    message: '11111',
+                    time: '1000',
+                    type: 'error',
+                })} className='size' theme={ButtonTheme.PRIMARY}  size={ButtonSize.LARGE} icon="fa fa-user fa-lg fa-fw">Button</Button>
             </div>
-            
-           
             <div className='size'>
                 <Input
                     type="number"
@@ -89,7 +130,6 @@ function InputButtonIconButon() {
                     icon="fa fa-user fa-lg fa-fw"
                 />
             </div>
-          
             <div>
                 <Errors errors={errors}/>
             </div>
@@ -97,4 +137,4 @@ function InputButtonIconButon() {
     )
 }
 
-export default InputButtonIconButon;
+export default Example;

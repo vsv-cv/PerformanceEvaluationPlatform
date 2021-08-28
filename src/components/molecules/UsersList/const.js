@@ -1,4 +1,4 @@
-export const USERS_LIST_QUERY_KEY = 'users';
+export const USERS_LIST_QUERY_KEY = 'usersList';
 
 export const DEFAULT_FETCH_PARAMS = {
   NextPEDate: '',

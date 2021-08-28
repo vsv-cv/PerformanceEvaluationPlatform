@@ -13,7 +13,7 @@ export const Toaster = ({
     return (
         <div className={styles.content} >
             {
-                toasts.map(toast =>
+                toasts?.map(toast =>
                     <Toast
                     toast={toast}
                     key={toast.id}

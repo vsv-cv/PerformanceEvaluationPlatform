@@ -8,10 +8,11 @@ import { RolesList } from './components/molecules/RolesList';
 import { FieldGroupsList } from './components/molecules/FieldsGroupsList';
 import { FormsList } from './components/molecules/FormsList';
 import { UsersList } from './components/molecules/UsersList';
-import { TeamsList } from './components/molecules/TeamsList'
+import { TeamsList } from './components/molecules/TeamsList';
 import { ProjectsList } from './components/molecules/ProjectsList';
 import { UsersProvider } from './providers/UsersProvider';
-
+import { ToastsProvider } from './providers/ToastsProvider';
+import Example from './components/atoms/Example';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -26,46 +27,48 @@ const App = () => {
     <Router>
       <QueryClientProvider client={queryClient}>
         <UsersProvider>
-          <Header />
-          <Switch>
-            <Route exact path="/">
-              Home Page
-            </Route>
-            <Route exact path="/projects">
-              <ProjectsList />
-            </Route>
-            <Route exact path="/teams">
-              <TeamsList />
-            </Route>
-            <Route exact path="/users">
-              <UsersList />
-            </Route>
-            <Route exact path="/fields">
-              Fields List
-            </Route>
-            <Route exact path="/deeplinks">
-              Deeplinks List
-            </Route>
-            <Route exact path="/documents">
-              Documents List
-            </Route>
-            <Route exact path="/roles">
-              <RolesList />
-            </Route>
-            <Route exact path="/fieldgroups">
-              <FieldGroupsList />
-            </Route>
-            <Route exact path="/surveys">
-              <SurveysList />
-            </Route>
-            <Route exact path="/forms">
-              <FormsList />
-            </Route>
-            <Route exact path="/formtemplates">
-              Form Templates List
-            </Route>
-            <Route path="/*">404: Page not found.</Route>
-          </Switch>
+          <ToastsProvider>
+            <Header />
+            <Switch>
+              <Route exact path="/">
+                <Example />
+              </Route>
+              <Route exact path="/projects">
+                <ProjectsList />
+              </Route>
+              <Route exact path="/teams">
+                <TeamsList />
+              </Route>
+              <Route exact path="/users">
+                <UsersList />
+              </Route>
+              <Route exact path="/fields">
+                Fields List
+              </Route>
+              <Route exact path="/deeplinks">
+                Deeplinks List
+              </Route>
+              <Route exact path="/documents">
+                Documents List
+              </Route>
+              <Route exact path="/roles">
+                <RolesList />
+              </Route>
+              <Route exact path="/fieldgroups">
+                <FieldGroupsList />
+              </Route>
+              <Route exact path="/surveys">
+                <SurveysList />
+              </Route>
+              <Route exact path="/forms">
+                <FormsList />
+              </Route>
+              <Route exact path="/formtemplates">
+                Form Templates List
+              </Route>
+              <Route path="/*">404: Page not found.</Route>
+            </Switch>
+          </ToastsProvider>
         </UsersProvider>
         <ReactQueryDevtools initialIsOpen />
       </QueryClientProvider>
