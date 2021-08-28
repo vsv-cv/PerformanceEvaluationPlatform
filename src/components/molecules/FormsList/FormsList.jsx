@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   FORMS_STATES_QUERY_KEY,
   FORMS_STATES_QUERY_URL,
@@ -7,7 +7,7 @@ import {
   LIST_COLUMNS,
   DEFAULT_FETCH_PARAMS,
 } from './const';
-import { formatData, getAssignees, getSupervisors } from './utils';
+import { formatData } from './utils';
 import { getSortingParam, getRows } from '../../../utils';
 import { ListWithFilters } from '../../templates/ListWithFilters';
 import { Button } from '../../atoms/Button';
@@ -39,10 +39,12 @@ export const FormsList = () => {
       fetchParams
     );
 
+  const refetchData = useCallback(() => {
+    refetch(FORMS_LIST_QUERY_KEY);
+  }, [refetch]);
+
   const formattedData = formatData(data);
   const listRows = getRows(formattedData);
-  const asignees = getAssignees(formattedData);
-  const supervisors = getSupervisors(formattedData);
 
   const handleClickOnSort = sortingConfig => {
     setFetchParams(prev => ({
@@ -50,13 +52,9 @@ export const FormsList = () => {
       FormNameSortOrder: getSortingParam(sortingConfig, 'formName'),
       AssigneeSortOrder: getSortingParam(sortingConfig, 'assignee'),
     }));
-
     setSortingParams(sortingConfig);
+    setTimeout(refetchData);
   };
-
-  useEffect(() => {
-    refetch(FORMS_LIST_QUERY_KEY);
-  }, [fetchParams]); // eslint-disable-line
 
   return isLoading ? (
     'Loading...'
@@ -84,8 +82,7 @@ export const FormsList = () => {
           setFetchParams={setFetchParams}
           isLoading={isLoading || isFetching}
           states={states}
-          asignees={asignees}
-          supervisors={supervisors}
+          refetchData={refetchData}
         />
       }
     />

@@ -1,20 +1,20 @@
-import React from 'react'
-import classNames from 'classnames'
-import PropTypes from 'prop-types'
+import React from 'react';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
-import styles from './button.module.scss'
+import styles from './button.module.scss';
 
 export const ButtonType = {
   RESET: 'reset',
   BUTTON: 'button',
   SUBMIT: 'submit',
-}
+};
 
 export const ButtonTheme = {
   SUCCESS: 'success',
   PRIMARY: 'primary',
   SECONDARY: 'secondary',
-}
+};
 
 export const ButtonSize = {
   SMALL: 'small',
@@ -35,12 +35,12 @@ export const Button = ({
   fullwidth,
   className,
 }) => {
-
   const sizeType = {
-    'small': iconType ? 'circleSmall' : 'small',
-    'medium': iconType ? 'circleMedium' : 'medium',
-    'large': iconType ? 'circleLarge' : 'large',
-  }
+    small: iconType ? 'circleSmall' : 'small',
+    medium: iconType ? 'circleMedium' : 'medium',
+    large: iconType ? 'circleLarge' : 'large',
+  };
+
 
   const classProps = classNames(styles.button, styles[theme], styles[sizeType[size]], {
     [styles.fullwidth]: fullwidth
@@ -53,8 +53,8 @@ export const Button = ({
         {!iconType && children}
       </button>
     </>
-  )
-}
+  );
+};
 
 Button.propTypes = {
   icon: PropTypes.string,
@@ -67,7 +67,7 @@ Button.propTypes = {
   children: PropTypes.string,
   className: PropTypes.string,
   onClick: PropTypes.func.isRequired,
-}
+};
 
 Button.defaultProps = {
   icon: '',
