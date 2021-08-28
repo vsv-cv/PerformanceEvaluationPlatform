@@ -7,7 +7,7 @@ import {
   LIST_COLUMNS,
   DEFAULT_FETCH_PARAMS,
 } from './const';
-import { formatData, getAssignees, getSupervisors } from './utils';
+import { formatData } from './utils';
 import { getSortingParam, getRows } from '../../../utils';
 import { ListWithFilters } from '../../templates/ListWithFilters';
 import { Button } from '../../atoms/Button';
@@ -45,8 +45,6 @@ export const FormsList = () => {
 
   const formattedData = formatData(data);
   const listRows = getRows(formattedData);
-  const asignees = getAssignees(formattedData);
-  const supervisors = getSupervisors(formattedData);
 
   const handleClickOnSort = sortingConfig => {
     setFetchParams(prev => ({
@@ -84,8 +82,6 @@ export const FormsList = () => {
           setFetchParams={setFetchParams}
           isLoading={isLoading || isFetching}
           states={states}
-          asignees={asignees}
-          supervisors={supervisors}
           refetchData={refetchData}
         />
       }

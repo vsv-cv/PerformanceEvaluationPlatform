@@ -5,16 +5,16 @@ import { Dropdown } from '../../atoms/Dropdown';
 import { Button } from '../../atoms/Button';
 import { Datepicker } from '../../atoms/Datepicker';
 import { formatDateToIsoDate } from '../../../utils';
+import { useUsersContext } from '../../../hooks/useUsersContext';
 
 export const SurveysListSidebar = ({
   fetchParams,
   setFetchParams,
   isLoading,
   states,
-  asignees,
-  supervisors,
   refetchData,
 }) => {
+  const users = useUsersContext();
   const shouldCleanFiltersRef = useRef(false);
   const {
     Search,
@@ -73,7 +73,7 @@ export const SurveysListSidebar = ({
       <Dropdown
         label="Assignee"
         title="Choose an assignee..."
-        options={asignees}
+        options={users}
         keys={AssigneeIds}
         onSelect={keys =>
           setFetchParams(prev => ({ ...prev, AssigneeIds: keys }))
@@ -85,7 +85,7 @@ export const SurveysListSidebar = ({
       <Dropdown
         label="Supervisor"
         title="Choose a supervisor..."
-        options={supervisors}
+        options={users}
         keys={SupervisorIds}
         onSelect={keys =>
           setFetchParams(prev => ({ ...prev, SupervisorIds: keys }))
