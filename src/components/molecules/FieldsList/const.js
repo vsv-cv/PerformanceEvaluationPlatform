@@ -6,8 +6,8 @@ export const FIELDS_LIST_QUERY_URL = `${BASE_API_URL}/fields`;
 export const FIELDS_TYPES_LIST_QUERY_KEY = 'fieldsTypes';
 export const FIELDS_TYPES_USERS_LIST_QUERY_URL = `${BASE_API_URL}/fields/types`;
 
-export const ASSESMENT_GROUP_QUERY_KEY = 'asessmentsGroup';
-export const ASSESMENT_GROUP_QUERY_URL = `${BASE_API_URL}/asessments/groups`;
+export const ASSESMENT_GROUP_QUERY_KEY = 'assesmentsGroup';
+export const ASSESMENT_GROUP_QUERY_URL = `${BASE_API_URL}/assessments/groups`;
 
 export const LIST_COLUMNS = [
   {
