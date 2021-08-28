@@ -2,12 +2,10 @@ import React from 'react'
 import { Input } from '../../atoms/Input/Input'
 import { Button, ButtonTheme } from '../../atoms/Button'
 import { Dropdown } from './../../atoms/Dropdown/Dropdown';
-import { Datepicker } from './../../atoms/Datepicker/Datepicker';
-import { formatDateToIsoDate } from './../../../utils/formatDateToIsoDate';
 import { ButtonSize } from './../../atoms/Button/Button';
 
 
-const UsersListSidebar = (
+const TeamsListSidebar = (
     {
         isLoading,
         fetchParams,
@@ -16,17 +14,6 @@ const UsersListSidebar = (
         cleanFilterValues,
     }
 ) => {
-
-    const level =  [
-            {
-                key: '1',
-                text: 'Junior',
-            },
-            {
-                key: '2',
-                text: 'Middle',
-            },
-    ]
     
     const role = [
             {
@@ -63,46 +50,23 @@ const UsersListSidebar = (
         <>
             <Input
                 value={fetchParams.Search}
-                label="Search by email or name"
+                label="Search by project title"
                 type="search"
                 name="Search"
                 handleChange={(e)=>handleChange(e)}
                 disabled={isLoading}
             />
             <Dropdown
-                label="Role"
-                title="Choose a role..."
-                keys={fetchParams.RoleIds}
+                label="Project"
+                title="Choose a project..."
+                keys={fetchParams.ProjectIds}
                 options = {role}
                 multiselect
                 onSelect={keys =>
-                    setFetchParams(prev => ({ ...prev, RoleIds: keys }))
+                    setFetchParams(prev => ({ ...prev, ProjectIds: keys }))
                 }
             />
-            <Dropdown
-                label="Level"
-                title="Choose a level..."
-                keys={fetchParams.StateIds}
-                options={level}
-                multiselect
-                onSelect={keys =>
-                    setFetchParams(prev => ({ ...prev, StateIds: keys }))
-                }
-            />
-            <Datepicker
-                label="Next PE date to"
-                placeholderText="Choose next PE date to..."
-                selected={
-                    fetchParams.NextPEDate ? new Date(fetchParams.NextPEDate)
-                        : null
-                }
-                onChange={date =>
-                    setFetchParams(prev => ({
-                        ...prev,
-                        NextPEDate: formatDateToIsoDate(date),
-                    }))
-                }
-            />
+            
             <Button
                 fullwidth
                 disabled={isLoading}
@@ -125,4 +89,4 @@ const UsersListSidebar = (
     )
 }
 
-export default UsersListSidebar
+export default TeamsListSidebar
