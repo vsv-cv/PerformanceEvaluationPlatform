@@ -1,28 +1,28 @@
-import React from 'react'
-import classNames from 'classnames'
-import PropTypes from 'prop-types'
+import React from 'react';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
-import styles from './button.module.scss'
+import styles from './button.module.scss';
 
 export const ButtonType = {
   RESET: 'reset',
   BUTTON: 'button',
   SUBMIT: 'submit',
-}
+};
 
 export const ButtonTheme = {
-  SUCCESS:'success',
+  SUCCESS: 'success',
   DEFAULT: 'default',
   ROUNDED: 'rounded',
   PRIMARY: 'primary',
   SECONDARY: 'secondary',
-}
+};
 
 export const ButtonSize = {
   SMALL: 'small',
   MEDIUM: 'medium',
   LARGE: 'large',
-}
+};
 
 export const Button = ({
   icon,
@@ -36,31 +36,50 @@ export const Button = ({
   iconType,
   className,
 }) => {
-
   const sizeType = {
-    'small': iconType ? 'circleSmall' : 'small',
-    'medium': iconType ? 'circleMedium' : 'medium',
-    'large': iconType ? 'circleLarge' : 'large',
-  }
+    small: iconType ? 'circleSmall' : 'small',
+    medium: iconType ? 'circleMedium' : 'medium',
+    large: iconType ? 'circleLarge' : 'large',
+  };
 
-  const classProps = classNames(styles.button, styles[theme], styles[sizeType[size]], styles[width], className)
+  const classProps = classNames(
+    styles.button,
+    styles[theme],
+    styles[sizeType[size]],
+    styles[width],
+    className
+  );
 
   return (
     <>
-      {!iconType ?
-        <button type={type} onClick={onClick} disabled={disabled} className={classProps}>
-          {icon && <i className={icon} />}
+      {!iconType ? (
+        <button
+          type={type}
+          onClick={onClick}
+          disabled={disabled}
+          className={classProps}
+        >
+          {icon && (
+            <div className={styles.btn_icon}>
+              <img src={icon} alt="" />
+            </div>
+          )}
           {children}
         </button>
-        :
-        <button type={type} onClick={onClick} disabled={disabled} className={classProps}>
+      ) : (
+        <button
+          type={type}
+          onClick={onClick}
+          disabled={disabled}
+          className={classProps}
+        >
           {icon && <i className={icon} />}
           {/* <div className={styles.hideText}>{children}</div> */}
         </button>
-      }
+      )}
     </>
-  )
-}
+  );
+};
 
 Button.propTypes = {
   icon: PropTypes.string,
@@ -73,7 +92,7 @@ Button.propTypes = {
   children: PropTypes.string,
   className: PropTypes.string,
   onClick: PropTypes.func.isRequired,
-}
+};
 
 Button.defaultProps = {
   icon: '',
@@ -86,6 +105,4 @@ Button.defaultProps = {
   size: ButtonSize.SMALL,
   type: ButtonType.BUTTON,
   theme: ButtonTheme.DEFAULT,
-}
-
-
+};
