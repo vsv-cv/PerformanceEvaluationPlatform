@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react'
-import styles from './list.module.scss'
-import PropTypes from 'prop-types'
+import React, { useState, useEffect } from 'react';
+import styles from './list.module.scss';
+import PropTypes from 'prop-types';
 
-import descendingSortIcon from './descending-sort.svg'
-import ascendingSortIcon from './ascending-sort.svg'
-import { getDataForTable } from './tools'
+import descendingSortIcon from './descending-sort.svg';
+import ascendingSortIcon from './ascending-sort.svg';
+import { getDataForTable } from './tools';
 
 export const sortUp = 'up';
 export const sortDown = 'down';
@@ -16,7 +16,7 @@ export default function List({
   onScrollToGetNewData,
   onSortChange,
   onRowClick,
-  hasNextPage = true
+  hasNextPage = true,
 }) {
   const [isDataLoad, setIsDataLoad] = useState(true);
   useEffect(() => {
@@ -24,56 +24,71 @@ export default function List({
   }, [rows.length]);
 
   const onClickSort = id => {
-    let newSorting = {columnId: id};
-    if(sortedColumn.columnId === id){
+    let newSorting = { columnId: id };
+    if (sortedColumn.columnId === id) {
       newSorting.type = sortedColumn.type === sortUp ? sortDown : sortUp;
-    }
-    else{
+    } else {
       newSorting.type = sortUp;
     }
     onSortChange(newSorting);
-  }
+  };
 
-  const onTableScroll = (e) => {
-    const {clientHeight, scrollHeight, scrollTop} = e.target;
+  const onTableScroll = e => {
+    const { clientHeight, scrollHeight, scrollTop } = e.target;
     const space = 50;
-    if((clientHeight + scrollTop >= scrollHeight - space) && isDataLoad){
+    if (clientHeight + scrollTop >= scrollHeight - space && isDataLoad) {
       setIsDataLoad(false);
-      onScrollToGetNewData()
+      onScrollToGetNewData();
     }
-  }
+  };
 
-  const rowClick = (id) => {
-    if(onRowClick){
+  const rowClick = id => {
+    if (onRowClick) {
       onRowClick(id);
     }
-  }
+  };
 
   const grid = getDataForTable(columns, rows);
+  // console.log(rows);
 
   return (
     <div className={styles.table__container} onScroll={onTableScroll}>
-      <table className={styles['table']} style={{gridTemplateColumns: 'repeat(' + columns.length + ', minmax(100px, auto))'}}>
+      <table
+        className={styles['table']}
+        style={{
+          gridTemplateColumns:
+            'repeat(' + columns.length + ', minmax(100px, auto))',
+        }}
+      >
         <thead>
           <tr>
             {columns.map(item => {
-              const {id, name, sort} = item;
+              const { id, name, sort } = item;
               return sort ? (
-                <th key={id} className={styles.sort_column} onClick={() => onClickSort(id)}>
+                <th
+                  key={id}
+                  className={styles.sort_column}
+                  onClick={() => onClickSort(id)}
+                >
                   <span>{name}</span>
                   {sortedColumn.columnId === id ? (
                     sortedColumn.type === sortUp ? (
                       <span className={styles.sort_icon}>
                         <img src={descendingSortIcon} alt="" />
                       </span>
-                    ) :
-                    sortedColumn.type === sortDown && (
-                      <span className={styles.sort_icon}>
-                        <img src={ascendingSortIcon} alt="" />
-                      </span>
+                    ) : (
+                      sortedColumn.type === sortDown && (
+                        <span className={styles.sort_icon}>
+                          <img src={ascendingSortIcon} alt="" />
+                        </span>
+                      )
                     )
                   ) : (
-                    <span className={styles.sort_icon + ' ' + styles.sort_icon_uncheck}>
+                    <span
+                      className={
+                        styles.sort_icon + ' ' + styles.sort_icon_uncheck
+                      }
+                    >
                       <img src={ascendingSortIcon} alt="" />
                     </span>
                   )}
@@ -82,59 +97,61 @@ export default function List({
                 <th key={id}>
                   <span>{name}</span>
                 </th>
-              )
+              );
             })}
           </tr>
         </thead>
         <tbody>
-          {
-            grid.map(row => {
-              return (
-                <tr key={row.id} onClick={(e) => rowClick(row.id, e)}>
-                  {columns.map(column => {
-                    const key = row.id + " " + column.id;
-                    return (
-                      <td key={key}>{row.items[column.id]}</td>
-                    );
-                  })}
-                </tr>
-              );
-            })
-          }
-				</tbody>
+          {grid.map(row => {
+            return (
+              <tr key={row.id} onClick={e => rowClick(row.id, e)}>
+                {columns.map(column => {
+                  const key = row.id + ' ' + column.id;
+                  return <td key={key}>{row.items[column.id]}</td>;
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
       </table>
-      {hasNextPage && !isDataLoad && (<span>LOADING...</span>)}
+      {hasNextPage && !isDataLoad && <span>LOADING...</span>}
     </div>
-  )
+  );
 }
 
 List.propTypes = {
-  columns: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
-    name: PropTypes.string,
-    sort: PropTypes.bool
-  })),
-  rows: PropTypes.arrayOf(PropTypes.shape({
-    items: PropTypes.arrayOf(PropTypes.shape({
-      columnId: PropTypes.string,
-      value: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number,
-        PropTypes.element
-      ])
-    })),
-    id: PropTypes.string
-  })),
+  columns: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+      sort: PropTypes.bool,
+    })
+  ),
+  rows: PropTypes.arrayOf(
+    PropTypes.shape({
+      items: PropTypes.arrayOf(
+        PropTypes.shape({
+          columnId: PropTypes.string,
+          value: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.number,
+            PropTypes.element,
+          ]),
+        })
+      ),
+      id: PropTypes.string,
+    })
+  ),
   onScrollToGetNewData: PropTypes.func,
   onSortChange: PropTypes.func,
   sortedColumn: PropTypes.shape({
     columnId: PropTypes.string,
-    type: PropTypes.oneOf([sortUp, sortDown])
-  })
-}
+    type: PropTypes.oneOf([sortUp, sortDown]),
+  }),
+};
 
 List.defaultProps = {
   columns: [],
   rows: [],
-  onScroll: () => {}
-}
+  onScroll: () => {},
+};
