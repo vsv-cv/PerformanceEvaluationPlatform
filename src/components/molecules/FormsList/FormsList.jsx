@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   FORMS_STATES_QUERY_KEY,
   FORMS_STATES_QUERY_URL,
@@ -39,6 +39,10 @@ export const FormsList = () => {
       fetchParams
     );
 
+  const refetchData = useCallback(() => {
+    refetch(FORMS_LIST_QUERY_KEY);
+  }, [refetch]);
+
   const formattedData = formatData(data);
   const listRows = getRows(formattedData);
   const asignees = getAssignees(formattedData);
@@ -50,13 +54,9 @@ export const FormsList = () => {
       FormNameSortOrder: getSortingParam(sortingConfig, 'formName'),
       AssigneeSortOrder: getSortingParam(sortingConfig, 'assignee'),
     }));
-
     setSortingParams(sortingConfig);
+    setTimeout(refetchData);
   };
-
-  useEffect(() => {
-    refetch(FORMS_LIST_QUERY_KEY);
-  }, [fetchParams]); // eslint-disable-line
 
   return isLoading ? (
     'Loading...'
@@ -86,6 +86,7 @@ export const FormsList = () => {
           states={states}
           asignees={asignees}
           supervisors={supervisors}
+          refetchData={refetchData}
         />
       }
     />

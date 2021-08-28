@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Input } from '../../atoms/Input/Input';
 import { Dropdown } from '../../atoms/Dropdown';
@@ -7,70 +7,53 @@ import { Datepicker } from '../../atoms/Datepicker';
 import { formatDateToIsoDate } from '../../../utils';
 
 export const SurveysListSidebar = ({
-  fetchParams: {
+  fetchParams,
+  setFetchParams,
+  isLoading,
+  states,
+  asignees,
+  supervisors,
+  refetchData,
+}) => {
+  const shouldCleanFiltersRef = useRef(false);
+  const {
     Search,
     StateIds,
     AssigneeIds,
     SupervisorIds,
     AppointmentDateFrom,
     AppointmentDateTo,
-  },
-  setFetchParams,
-  isLoading,
-  states,
-  asignees,
-  supervisors,
-}) => {
-  const [filterInputValues, setFilterInputValues] = useState({
-    search: Search,
-    stateIds: StateIds,
-    assigneeIds: AssigneeIds,
-    supervisorIds: SupervisorIds,
-    appointmentDateFrom: AppointmentDateFrom,
-    appointmentDateTo: AppointmentDateTo,
-  });
-  const shouldCleanFiltersRef = useRef(false);
+  } = fetchParams;
 
   const cleanInputValues = () => {
     shouldCleanFiltersRef.current = true;
-    setFilterInputValues({
-      search: '',
-      stateIds: null,
-      assigneeIds: null,
-      supervisorIds: null,
-      appointmentDateFrom: '',
-      appointmentDateTo: '',
-    });
-  };
-
-  const handleApplyFilterValues = () => {
     setFetchParams(prev => ({
       ...prev,
-      Search: filterInputValues.search,
-      StateIds: filterInputValues.stateIds,
-      AssigneeIds: filterInputValues.assigneeIds,
-      SupervisorIds: filterInputValues.supervisorIds,
-      AppointmentDateFrom: filterInputValues.appointmentDateFrom,
-      AppointmentDateTo: filterInputValues.appointmentDateTo,
+      Search: '',
+      StateIds: [],
+      AssigneeIds: [],
+      SupervisorIds: [],
+      AppointmentDateFrom: '',
+      AppointmentDateTo: '',
     }));
   };
 
   useEffect(() => {
     if (!shouldCleanFiltersRef.current) return;
 
-    handleApplyFilterValues();
+    setTimeout(refetchData);
     shouldCleanFiltersRef.current = false;
-  }, [filterInputValues]); //eslint-disable-line
+  }, [fetchParams]); //eslint-disable-line
 
   return (
     <>
       <Input
-        value={filterInputValues.search}
+        value={Search}
         label="Search by email or name"
         handleChange={e =>
-          setFilterInputValues(prev => ({
+          setFetchParams(prev => ({
             ...prev,
-            search: e.target.value,
+            Search: e.target.value,
           }))
         }
         type="search"
@@ -82,10 +65,8 @@ export const SurveysListSidebar = ({
         label="State"
         title="Choose a state..."
         options={states}
-        keys={filterInputValues.stateIds}
-        onSelect={keys =>
-          setFilterInputValues(prev => ({ ...prev, stateIds: keys }))
-        }
+        keys={StateIds}
+        onSelect={keys => setFetchParams(prev => ({ ...prev, StateIds: keys }))}
         multiselect
       />
 
@@ -93,9 +74,9 @@ export const SurveysListSidebar = ({
         label="Assignee"
         title="Choose an assignee..."
         options={asignees}
-        keys={filterInputValues.assigneeIds}
+        keys={AssigneeIds}
         onSelect={keys =>
-          setFilterInputValues(prev => ({ ...prev, assigneeIds: keys }))
+          setFetchParams(prev => ({ ...prev, AssigneeIds: keys }))
         }
         multiselect
       />
@@ -104,9 +85,9 @@ export const SurveysListSidebar = ({
         label="Supervisor"
         title="Choose a supervisor..."
         options={supervisors}
-        keys={filterInputValues.supervisorIds}
+        keys={SupervisorIds}
         onSelect={keys =>
-          setFilterInputValues(prev => ({ ...prev, supervisorIds: keys }))
+          setFetchParams(prev => ({ ...prev, SupervisorIds: keys }))
         }
         multiselect
       />
@@ -114,15 +95,11 @@ export const SurveysListSidebar = ({
       <Datepicker
         label="Appointment date from"
         placeholderText="Choose an appointment date from..."
-        selected={
-          filterInputValues.appointmentDateFrom
-            ? new Date(filterInputValues.appointmentDateFrom)
-            : null
-        }
+        selected={AppointmentDateFrom ? new Date(AppointmentDateFrom) : null}
         onChange={date =>
-          setFilterInputValues(prev => ({
+          setFetchParams(prev => ({
             ...prev,
-            appointmentDateFrom: formatDateToIsoDate(date),
+            AppointmentDateFrom: formatDateToIsoDate(date),
           }))
         }
       />
@@ -130,22 +107,18 @@ export const SurveysListSidebar = ({
       <Datepicker
         label="Appointment date to"
         placeholderText="Choose an appointment date to..."
-        selected={
-          filterInputValues.appointmentDateTo
-            ? new Date(filterInputValues.appointmentDateTo)
-            : null
-        }
+        selected={AppointmentDateTo ? new Date(AppointmentDateTo) : null}
         onChange={date =>
-          setFilterInputValues(prev => ({
+          setFetchParams(prev => ({
             ...prev,
-            appointmentDateTo: formatDateToIsoDate(date),
+            AppointmentDateTo: formatDateToIsoDate(date),
           }))
         }
       />
 
       <Button
         width="width"
-        onClick={handleApplyFilterValues}
+        onClick={refetchData}
         size="medium"
         disabled={isLoading}
       >
@@ -174,4 +147,5 @@ SurveysListSidebar.propTypes = {
   setFetchParams: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
   asignees: PropTypes.array,
+  refetchData: PropTypes.func,
 };

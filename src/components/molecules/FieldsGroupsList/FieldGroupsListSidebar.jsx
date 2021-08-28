@@ -1,58 +1,44 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Input } from '../../atoms/Input/Input';
 import { Checkbox } from '../../atoms/Checkbox';
 import { Button } from '../../atoms/Button';
 
 export const FieldGroupsListSidebar = ({
-  fetchParams: { Search, IsNotEmptyOnly, CountFrom, CountTo },
+  fetchParams,
   setFetchParams,
   isLoading,
+  refetchData,
 }) => {
-  const [filterInputValues, setFilterInputValues] = useState({
-    search: Search,
-    isNotEmptyOnly: IsNotEmptyOnly,
-    countFrom: CountFrom,
-    countTo: CountTo,
-  });
   const shouldCleanFiltersRef = useRef(false);
+  const { Search, IsNotEmptyOnly, CountFrom, CountTo } = fetchParams;
 
   const cleanInputValues = () => {
     shouldCleanFiltersRef.current = true;
-    setFilterInputValues({
-      search: '',
-      isNotEmptyOnly: false,
-      countFrom: '',
-      countTo: '',
+    setFetchParams({
+      Search: '',
+      IsNotEmptyOnly: false,
+      CountFrom: '',
+      CountTo: '',
     });
-  };
-
-  const handleApplyFilterValues = () => {
-    setFetchParams(prev => ({
-      ...prev,
-      Search: filterInputValues.search,
-      IsNotEmptyOnly: filterInputValues.isNotEmptyOnly || null,
-      CountFrom: filterInputValues.countFrom,
-      CountTo: filterInputValues.countTo,
-    }));
   };
 
   useEffect(() => {
     if (!shouldCleanFiltersRef.current) return;
 
-    handleApplyFilterValues();
+    setTimeout(refetchData);
     shouldCleanFiltersRef.current = false;
-  }, [filterInputValues]); //eslint-disable-line
+  }, [fetchParams]); //eslint-disable-line
 
   return (
     <>
       <Input
-        value={filterInputValues.search}
+        value={Search}
         label="Search by title"
         handleChange={e =>
-          setFilterInputValues(prev => ({
+          setFetchParams(prev => ({
             ...prev,
-            search: e.target.value,
+            Search: e.target.value,
           }))
         }
         type="search"
@@ -62,23 +48,23 @@ export const FieldGroupsListSidebar = ({
 
       <Checkbox
         label="Only not empty"
-        checked={filterInputValues.isNotEmptyOnly}
+        checked={IsNotEmptyOnly}
         onChange={() =>
-          setFilterInputValues(prev => ({
+          setFetchParams(prev => ({
             ...prev,
-            isNotEmptyOnly: !prev.isNotEmptyOnly,
+            IsNotEmptyOnly: !prev.IsNotEmptyOnly,
           }))
         }
         disabled={isLoading}
       />
 
       <Input
-        value={filterInputValues.countFrom}
+        value={CountFrom}
         label="Count from"
         handleChange={e =>
-          setFilterInputValues(prev => ({
+          setFetchParams(prev => ({
             ...prev,
-            countFrom: e.target.value,
+            CountFrom: e.target.value,
           }))
         }
         type="number"
@@ -87,12 +73,12 @@ export const FieldGroupsListSidebar = ({
       />
 
       <Input
-        value={filterInputValues.countTo}
+        value={CountTo}
         label="Count to"
         handleChange={e =>
-          setFilterInputValues(prev => ({
+          setFetchParams(prev => ({
             ...prev,
-            countTo: e.target.value,
+            CountTo: e.target.value,
           }))
         }
         type="number"
@@ -102,7 +88,7 @@ export const FieldGroupsListSidebar = ({
 
       <Button
         width="width"
-        onClick={handleApplyFilterValues}
+        onClick={refetchData}
         size="medium"
         disabled={isLoading}
       >
@@ -130,4 +116,5 @@ FieldGroupsListSidebar.propTypes = {
   }).isRequired,
   setFetchParams: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
+  refetchData: PropTypes.func,
 };
