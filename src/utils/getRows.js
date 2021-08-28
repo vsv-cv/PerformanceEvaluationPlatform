@@ -4,7 +4,7 @@ export const getRows = rows =>
       .map(([key, value]) => {
         return {
           columnId: key,
-          value: String(value),
+          value,
         };
       })
       .filter(item => item.columnId !== 'id');
