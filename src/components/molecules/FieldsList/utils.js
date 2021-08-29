@@ -1,4 +1,4 @@
-import { concatPages, formatDate } from '../../../utils';
+import { concatPages } from '../../../utils';
 
 export const formatData = data => {
   if (!data) return;

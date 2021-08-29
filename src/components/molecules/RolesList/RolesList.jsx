@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   ROLES_LIST_QUERY_KEY,
   QUERY_URL,
@@ -23,6 +23,10 @@ export const RolesList = () => {
   const { data, isLoading, isFetching, refetch, fetchNextPage, hasNextPage } =
     useInfiniteQueryData(ROLES_LIST_QUERY_KEY, QUERY_URL, fetchParams);
 
+  const refetchData = useCallback(() => {
+    refetch(ROLES_LIST_QUERY_KEY);
+  }, [refetch]);
+
   const formattedData = formatData(data);
   const listRows = getRows(formattedData);
 
@@ -32,13 +36,9 @@ export const RolesList = () => {
       TitleSortOrder: getSortingParam(sortingConfig, 'title'),
       IsPrimarySortOrder: getSortingParam(sortingConfig, 'isPrimary'),
     }));
-
     setSortingParams(sortingConfig);
+    setTimeout(refetchData);
   };
-
-  useEffect(() => {
-    refetch(ROLES_LIST_QUERY_KEY);
-  }, [fetchParams]); // eslint-disable-line
 
   return isLoading ? (
     'Loading...'
@@ -65,6 +65,7 @@ export const RolesList = () => {
           fetchParams={fetchParams}
           setFetchParams={setFetchParams}
           isLoading={isFetching}
+          refetchData={refetchData}
         />
       }
     />

@@ -17,7 +17,7 @@ export const useInfiniteQueryData = (queryKey, queryUrl, fetchParams = {}) => {
     return response.data;
   };
 
-  const query = useInfiniteQuery(queryKey, handleFetch, {
+  const queryConfig = {
     getNextPageParam: (lastPage, allPages) => {
       const totalCount = allPages.concat.apply([], allPages).length;
 
@@ -28,7 +28,7 @@ export const useInfiniteQueryData = (queryKey, queryUrl, fetchParams = {}) => {
             Skip: totalCount,
           };
     },
-  });
+  };
 
-  return query;
+  return useInfiniteQuery(queryKey, handleFetch, queryConfig);
 };
