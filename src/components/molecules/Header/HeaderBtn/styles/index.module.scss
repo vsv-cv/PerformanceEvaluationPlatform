@@ -1,0 +1,50 @@
+.header__btn {
+  font-size: 20px;
+  display: block;
+  padding: 10px;
+  position: relative;
+  // background-color: #007cc7;
+  color: #ffffff;
+  text-decoration: none;
+  transition: 0.3s;
+  white-space: nowrap;
+
+  &:hover {
+    color: #d8d8d8;
+  }
+
+  &:hover::after {
+    opacity: 1;
+    bottom: 6px;
+    transform: scale(1);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: calc(100% - 16px);
+    height: 2px;
+    background-color: #d8d8d8;
+    bottom: 0px;
+    left: 8px;
+    opacity: 0.01;
+    transition: 0.3s;
+    transform: scale(0.2);
+  }
+  @media only screen and (max-width: 1420px) {
+    &::after {
+      display: none;
+    }
+  }
+}
+
+.header__btn_active {
+  color: #ffe65a;
+
+  &::after {
+    opacity: 1;
+    bottom: 6px;
+    transform: scale(1);
+    background-color: #ffe65a;
+  }
+}
