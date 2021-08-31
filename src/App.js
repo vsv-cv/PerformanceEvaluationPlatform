@@ -12,7 +12,11 @@ import { TeamsList } from './components/molecules/TeamsList';
 import { ProjectsList } from './components/molecules/ProjectsList';
 import { UsersProvider } from './providers/UsersProvider';
 import { ToastsProvider } from './providers/ToastsProvider';
-import Example from './components/atoms/Example';
+import { DocumentsList } from './components/molecules/DocumentsList/DocumentsList';
+import { DeeplinksList } from './components/molecules/DeeplinksList/DeeplinksList';
+import { FieldsList } from './components/molecules/FieldsList/FieldsList';
+import MainContentWrapper from './components/atoms/MainContentWrapper/MainContentWrapper';
+
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,28 +32,29 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <UsersProvider>
           <ToastsProvider>
-            <Header />
+          <Header />
+          <MainContentWrapper>
             <Switch>
               <Route exact path="/">
-                <Example />
+                Home Page
               </Route>
               <Route exact path="/projects">
-                <ProjectsList />
+                <ProjectsList/>
               </Route>
               <Route exact path="/teams">
-                <TeamsList />
+                <TeamsList/>
               </Route>
               <Route exact path="/users">
-                <UsersList />
+                <UsersList/>
               </Route>
               <Route exact path="/fields">
-                Fields List
+                <FieldsList />
               </Route>
               <Route exact path="/deeplinks">
-                Deeplinks List
+                <DeeplinksList />
               </Route>
               <Route exact path="/documents">
-                Documents List
+                <DocumentsList />
               </Route>
               <Route exact path="/roles">
                 <RolesList />
@@ -67,7 +72,8 @@ const App = () => {
                 Form Templates List
               </Route>
               <Route path="/*">404: Page not found.</Route>
-            </Switch>
+              </Switch> 
+          </MainContentWrapper>
           </ToastsProvider>
         </UsersProvider>
         <ReactQueryDevtools initialIsOpen />
