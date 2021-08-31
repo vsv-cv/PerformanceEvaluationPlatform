@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useCallback } from 'react'
 import List from '../../atoms/List'
 import { UsersApi } from '../../../api/api';
 import { Button } from '../../atoms/Button'
@@ -26,21 +26,12 @@ export const UsersList = () => {
         refetch,
         isFetching, } = useInfiniteQuery(USERS_LIST_QUERY_KEY, () => UsersApi.getUsersList(fetchParams))
     
-    useEffect(() => {
-        refetch(USERS_LIST_QUERY_KEY)
-    }, [refetch])
-    
-    const applyFilters = () => {
-        refetch(USERS_LIST_QUERY_KEY)
-        setFetchParams(CLEAN_PARAMS)
-    }
-
-    const cleanFilterValues = () => {
-        setFetchParams(CLEAN_PARAMS)
-    }
-
     const formattedData = formatData(data);
     const listRows = getRows(formattedData);
+    
+    const refetchData = useCallback(() => {
+        refetch(USERS_LIST_QUERY_KEY)
+    }, [refetch]);
 
     const handleClickOnSort = sortingConfig => {
         setFetchParams(prev => ({
@@ -50,7 +41,7 @@ export const UsersList = () => {
             UserPreviousPE: getSortingParam(sortingConfig, 'previousPEDate'),
         }));
         setSortingParams(sortingConfig);
-        setTimeout(applyFilters);
+        setTimeout(refetchData);
     };
 
     return (
@@ -77,9 +68,8 @@ export const UsersList = () => {
                 <UsersListSidebar
                     fetchParams={fetchParams}
                     setFetchParams={setFetchParams}
-                    applyFilters={applyFilters}
+                    refetchData={refetchData}
                     isLoading={isFetching}
-                    cleanFilterValues={cleanFilterValues}
                 />
             }
         />

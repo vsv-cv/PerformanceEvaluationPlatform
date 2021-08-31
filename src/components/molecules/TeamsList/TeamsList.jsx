@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useCallback } from 'react'
 import List from '../../atoms/List'
 import { TeamsApi } from '../../../api/api'
 import { Button } from '../../atoms/Button'
@@ -9,7 +9,6 @@ import { getRows, formatData } from '../UsersList/utils';
 import { ListWithFilters } from '../../templates/ListWithFilters'
 import {
     LIST_COLUMNS,
-    CLEAN_PARAMS,
     DEFAULT_FETCH_PARAMS,
     USERS_LIST_QUERY_KEY,
 } from './const';
@@ -25,22 +24,13 @@ export const TeamsList = () => {
         data,
         refetch,
         isFetching, } = useInfiniteQuery(USERS_LIST_QUERY_KEY, () => TeamsApi.getTeamsList(fetchParams))
-    
-    useEffect(() => {
-        refetch(USERS_LIST_QUERY_KEY)
-    }, [refetch])
 
     const formattedData = formatData(data);
     const listRows = getRows(formattedData);
     
-    const applyFilters = () => {
+    const refetchData = useCallback(() => {
         refetch(USERS_LIST_QUERY_KEY)
-        cleanFilterValues()
-    }
-
-    const cleanFilterValues = () => {
-        setFetchParams(CLEAN_PARAMS)
-    }
+    }, [refetch]);
 
     const handleClickOnSort = sortingConfig => {
         setFetchParams(prev => ({
@@ -50,7 +40,7 @@ export const TeamsList = () => {
             OrderByTeamSize: getSortingParam(sortingConfig, 'size'),
         }));
         setSortingParams(sortingConfig);
-        setTimeout(applyFilters);
+        setTimeout(refetchData);
     };
 
     return (
@@ -77,9 +67,8 @@ export const TeamsList = () => {
                 <TeamsListSidebar
                     fetchParams={fetchParams}
                     setFetchParams={setFetchParams}
-                    applyFilters={applyFilters}
+                    refetchData={refetchData}
                     isLoading={isFetching}
-                    cleanFilterValues={cleanFilterValues}
                 />
             }
         />

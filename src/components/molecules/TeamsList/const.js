@@ -9,15 +9,6 @@ export const DEFAULT_FETCH_PARAMS = {
   Take: 20,
 };
 
-export const CLEAN_PARAMS = {
-  Search: '',
-  ProjectIds: [],
-  OrderByTeamTitle: null,
-  OrderByProjectTitle: null,
-  OrderByTeamSize: null,
-  Take: 20,
-};
-
 export const LIST_COLUMNS = [
   {
     id: 'title',

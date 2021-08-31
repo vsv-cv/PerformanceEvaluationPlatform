@@ -2,8 +2,6 @@ import React from 'react'
 import { Input } from '../../atoms/Input/Input'
 import { Button, ButtonTheme } from '../../atoms/Button'
 import { Dropdown } from '../../atoms/Dropdown/Dropdown';
-import { Datepicker } from '../../atoms/Datepicker/Datepicker';
-import { formatDateToIsoDate } from '../../../utils/formatDateToIsoDate';
 import { ButtonSize } from '../../atoms/Button/Button';
 
 
@@ -13,7 +11,7 @@ const ProjectsListSidebar = (
         fetchParams,
         applyFilters,
         setFetchParams,
-        cleanFilterValues,
+        cleanFiltersValues,
     }
 ) => {
 
@@ -36,8 +34,8 @@ const ProjectsListSidebar = (
         })
     }
 
-    const handleCleanFilterValues = () => {
-        cleanFilterValues()
+    const handleCleanFiltersValues = () => {
+        cleanFiltersValues()
     }
 
     return (
@@ -73,7 +71,7 @@ const ProjectsListSidebar = (
                 fullwidth
                 disabled={isLoading}
                 size={ButtonSize.SMALL}
-                onClick={handleCleanFilterValues}
+                onClick={handleCleanFiltersValues}
             >
                 Clean Filters
             </Button>

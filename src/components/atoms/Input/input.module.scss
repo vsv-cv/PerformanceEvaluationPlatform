@@ -5,13 +5,12 @@ input::-webkit-inner-spin-button {
 }
 $grey-color: grey;
 $black-color: black;
-$focus-color: #1976d2;
 $main-color: #007cc7;
-$primary-hover: #1769aa;
+$primary: #1769aa;
 
 @mixin upLabel {
-  top: -4px;
-  font-size: 10px;
+  top: -8px;
+  font-size: 0.7rem;
   color: $black-color;
 }
 
@@ -26,7 +25,7 @@ $primary-hover: #1769aa;
   }
 
   &:focus.formInput__label {
-    color: $primary-hover;
+    color: $primary;
   }
 
   .formInput {
@@ -54,7 +53,7 @@ $primary-hover: #1769aa;
       position: absolute;
       transform: scaleX(0);
       transition: transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-      border-bottom: 2px solid #1976d2;
+      border-bottom: 2px solid $main-color;
       pointer-events: none;
     }
 
@@ -64,10 +63,6 @@ $primary-hover: #1769aa;
       &:hover.formInput::before{
         border-bottom: 2px solid rgba(0, 0, 0, 0.7);
       }
-    // &:hover.formInput:after{
-    //   transform: scaleX(1);
-    //   border-bottom: 2px solid rgba(0, 0, 0, 0.87);
-    // }
     
     .formInput__input {
       width: 100%;
@@ -79,7 +74,7 @@ $primary-hover: #1769aa;
       display: block;
       border: none;
       border-radius: 0;
-      margin: 3px 0;
+      margin: 4px 0;
       width: 100%;
 
       &:focus {
@@ -88,7 +83,7 @@ $primary-hover: #1769aa;
 
       &:focus ~ .formInput__label {
         @include upLabel();
-        color: $focus-color;
+        color: $primary;
       }
     }
 

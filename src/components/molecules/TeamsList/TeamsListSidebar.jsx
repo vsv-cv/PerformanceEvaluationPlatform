@@ -3,18 +3,17 @@ import { Input } from '../../atoms/Input/Input'
 import { Button, ButtonTheme } from '../../atoms/Button'
 import { Dropdown } from './../../atoms/Dropdown/Dropdown';
 import { ButtonSize } from './../../atoms/Button/Button';
+import { DEFAULT_FETCH_PARAMS } from './const';
 
 
 const TeamsListSidebar = (
     {
         isLoading,
         fetchParams,
-        applyFilters,
+        refetchData,
         setFetchParams,
-        cleanFilterValues,
     }
 ) => {
-    
     const role = [
             {
                 key: '1',
@@ -42,8 +41,13 @@ const TeamsListSidebar = (
         })
     }
 
+    const applyFilters = () => {
+        refetchData()
+    }
+
     const handleCleanFilterValues = () => {
-        cleanFilterValues()
+        setFetchParams(DEFAULT_FETCH_PARAMS)
+        setTimeout(applyFilters)
     }
 
     return (

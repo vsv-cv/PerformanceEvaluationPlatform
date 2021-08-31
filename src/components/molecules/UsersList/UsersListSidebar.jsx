@@ -1,19 +1,18 @@
 import React from 'react'
+import { DEFAULT_FETCH_PARAMS } from './const';
 import { Input } from '../../atoms/Input/Input'
-import { ButtonSize } from './../../atoms/Button/Button';
 import { Button, ButtonTheme } from '../../atoms/Button'
+import { ButtonSize } from './../../atoms/Button/Button';
 import { Dropdown } from './../../atoms/Dropdown/Dropdown';
 import { Datepicker } from './../../atoms/Datepicker/Datepicker';
 import { formatDateToIsoDate } from './../../../utils/formatDateToIsoDate';
-
 
 const UsersListSidebar = (
     {
         isLoading,
         fetchParams,
-        applyFilters,
+        refetchData,
         setFetchParams,
-        cleanFilterValues,
     }
 ) => {
 
@@ -46,6 +45,10 @@ const UsersListSidebar = (
                 text: 'Team Lead',
         }
     ]
+
+    const applyFilters = () => {
+        refetchData()
+    }
     
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -56,7 +59,8 @@ const UsersListSidebar = (
     }
 
     const handleCleanFilterValues = () => {
-        cleanFilterValues()
+        setFetchParams(DEFAULT_FETCH_PARAMS)
+        setTimeout(applyFilters)
     }
 
     return (
