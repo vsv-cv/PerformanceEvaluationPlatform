@@ -5,7 +5,11 @@ import PropTypes from 'prop-types'
 import styles from './toast.module.scss'
 import {ButtonTaost} from '../ButtonTaost';
 
-export const Toast = ({ toast, deleteToast}) => {
+export const Toast = ({
+    toast,
+    deleteToastOnClick,
+    deleteToastOnSetTime
+}) => {
     const {
         id,
         time,
@@ -16,12 +20,12 @@ export const Toast = ({ toast, deleteToast}) => {
     } = toast
 
     useEffect(() => {
-        const timer = time && setTimeout(() => deleteToast(id), time);
+        const timer = time && setTimeout(() => deleteToastOnSetTime(time), time);
         return () => clearTimeout(timer);
-    }, [deleteToast, id, time]);
+    }, [deleteToastOnSetTime, time]);
 
     const handelClose = () => {
-        deleteToast(id)
+        deleteToastOnClick(id)
     }
 
     const classProps = classNames(styles.notification, styles[type], className)

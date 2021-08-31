@@ -8,7 +8,9 @@ export const Errors = ({errors}) => {
         <div className={styles.errors}>
             {errors.map(e => {
                 return (
-                    <div key={e.id} className={styles.error} >{e.message}</div>
+                    <div key={e.id} className={styles.error} >
+                        {e.icon && <i className={e.icon} />}
+                        {e.message}</div>
                 )
             })} 
         </div>

@@ -26,7 +26,7 @@ export const RolesList = () => {
   const refetchData = useCallback(() => {
     refetch(ROLES_LIST_QUERY_KEY);
   }, [refetch]);
-
+  
   const formattedData = formatData(data);
   const listRows = getRows(formattedData);
 
