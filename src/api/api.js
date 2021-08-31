@@ -7,9 +7,25 @@ const instance = axios.create({
 });
 
 export const UsersApi = {
-  getUsers(fetchParams) {
+  getUsersList(fetchParams) {
     return instance
       .get(`Users`, {
+        params: {
+          ...fetchParams,
+        },
+        paramsSerializer: params =>
+          qs.stringify(filterEmptyValues(params), { indices: false }),
+      })
+      .then(response => {
+        return response.data;
+      });
+  },
+};
+
+export const TeamsApi = {
+  getTeamsList(fetchParams) {
+    return instance
+      .get(`teams`, {
         params: {
           ...fetchParams,
         },

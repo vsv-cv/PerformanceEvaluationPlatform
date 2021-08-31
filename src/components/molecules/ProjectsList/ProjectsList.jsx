@@ -3,7 +3,7 @@ import List from '../../atoms/List'
 import { UsersApi } from '../../../api/api';
 import { Button } from '../../atoms/Button'
 import ProjectsListSidebar from './ProjectsListSidebar';
-import { useInfiniteQuery, useQuery } from 'react-query'
+import { useInfiniteQuery } from 'react-query'
 import { getRows, formatData } from '../UsersList/utils';
 import { ListWithFilters } from '../../templates/ListWithFilters'
 import {
@@ -20,7 +20,6 @@ export const ProjectsList = () => {
     const {
         data,
         refetch,
-        isLoading,
         isFetching, } = useInfiniteQuery(USERS_LIST_QUERY_KEY, () => UsersApi.getUsers(fetchParams))
     
     useEffect(() => {

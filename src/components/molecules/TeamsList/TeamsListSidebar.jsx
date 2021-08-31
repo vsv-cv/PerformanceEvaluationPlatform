@@ -18,19 +18,19 @@ const TeamsListSidebar = (
     const role = [
             {
                 key: '1',
-                text: 'Backend',
+                text: 'project1',
             },
             {
                 key: '2',
-                text: 'Frontend',
+                text: 'project2',
             },
             {
                 key: '3',
-                text: 'QA',
+                text: 'project3',
             },
             {
                 key: '4',
-                text: 'Team Lead',
+                text: 'project4',
         }
     ]
     

@@ -1,31 +1,37 @@
 import React, { useState, useEffect } from 'react'
 import List from '../../atoms/List'
-import { UsersApi } from '../../../api/api'
+import { TeamsApi } from '../../../api/api'
 import { Button } from '../../atoms/Button'
+import { useInfiniteQuery } from 'react-query'
 import TeamsListSidebar from './TeamsListSidebar'
-import { useInfiniteQuery, useQuery } from 'react-query'
+import { getSortingParam } from './../../../utils';
 import { getRows, formatData } from '../UsersList/utils';
 import { ListWithFilters } from '../../templates/ListWithFilters'
 import {
-    CLEAN_PARAMS,
     LIST_COLUMNS,
+    CLEAN_PARAMS,
     DEFAULT_FETCH_PARAMS,
     USERS_LIST_QUERY_KEY,
 } from './const';
 
 export const TeamsList = () => {
-    const [sortingParams, setSortingParams] = useState({});
     const [fetchParams, setFetchParams] = useState(DEFAULT_FETCH_PARAMS);
+    const [sortingParams, setSortingParams] = useState({
+        columnId: 'formName',
+        type: 'up',
+    });
 
     const {
         data,
         refetch,
-        isLoading,
-        isFetching, } = useInfiniteQuery(USERS_LIST_QUERY_KEY, () => UsersApi.getUsers(fetchParams))
+        isFetching, } = useInfiniteQuery(USERS_LIST_QUERY_KEY, () => TeamsApi.getTeamsList(fetchParams))
     
     useEffect(() => {
         refetch(USERS_LIST_QUERY_KEY)
-    }, [refetch, sortingParams])
+    }, [refetch])
+
+    const formattedData = formatData(data);
+    const listRows = getRows(formattedData);
     
     const applyFilters = () => {
         refetch(USERS_LIST_QUERY_KEY)
@@ -36,22 +42,16 @@ export const TeamsList = () => {
         setFetchParams(CLEAN_PARAMS)
     }
 
-    const handleClickOnSort = ({ columnId, type }) => {
-        const sortingConfig = {
-            'firstName': 'UserName',
-            'nextPEDate': 'UserNextPE',
-            'previousPEDate': 'UserPreviousPE',
-        }
-        const sortingType = sortingConfig[columnId];
+    const handleClickOnSort = sortingConfig => {
         setFetchParams(prev => ({
             ...prev,
-            [sortingType]: prev[sortingType] === 1 ? 2 : 1,
-        }))
-        setSortingParams({ columnId, type });
-    }
-
-    const formattedData = formatData(data);
-    const listRows = getRows(formattedData);
+            OrderByTeamTitle: getSortingParam(sortingConfig, 'title'),
+            OrderByProjectTitle: getSortingParam(sortingConfig, 'projectTitle'),
+            OrderByTeamSize: getSortingParam(sortingConfig, 'size'),
+        }));
+        setSortingParams(sortingConfig);
+        setTimeout(applyFilters);
+    };
 
     return (
         <ListWithFilters
@@ -67,10 +67,10 @@ export const TeamsList = () => {
             list={
                 <List
                     columns={LIST_COLUMNS}
-                    //rows={listRows}
-                    //onScrollToGetNewData={fetchNextPage}
+                    rows={listRows}
                     onSortChange={handleClickOnSort}
                     sortedColumn={sortingParams}
+                    //onScrollToGetNewData={fetchNextPage}
                 />
             }
             sidebar={

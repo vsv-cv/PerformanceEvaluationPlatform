@@ -1,10 +1,10 @@
 import React from 'react'
 import { Input } from '../../atoms/Input/Input'
+import { ButtonSize } from './../../atoms/Button/Button';
 import { Button, ButtonTheme } from '../../atoms/Button'
 import { Dropdown } from './../../atoms/Dropdown/Dropdown';
 import { Datepicker } from './../../atoms/Datepicker/Datepicker';
 import { formatDateToIsoDate } from './../../../utils/formatDateToIsoDate';
-import { ButtonSize } from './../../atoms/Button/Button';
 
 
 const UsersListSidebar = (

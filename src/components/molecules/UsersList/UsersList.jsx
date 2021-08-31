@@ -3,37 +3,32 @@ import List from '../../atoms/List'
 import { UsersApi } from '../../../api/api';
 import { Button } from '../../atoms/Button'
 import UsersListSidebar from './UsersListSidebar';
-import { useInfiniteQuery, useQuery } from 'react-query'
+import { getSortingParam } from './../../../utils';
+import { useInfiniteQuery } from 'react-query'
 import { getRows, formatData } from './../UsersList/utils';
 import { ListWithFilters } from '../../templates/ListWithFilters'
 import {
     CLEAN_PARAMS,
     LIST_COLUMNS,
-    SORTING_PARAMS,
     DEFAULT_FETCH_PARAMS,
     USERS_LIST_QUERY_KEY,
 } from './const';
 
 export const UsersList = () => {
-    const [sortingParams, setSortingParams] = useState(SORTING_PARAMS);
-    const [sortingListParams, setSortingListParams] = useState({});
     const [fetchParams, setFetchParams] = useState(DEFAULT_FETCH_PARAMS);
+    const [sortingParams, setSortingParams] = useState({
+        columnId: 'formName',
+        type: 'up',
+    });
 
     const {
         data,
         refetch,
-        isLoading,
-        isFetching, } = useInfiniteQuery(USERS_LIST_QUERY_KEY, () => UsersApi.getUsers(fetchParams))
+        isFetching, } = useInfiniteQuery(USERS_LIST_QUERY_KEY, () => UsersApi.getUsersList(fetchParams))
     
     useEffect(() => {
         refetch(USERS_LIST_QUERY_KEY)
-        setFetchParams(prev => ({
-            ...prev,
-            UserName: null,
-            UserNextPE: null,
-            UserPreviousPE: null,
-        }))
-    }, [refetch, sortingParams])
+    }, [refetch])
     
     const applyFilters = () => {
         refetch(USERS_LIST_QUERY_KEY)
@@ -44,26 +39,19 @@ export const UsersList = () => {
         setFetchParams(CLEAN_PARAMS)
     }
 
-    const handleClickOnSort = ({ columnId, type }) => {
-        const sortingConfig = {
-            'firstName': 'UserName',
-            'nextPEDate': 'UserNextPE',
-            'previousPEDate': 'UserPreviousPE',
-        }
-        const sortingType = sortingConfig[columnId];
-        setSortingParams(prev => ({
-            ...prev,
-            [sortingType]: prev[sortingType] === 1 ? 2 : 1,
-        }))
-        setSortingListParams({ columnId, type });
-        setFetchParams(prev => ({
-            ...prev,
-            [sortingType]: sortingParams[sortingType],
-        }))
-    }
-
     const formattedData = formatData(data);
     const listRows = getRows(formattedData);
+
+    const handleClickOnSort = sortingConfig => {
+        setFetchParams(prev => ({
+            ...prev,
+            UserName: getSortingParam(sortingConfig, 'firstName'),
+            UserNextPE: getSortingParam(sortingConfig, 'nextPEDate'),
+            UserPreviousPE: getSortingParam(sortingConfig, 'previousPEDate'),
+        }));
+        setSortingParams(sortingConfig);
+        setTimeout(applyFilters);
+    };
 
     return (
         <ListWithFilters
@@ -78,11 +66,11 @@ export const UsersList = () => {
             }
             list={
                 <List
+                rows={listRows}
                     columns={LIST_COLUMNS}
-                    rows={listRows}
-                    //onScrollToGetNewData={fetchNextPage}
+                    sortedColumn={sortingParams}
                     onSortChange={handleClickOnSort}
-                    sortedColumn={sortingListParams}
+                    //onScrollToGetNewData={fetchNextPage}
                 />
             }
             sidebar={
