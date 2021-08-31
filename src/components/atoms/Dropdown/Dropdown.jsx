@@ -1,4 +1,10 @@
-import React, { useRef, useState, useCallback } from 'react';
+import React, {
+  useMemo,
+  useRef,
+  useState,
+  useCallback,
+  useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
 import { DropdownPortal } from './DropdownPortal';
 import { DropdownContent } from './DropdownContent';
@@ -13,13 +19,20 @@ export const Dropdown = ({
   onSelect,
   disabled,
   multiselect = false,
+  hasSearch = false,
 }) => {
   if (!multiselect && keys.length > 1) {
     throw new Error('Expected only one selected option in dropdown');
   }
 
   const [isOpen, setIsOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
   const dropdownButtonRef = useRef(null);
+  const filteredBySearchOptions = useMemo(() => {
+    return options?.filter(option => {
+      return option.text.toLowerCase().includes(searchValue.toLowerCase());
+    });
+  }, [searchValue, options]);
 
   const createPortalContainer = () => {
     if (document.querySelector('.dropdown-portal')) {
@@ -43,8 +56,18 @@ export const Dropdown = ({
 
   const handleClose = useCallback(() => {
     document.querySelector('.dropdown-portal')?.remove();
+    setSearchValue('');
     setIsOpen(false);
   }, [setIsOpen]);
+
+  useEffect(() => {
+    const cleanup = window.addEventListener('keyup', e => {
+      if (e.key === 'Escape' || (keys?.length > 0 && e.key === 'Enter')) {
+        handleClose();
+      }
+    });
+    return cleanup;
+  }, [handleClose, keys]);
 
   return (
     <div>
@@ -60,20 +83,24 @@ export const Dropdown = ({
           title,
           disabled,
           handleDropdownButtonClick,
-          options,
+          options: filteredBySearchOptions,
           keys,
+          hasSearch,
+          searchValue,
+          setSearchValue,
         }}
       />
 
       {isOpen && (
         <DropdownPortal>
           <DropdownContent
-            options={options}
+            options={filteredBySearchOptions}
             callingComponent={dropdownButtonRef.current}
             handleClose={handleClose}
             keys={keys}
             onSelect={onSelect}
             multiselect={multiselect}
+            setSearchValue={setSearchValue}
           />
         </DropdownPortal>
       )}
@@ -96,4 +123,5 @@ Dropdown.propTypes = {
   onSelect: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   multiselect: PropTypes.bool,
+  hasSearch: PropTypes.bool,
 };

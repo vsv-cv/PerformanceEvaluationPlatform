@@ -1,92 +1,96 @@
-import React, { useRef, useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { Input } from '../../atoms/Input/Input';
-import { Button } from '../../atoms/Button';
-import { Dropdown } from '../../atoms/Dropdown';
+import React from 'react'
+import { Input } from '../../atoms/Input/Input'
+import { Button, ButtonTheme } from '../../atoms/Button'
+import { Dropdown } from './../../atoms/Dropdown/Dropdown';
+import { ButtonSize } from './../../atoms/Button/Button';
+import { DEFAULT_FETCH_PARAMS } from './const';
 
-export const TeamsListSidebar = ({
-  fetchParams: { Search },
-  setFetchParams,
-  isLoading,
-    }) => {
-    const [filterInputValues, setFilterInputValues] = useState({
-        search: Search,
-    });
-    const shouldCleanFiltersRef = useRef(false);
 
-    const cleanInputValues = () => {
-        shouldCleanFiltersRef.current = true;
-        setFilterInputValues({
-            search: ''
-        });
-    };
+const TeamsListSidebar = (
+    {
+        isLoading,
+        fetchParams,
+        refetchData,
+        setFetchParams,
+    }
+) => {
+    const role = [
+            {
+                key: '1',
+                text: 'project1',
+            },
+            {
+                key: '2',
+                text: 'project2',
+            },
+            {
+                key: '3',
+                text: 'project3',
+            },
+            {
+                key: '4',
+                text: 'project4',
+        }
+    ]
+    
+    const handleChange = (e) => {
+        const { name, value } = e.target
+        setFetchParams({
+            ...fetchParams,
+            [name]: value
+        })
+    }
 
-    const handleApplyFilterValues = () => {
-        setFetchParams(prev => ({
-            ...prev,
-            Search: filterInputValues.search,
-        }));
-    };
+    const applyFilters = () => {
+        refetchData()
+    }
 
-    useEffect(() => {
-        if (!shouldCleanFiltersRef.current) return;
-
-        handleApplyFilterValues();
-            shouldCleanFiltersRef.current = false;
-    }, [filterInputValues]); //eslint-disable-line
+    const handleCleanFilterValues = () => {
+        setFetchParams(DEFAULT_FETCH_PARAMS)
+        setTimeout(applyFilters)
+    }
 
     return (
         <>
-        <Input
-            value={filterInputValues.search}
-            label="Search by project title"
-            handleChange={e =>
-                setFilterInputValues(prev => ({
-                    ...prev,
-                    search: e.target.value,
-                }))
-            }
-            type="search"
-            name="search"
-            disabled={isLoading}
-        />
-   
-        <Dropdown
-            label="Project"
-            title="Choose status..."
-            // options={statuses}
-            // keys={filterInputValues.statusIds}
-            // onSelect={keys =>
-            // setFilterInputValues(prev => ({ ...prev, statusIds: keys }))
-            // }
-            multiselect
-        />
-        
-        <Button
-            width="width"
-            onClick={handleApplyFilterValues}
-            size="medium"
-            disabled={isLoading}
-        >
-            Apply Filters
-        </Button>
+            <Input
+                value={fetchParams.Search}
+                label="Search by project title"
+                type="search"
+                name="Search"
+                handleChange={(e)=>handleChange(e)}
+                disabled={isLoading}
+            />
+            <Dropdown
+                label="Project"
+                title="Choose a project..."
+                keys={fetchParams.ProjectIds}
+                options = {role}
+                multiselect
+                onSelect={keys =>
+                    setFetchParams(prev => ({ ...prev, ProjectIds: keys }))
+                }
+            />
+            
+            <Button
+                fullwidth
+                disabled={isLoading}
+                onClick={applyFilters}
+                size={ButtonSize.SMALL}
+                theme={ButtonTheme.SUCCESS}
+            >
+                Apply Filters
+            </Button>
+            <Button
+                fullwidth
+                disabled={isLoading}
+                size={ButtonSize.SMALL}
+                onClick={handleCleanFilterValues}
+            >
+                Clean Filters
+            </Button>
 
-        <Button
-            width="width"
-            onClick={cleanInputValues}
-            size="medium"
-            disabled={isLoading}
-        >
-            Clean Filters
-        </Button>
         </>
-    );
-};
+    )
+}
 
-TeamsListSidebar.propTypes = {
-  fetchParams: PropTypes.shape({
-    Search: PropTypes.string
-  }).isRequired,
-  setFetchParams: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool,
-};
+export default TeamsListSidebar

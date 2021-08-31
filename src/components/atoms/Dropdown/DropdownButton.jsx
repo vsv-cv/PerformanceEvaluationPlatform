@@ -2,10 +2,21 @@ import React from 'react';
 import classes from './styles/index.module.scss';
 import classNames from 'classnames';
 import { getSelectedOptionsTitle } from './utils';
-import PropTypes from 'prop-types';
+import PropTypes, { string } from 'prop-types';
 
 const DropdownButtonInner = (
-  { label, isOpen, title, disabled, handleDropdownButtonClick, options, keys },
+  {
+    label,
+    isOpen,
+    title,
+    disabled,
+    handleDropdownButtonClick,
+    options,
+    keys,
+    hasSearch,
+    searchValue,
+    setSearchValue,
+  },
   ref
 ) => {
   const { dropdownButtonRef } = ref;
@@ -31,9 +42,19 @@ const DropdownButtonInner = (
       onClick={handleDropdownButtonClick}
       className={buttonClasses}
     >
-      <div className={titleClasses}>
-        {selectedOptionsTitle?.length ? selectedOptionsTitle : title}
-      </div>
+      {hasSearch ? (
+        <input
+          disabled={disabled}
+          placeholder={selectedOptionsTitle || title}
+          className={classes.input}
+          value={searchValue}
+          onChange={e => setSearchValue(e.target.value)}
+        />
+      ) : (
+        <div className={titleClasses}>
+          {selectedOptionsTitle?.length ? selectedOptionsTitle : title}
+        </div>
+      )}
 
       <svg className={svgClasses} viewBox="0 0 24 24" aria-hidden="true">
         <path d="M7 10l5 5 5-5z" />
@@ -61,4 +82,7 @@ DropdownButton.propTypes = {
   ),
   disabled: PropTypes.bool,
   handleDropdownButtonClick: PropTypes.func.isRequired,
+  hasSearch: PropTypes.bool,
+  searchValue: string,
+  setSearchValue: PropTypes.func,
 };

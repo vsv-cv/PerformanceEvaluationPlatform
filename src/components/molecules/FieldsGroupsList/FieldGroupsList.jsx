@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   FIELD_GROUPS_LIST_QUERY_KEY,
   FIELD_GROUPS_LIST_QUERY_URL,
@@ -27,6 +27,10 @@ export const FieldGroupsList = () => {
       fetchParams
     );
 
+  const refetchData = useCallback(() => {
+    refetch(FIELD_GROUPS_LIST_QUERY_KEY);
+  }, [refetch]);
+
   const formattedData = formatData(data);
   const listRows = getRows(formattedData);
 
@@ -39,13 +43,9 @@ export const FieldGroupsList = () => {
       TitleSetOrder: getSortingParam(sortingConfig, 'title'),
       FieldCountSetOrder: getSortingParam(sortingConfig, 'fieldCount'),
     }));
-
     setSortingParams(sortingConfig);
+    setTimeout(refetchData);
   };
-
-  useEffect(() => {
-    refetch(FIELD_GROUPS_LIST_QUERY_KEY);
-  }, [fetchParams]); // eslint-disable-line
 
   return isLoading ? (
     'Loading...'
@@ -72,6 +72,7 @@ export const FieldGroupsList = () => {
           setFetchParams={setFetchParams}
           isLoading={isFetching}
           onCleanFilterValues={handleCleanFilterValues}
+          refetchData={refetchData}
         />
       }
     />

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
+import axios from 'axios';
 import {
   SURVEYS_STATES_QUERY_KEY,
   SURVEYS_STATES_QUERY_URL,
@@ -7,7 +8,7 @@ import {
   LIST_COLUMNS,
   DEFAULT_FETCH_PARAMS,
 } from './const';
-import { formatData, getAssignees, getSupervisors } from './utils';
+import { formatData } from './utils';
 import { getSortingParam, getRows } from '../../../utils';
 import { ListWithFilters } from '../../templates/ListWithFilters';
 import { Button } from '../../atoms/Button';
@@ -15,7 +16,6 @@ import List from '../../atoms/List';
 import { SurveysListSidebar } from './SurveysListSidebar';
 import { useInfiniteQueryData } from '../../../hooks/useInfiniteQueryData';
 import { useQuery } from 'react-query';
-import axios from 'axios';
 
 export const SurveysList = () => {
   const [fetchParams, setFetchParams] = useState(DEFAULT_FETCH_PARAMS);
@@ -27,6 +27,7 @@ export const SurveysList = () => {
   const { data: surveysStatesData } = useQuery(SURVEYS_STATES_QUERY_KEY, () =>
     axios.get(SURVEYS_STATES_QUERY_URL).then(response => response.data)
   );
+  
   const states = surveysStatesData?.map(state => ({
     key: state.id,
     text: state.name,
@@ -39,10 +40,12 @@ export const SurveysList = () => {
       fetchParams
     );
 
+  const refetchData = useCallback(() => {
+    refetch(SURVEY_LIST_QUERY_KEY);
+  }, [refetch]);
+
   const formattedData = formatData(data);
   const listRows = getRows(formattedData);
-  const asignees = getAssignees(formattedData);
-  const supervisors = getSupervisors(formattedData);
 
   const handleClickOnSort = sortingConfig => {
     setFetchParams(prev => ({
@@ -50,13 +53,9 @@ export const SurveysList = () => {
       FormNameSortOrder: getSortingParam(sortingConfig, 'formName'),
       AssigneeSortOrder: getSortingParam(sortingConfig, 'assignee'),
     }));
-
     setSortingParams(sortingConfig);
+    setTimeout(refetchData);
   };
-
-  useEffect(() => {
-    refetch(SURVEY_LIST_QUERY_KEY);
-  }, [fetchParams]); // eslint-disable-line
 
   return isLoading ? (
     'Loading...'
@@ -84,8 +83,7 @@ export const SurveysList = () => {
           setFetchParams={setFetchParams}
           isLoading={isLoading || isFetching}
           states={states}
-          asignees={asignees}
-          supervisors={supervisors}
+          refetchData={refetchData}
         />
       }
     />

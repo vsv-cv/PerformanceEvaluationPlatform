@@ -1,7 +1,13 @@
-import { BASE_API_URL } from '../../api/const';
+export const USERS_LIST_QUERY_KEY = 'teamsList';
 
-export const FIELD_GROUPS_LIST_QUERY_KEY = 'teamsList';
-export const FIELD_GROUPS_LIST_QUERY_URL = `${BASE_API_URL}/teams`;
+export const DEFAULT_FETCH_PARAMS = {
+  Search: '',
+  ProjectIds: [],
+  OrderByTeamTitle: null,
+  OrderByProjectTitle: null,
+  OrderByTeamSize: null,
+  Take: 20,
+};
 
 export const LIST_COLUMNS = [
   {
@@ -10,7 +16,7 @@ export const LIST_COLUMNS = [
     sort: true,
   },
   {
-    id: 'projectIds',
+    id: 'projectTitle',
     name: 'Project',
     sort: true,
   },
@@ -24,18 +30,4 @@ export const LIST_COLUMNS = [
     name: 'Team Lead',
     sort: false,
   },
-  {
-    id: 'edit',
-    name: '',
-    sort: false,
-  },
 ];
-
-export const DEFAULT_FETCH_PARAMS = {
-    ProjectIds: [],
-    OrderByTeamTitle: 1,
-    OrderByProjectTitle: 1,
-    OrderByTeamSize: 1,
-    Search: '',
-    Take: 20,
-};

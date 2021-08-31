@@ -1,58 +1,44 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Input } from '../../atoms/Input/Input';
 import { Checkbox } from '../../atoms/Checkbox';
 import { Button } from '../../atoms/Button';
 
 const RolesListSidebar = ({
-  fetchParams: { Search, IsPrimary, UsersCountFrom, UsersCountTo },
+  fetchParams,
   setFetchParams,
   isLoading,
+  refetchData,
 }) => {
-  const [filterInputValues, setFilterInputValues] = useState({
-    search: Search,
-    isPrimary: !!IsPrimary,
-    countFrom: UsersCountFrom,
-    countTo: UsersCountTo,
-  });
   const shouldCleanFiltersRef = useRef(false);
+  const { Search, IsPrimary, UsersCountFrom, UsersCountTo } = fetchParams;
 
   const cleanInputValues = () => {
     shouldCleanFiltersRef.current = true;
-    setFilterInputValues({
-      search: '',
-      isPrimary: false,
-      countFrom: '',
-      countTo: '',
+    setFetchParams({
+      Search: '',
+      IsPrimary: false,
+      CountFrom: '',
+      CountTo: '',
     });
-  };
-
-  const handleApplyFilterValues = () => {
-    setFetchParams(prev => ({
-      ...prev,
-      Search: filterInputValues.search,
-      IsPrimary: filterInputValues.isPrimary || null,
-      UsersCountFrom: filterInputValues.countFrom,
-      UsersCountTo: filterInputValues.countTo,
-    }));
   };
 
   useEffect(() => {
     if (!shouldCleanFiltersRef.current) return;
 
-    handleApplyFilterValues();
+    setTimeout(refetchData);
     shouldCleanFiltersRef.current = false;
-  }, [filterInputValues]); //eslint-disable-line
+  }, [fetchParams]); //eslint-disable-line
 
   return (
     <>
       <Input
-        value={filterInputValues.search}
+        value={Search}
         label="Search by title"
         handleChange={e =>
-          setFilterInputValues(prev => ({
+          setFetchParams(prev => ({
             ...prev,
-            search: e.target.value,
+            Search: e.target.value,
           }))
         }
         type="search"
@@ -62,23 +48,23 @@ const RolesListSidebar = ({
 
       <Checkbox
         label="Primary only"
-        checked={filterInputValues.isPrimary}
+        checked={IsPrimary}
         onChange={() =>
-          setFilterInputValues(prev => ({
+          setFetchParams(prev => ({
             ...prev,
-            isPrimary: !prev.isPrimary,
+            IsPrimary: !prev.IsPrimary,
           }))
         }
         disabled={isLoading}
       />
 
       <Input
-        value={filterInputValues.countFrom}
+        value={UsersCountFrom}
         label="Count from"
         handleChange={e =>
-          setFilterInputValues(prev => ({
+          setFetchParams(prev => ({
             ...prev,
-            countFrom: e.target.value,
+            CountFrom: e.target.value,
           }))
         }
         type="number"
@@ -87,12 +73,12 @@ const RolesListSidebar = ({
       />
 
       <Input
-        value={filterInputValues.countTo}
+        value={UsersCountTo}
         label="Count to"
         handleChange={e =>
-          setFilterInputValues(prev => ({
+          setFetchParams(prev => ({
             ...prev,
-            countTo: e.target.value,
+            CountTo: e.target.value,
           }))
         }
         type="number"
@@ -102,7 +88,7 @@ const RolesListSidebar = ({
 
       <Button
         width="width"
-        onClick={handleApplyFilterValues}
+        onClick={refetchData}
         size="medium"
         disabled={isLoading}
       >
@@ -130,6 +116,7 @@ RolesListSidebar.propTypes = {
   }).isRequired,
   setFetchParams: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
+  refetchData: PropTypes.func,
 };
 
 export default RolesListSidebar;
