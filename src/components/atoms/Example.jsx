@@ -50,7 +50,7 @@ let errors = [
     },
 ]
 
-function Example() {
+const Example = () => {
     const { addToast, toastsList, deleteToastOnClick, deleteToastOnSetTime} = useToastsContext();
     const [name, setName] = useState("");
 
@@ -60,7 +60,7 @@ function Example() {
     };
 
     return (
-        <div className='buttons'>
+        <>
             <Toaster
                 toasts={toastsList}
                 deleteToastOnClick={deleteToastOnClick}
@@ -133,7 +133,7 @@ function Example() {
             <div>
                 <Errors errors={errors}/>
             </div>
-        </div>
+        </>
     )
 }
 

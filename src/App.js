@@ -16,6 +16,7 @@ import { DocumentsList } from './components/molecules/DocumentsList/DocumentsLis
 import { DeeplinksList } from './components/molecules/DeeplinksList/DeeplinksList';
 import { FieldsList } from './components/molecules/FieldsList/FieldsList';
 import MainContentWrapper from './components/atoms/MainContentWrapper/MainContentWrapper';
+import Example from './components/atoms/Example';
 
 
 const queryClient = new QueryClient({
@@ -36,7 +37,7 @@ const App = () => {
           <MainContentWrapper>
             <Switch>
               <Route exact path="/">
-                Home Page
+                <Example/>
               </Route>
               <Route exact path="/projects">
                 <ProjectsList/>
