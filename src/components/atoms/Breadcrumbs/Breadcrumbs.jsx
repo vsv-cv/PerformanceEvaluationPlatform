@@ -1,6 +1,6 @@
+import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
 import classes from './styles/index.module.scss';
 
 export const Breadcrumbs = ({ items }) => {
@@ -12,12 +12,12 @@ export const Breadcrumbs = ({ items }) => {
         });
 
         return (
-          <>
+          <React.Fragment key={item.text}>
             <li className={itemClassNames}>{item.text}</li>
             {items.length !== index + 1 && (
               <li className={classes.item}>{'>'}</li>
             )}
-          </>
+          </React.Fragment>
         );
       })}
     </ul>
@@ -25,8 +25,10 @@ export const Breadcrumbs = ({ items }) => {
 };
 
 Breadcrumbs.propTypes = {
-  items: PropTypes.shape({
-    text: PropTypes.string,
-    isSelected: PropTypes.bool,
-  }),
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      text: PropTypes.string,
+      isSelected: PropTypes.bool,
+    })
+  ),
 };
