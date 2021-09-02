@@ -44,12 +44,6 @@ export const ToastsProvider = ({ children }) => {
     const [toastsList, setToastsList] = useState(errors);
 
     const addToast = (newToast) => {
-    // let newToast = {
-    //         id: 9,
-    //         message: '9999',
-    //         time: '5000',
-    //         type: 'error',
-    //     }
         setToastsList(prevState => [...prevState, newToast ]);
     }
 

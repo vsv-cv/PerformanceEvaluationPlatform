@@ -9,13 +9,11 @@ import { formatDateToIsoDate } from './../../../utils/formatDateToIsoDate';
 
 const UsersListSidebar = (
     {
-        isLoading,
         fetchParams,
-        refetchData,
         setFetchParams,
+        setFetchData
     }
 ) => {
-
     const level =  [
             {
                 key: '1',
@@ -47,7 +45,7 @@ const UsersListSidebar = (
     ]
 
     const applyFilters = () => {
-        refetchData()
+        setFetchData(true)
     }
     
     const handleChange = (e) => {
@@ -66,12 +64,12 @@ const UsersListSidebar = (
     return (
         <>
             <Input
-                value={fetchParams.Search}
+                value={fetchParams.EmailOrName}
                 label="Search by email or name"
                 type="search"
-                name="Search"
+                name="EmailOrName"
                 handleChange={(e)=>handleChange(e)}
-                disabled={isLoading}
+                // disabled={isLoading}
             />
             <Dropdown
                 label="Role"
@@ -109,7 +107,7 @@ const UsersListSidebar = (
             />
             <Button
                 fullwidth
-                disabled={isLoading}
+                // disabled={isLoading}
                 onClick={applyFilters}
                 size={ButtonSize.SMALL}
                 theme={ButtonTheme.SUCCESS}
@@ -118,7 +116,7 @@ const UsersListSidebar = (
             </Button>
             <Button
                 fullwidth
-                disabled={isLoading}
+                // disabled={isLoading}
                 size={ButtonSize.SMALL}
                 onClick={handleCleanFilterValues}
             >

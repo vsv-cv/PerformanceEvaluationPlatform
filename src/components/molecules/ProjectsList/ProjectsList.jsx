@@ -10,7 +10,7 @@ import {
     CLEAN_PARAMS,
     LIST_COLUMNS,
     DEFAULT_FETCH_PARAMS,
-    USERS_LIST_QUERY_KEY,
+    PROJECTS_LIST_QUERY_KEY,
 } from './const';
 
 export const ProjectsList = () => {
@@ -20,14 +20,14 @@ export const ProjectsList = () => {
     const {
         data,
         refetch,
-        isFetching, } = useInfiniteQuery(USERS_LIST_QUERY_KEY, () => UsersApi.getUsers(fetchParams))
+        isFetching, } = useInfiniteQuery(PROJECTS_LIST_QUERY_KEY, () => UsersApi.getUsers(fetchParams))
     
     // useEffect(() => {
     //     refetch(USERS_LIST_QUERY_KEY)
     // }, [refetch, sortingParams])
 
     const refetchData = useCallback(() => {
-        refetch(USERS_LIST_QUERY_KEY);
+        refetch(PROJECTS_LIST_QUERY_KEY);
     }, [refetch]);
 
     const cleanFiltersValues = () => {

@@ -1,7 +1,6 @@
 import { formatDate, concatPages } from './../../../utils';
 
 export const formatData = data => {
-  
   if (!data) return;
 
   const allPages = concatPages(data?.pages);

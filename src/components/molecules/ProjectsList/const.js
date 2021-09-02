@@ -1,4 +1,4 @@
-export const USERS_LIST_QUERY_KEY = 'projectList';
+export const PROJECTS_LIST_QUERY_KEY = 'projectList';
 
 export const DEFAULT_FETCH_PARAMS = {
   Search: '',
