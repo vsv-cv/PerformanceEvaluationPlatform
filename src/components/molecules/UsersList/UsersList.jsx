@@ -12,8 +12,9 @@ import {
 } from './const';
 
 export const UsersList = () => {
+    const [isLoading, setIsLoading] = useState()
     const [fetchParams, setFetchParams] = useState(DEFAULT_FETCH_PARAMS);
-    const [aplyFilterFetchData, setAplyFilterFetchData] = useState(false)
+    const [aplyFilterFetchData, setAplyFilterFetchData] = useState({ fetch: false, isLoading: false})
 
     const onRowClick = (id) => {
         console.log(id)
@@ -33,6 +34,8 @@ export const UsersList = () => {
                 }
                 list={
                     <NewList
+                        isLoading={isLoading}
+                        setIsLoading={setIsLoading}
                         url={USER_URL}
                         columns={USERS_LIST_COLUMNS}
                         SORT_USERS_PARAMS={SORT_USERS_PARAMS}
@@ -46,9 +49,10 @@ export const UsersList = () => {
                 }
                 sidebar={
                     <UsersListSidebar
+                        isLoading={isLoading}
                         fetchParams={fetchParams}
                         setFetchParams={setFetchParams}
-                        setFetchData={setAplyFilterFetchData}
+                        setAplyFilterFetchData={setAplyFilterFetchData}
                     />
                 }
             />

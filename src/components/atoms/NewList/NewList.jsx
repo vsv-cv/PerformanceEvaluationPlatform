@@ -6,6 +6,7 @@ import { TableHead } from './TableHead';
 import { useFetch } from './../../../hooks/useFetch';
 
 export const NewList = ({
+  setIsLoading,
   url,
   columns,
   onRowClick,
@@ -16,14 +17,16 @@ export const NewList = ({
   aplyFilterFetchData,
   setAplyFilterFetchData,
 }) => {
-  
   const [fetching, setFetching] = useState(false)
   const [sortedRow, setSortedRow] = useState(SORT_USERS_PARAMS)
   const { data, fetchingData, getNextPage } = useFetch(url, fetchParams)
   const bottomTablet = useRef()
 
   useEffect(() => {
-    aplyFilterFetchData && fetchingData(url, fetchParams)
+    if (aplyFilterFetchData) {
+      setIsLoading(true)
+      fetchingData(url, fetchParams).then(response => setIsLoading(false))
+    }
     setAplyFilterFetchData(false)
   }, [aplyFilterFetchData])
 
@@ -32,8 +35,7 @@ export const NewList = ({
   }, [sortedRow])
 
   useEffect(() => {
-    fetching && getNextPage( url, fetchParams)
-    setFetching(false)
+    fetching && getNextPage(url, fetchParams).then(response => setFetching(false))
   }, [fetching])
 
   useEffect(() => {

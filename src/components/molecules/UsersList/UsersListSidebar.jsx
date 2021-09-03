@@ -7,11 +7,13 @@ import { Dropdown } from './../../atoms/Dropdown/Dropdown';
 import { Datepicker } from './../../atoms/Datepicker/Datepicker';
 import { formatDateToIsoDate } from './../../../utils/formatDateToIsoDate';
 
+
 const UsersListSidebar = (
     {
+        isLoading,
         fetchParams,
         setFetchParams,
-        setFetchData
+        setAplyFilterFetchData,
     }
 ) => {
     const level =  [
@@ -45,7 +47,7 @@ const UsersListSidebar = (
     ]
 
     const applyFilters = () => {
-        setFetchData(true)
+        setAplyFilterFetchData(true)
     }
     
     const handleChange = (e) => {
@@ -107,7 +109,7 @@ const UsersListSidebar = (
             />
             <Button
                 fullwidth
-                // disabled={isLoading}
+                disabled={isLoading}
                 onClick={applyFilters}
                 size={ButtonSize.SMALL}
                 theme={ButtonTheme.SUCCESS}
@@ -116,7 +118,7 @@ const UsersListSidebar = (
             </Button>
             <Button
                 fullwidth
-                // disabled={isLoading}
+                disabled={isLoading}
                 size={ButtonSize.SMALL}
                 onClick={handleCleanFilterValues}
             >

@@ -6,6 +6,8 @@ import qs from 'qs';
 export const useFetch = (url, fetchParams) => {
   const [data, setData] = useState();
   const [pageParams, setPageParams] = useState({ take: 1, skip: 3 });
+  const [status, setStatus] = useState(false)
+  
 
   useEffect(() => {
     url && fetchingData(url, fetchParams);
@@ -23,9 +25,11 @@ export const useFetch = (url, fetchParams) => {
           return response.data;
         });
       setData(newData);
+      console.log(status);
     } catch (e) {
       console.log(e);
     }
+    return 'response'
   }
 
   async function getNextPage(url, fetchParams) {
@@ -50,7 +54,8 @@ export const useFetch = (url, fetchParams) => {
     } catch (e) {
       console.log(e);
     }
+    return 'respons'
   }
 
-  return { data, fetchingData, getNextPage };
+  return { status, data, fetchingData, getNextPage };
 };
