@@ -1,0 +1,23 @@
+.closeSvgIconContainer {
+  width: 100%;
+  display: flex;
+}
+
+.closeSvgIcon {
+  transform: rotate(-0.03turn);
+  transition: transform ease-out 0.2s;
+
+  &:hover {
+    cursor: pointer;
+    transform: rotate(0);
+  }
+}
+
+.closeSvgIconButton {
+  background: transparent;
+  border: 0;
+  outline: 0;
+  height: 1rem;
+  width: 1rem;
+  padding: 0;
+}
