@@ -6,11 +6,11 @@ import { TableHead } from './TableHead';
 import { useFetch } from './../../../hooks/useFetch';
 
 export const NewList = ({
-  setIsLoading,
   url,
   columns,
   onRowClick,
   fetchParams,
+  setIsLoading,
   setFetchParams,
   SORT_USERS_PARAMS,
   SORT_USERS_FETCH_PARAMS,
@@ -91,7 +91,7 @@ export const NewList = ({
         className={styles['table']}
         style={{
           gridTemplateColumns:
-            'repeat(' + columns.length + ', minmax(100px, auto))',
+            `repeat( ${columns.length}, minmax(100px, auto))`,
         }}
       >
         <thead>

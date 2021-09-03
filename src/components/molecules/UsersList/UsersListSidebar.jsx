@@ -71,7 +71,7 @@ const UsersListSidebar = (
                 type="search"
                 name="EmailOrName"
                 handleChange={(e)=>handleChange(e)}
-                // disabled={isLoading}
+                disabled={isLoading}
             />
             <Dropdown
                 label="Role"

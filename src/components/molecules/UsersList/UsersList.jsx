@@ -34,7 +34,6 @@ export const UsersList = () => {
                 }
                 list={
                     <NewList
-                        isLoading={isLoading}
                         setIsLoading={setIsLoading}
                         url={USER_URL}
                         columns={USERS_LIST_COLUMNS}
