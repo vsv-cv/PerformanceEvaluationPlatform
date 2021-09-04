@@ -1,4 +1,4 @@
-export const USERS_LIST_QUERY_KEY = 'teamsList';
+export const TEAMS_LIST_QUERY_KEY = 'teamsList';
 
 export const DEFAULT_FETCH_PARAMS = {
   Search: '',

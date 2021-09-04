@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useMemo } from 'react'
 import List from '../../atoms/List'
 import { TeamsApi } from '../../../api/api'
 import { Button } from '../../atoms/Button'
@@ -10,7 +10,7 @@ import { ListWithFilters } from '../../templates/ListWithFilters'
 import {
     LIST_COLUMNS,
     DEFAULT_FETCH_PARAMS,
-    USERS_LIST_QUERY_KEY,
+    TEAMS_LIST_QUERY_KEY,
 } from './const';
 
 export const TeamsList = () => {
@@ -23,14 +23,14 @@ export const TeamsList = () => {
     const {
         data,
         refetch,
-        isFetching, } = useInfiniteQuery(USERS_LIST_QUERY_KEY, () => TeamsApi.getTeamsList(fetchParams))
+        isFetching, } = useInfiniteQuery(TEAMS_LIST_QUERY_KEY, () => TeamsApi.getTeamsList(fetchParams))
 
-    const formattedData = formatData(data);
-    const listRows = getRows(formattedData);
+    const formattedData = useMemo(() => formatData(data), [data])
+    const listRows = useMemo(() => getRows(formattedData), [formattedData])
     
-    const refetchData = useCallback(() => {
-        refetch(USERS_LIST_QUERY_KEY)
-    }, [refetch]);
+    const refetchData = () => {
+        refetch(TEAMS_LIST_QUERY_KEY)
+    }
 
     const handleClickOnSort = sortingConfig => {
         setFetchParams(prev => ({

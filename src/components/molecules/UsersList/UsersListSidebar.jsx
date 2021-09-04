@@ -7,15 +7,15 @@ import { Dropdown } from './../../atoms/Dropdown/Dropdown';
 import { Datepicker } from './../../atoms/Datepicker/Datepicker';
 import { formatDateToIsoDate } from './../../../utils/formatDateToIsoDate';
 
+
 const UsersListSidebar = (
     {
         isLoading,
         fetchParams,
-        refetchData,
         setFetchParams,
+        setAplyFilterFetchData,
     }
 ) => {
-
     const level =  [
             {
                 key: '1',
@@ -47,7 +47,7 @@ const UsersListSidebar = (
     ]
 
     const applyFilters = () => {
-        refetchData()
+        setAplyFilterFetchData(true)
     }
     
     const handleChange = (e) => {
@@ -66,10 +66,10 @@ const UsersListSidebar = (
     return (
         <>
             <Input
-                value={fetchParams.Search}
+                value={fetchParams.EmailOrName}
                 label="Search by email or name"
                 type="search"
-                name="Search"
+                name="EmailOrName"
                 handleChange={(e)=>handleChange(e)}
                 disabled={isLoading}
             />

@@ -1,17 +1,31 @@
-export const USERS_LIST_QUERY_KEY = 'usersList';
+export const USER_URL = 'https://pepwebappqa.azurewebsites.net/Users';
 
 export const DEFAULT_FETCH_PARAMS = {
   NextPEDate: '',
-  Search: '',
+  EmailOrName: '',
   RoleIds: [],
   StateIds: [],
   UserName: null,
   UserNextPE: null,
   UserPreviousPE: null,
-  Take: 20,
+  Take: 3,
+  Skip: 0,
 };
 
-export const LIST_COLUMNS = [
+export const SORT_USERS_FETCH_PARAMS = {
+  firstName: 'UserName',
+  nextPEDate: 'UserNextPE',
+  previousPEDate: 'UserPreviousPE',
+};
+
+export const SORT_USERS_PARAMS = {
+  firstName: 1,
+  nextPEDate: 1,
+  previousPEDate: 1,
+};
+
+
+export const USERS_LIST_COLUMNS = [
   {
     id: 'firstName',
     name: 'FirstName',
@@ -46,11 +60,13 @@ export const LIST_COLUMNS = [
     id: 'previousPEDate',
     name: 'Previous PE date',
     sort: true,
+    date: true,
   },
   {
     id: 'nextPEDate',
     name: 'Next PE date',
     sort: true,
+    date: true,
   },
   {
     id: 'stateName',

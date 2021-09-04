@@ -7,9 +7,9 @@ const instance = axios.create({
 });
 
 export const UsersApi = {
-  getUsersList(fetchParams) {
+  getUsersList(url, fetchParams) {
     return instance
-      .get(`Users`, {
+      .get(url, {
         params: {
           ...fetchParams,
         },
