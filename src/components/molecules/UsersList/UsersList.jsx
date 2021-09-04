@@ -14,7 +14,7 @@ import {
 export const UsersList = () => {
     const [isLoading, setIsLoading] = useState()
     const [fetchParams, setFetchParams] = useState(DEFAULT_FETCH_PARAMS);
-    const [aplyFilterFetchData, setAplyFilterFetchData] = useState({ fetch: false, isLoading: false})
+    const [aplyFilterFetchData, setAplyFilterFetchData] = useState(false)
 
     const onRowClick = (id) => {
         console.log(id)

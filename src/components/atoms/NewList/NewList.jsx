@@ -48,7 +48,6 @@ export const NewList = ({
   const scrolHanler = (e) => {
     if (e.target.documentElement.scrollHeight -
       (e.target.documentElement.scrollTop + window.innerHeight) < 1) {
-      console.log('scrol')
       setFetching(true)
     }
     // const { scrollTop, scrollHeight, clientHeight } = bottomTablet.current;
@@ -104,7 +103,6 @@ export const NewList = ({
             />)}
           </tr>
         </thead>
-
         <tbody>
           {data?.map(row => <Row
             row={row}
@@ -114,7 +112,6 @@ export const NewList = ({
           />)}
         </tbody>
       </table>
-
     </div>
   );
 }
