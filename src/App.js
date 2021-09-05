@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { SurveysList } from './components/molecules/SurveyList';
-import { Header } from './components/molecules/Header';
+import { HeaderEntry } from './components/molecules/Header';
 import { RolesList } from './components/molecules/RolesList';
 import { FieldGroupsList } from './components/molecules/FieldsGroupsList';
 import { FormsList } from './components/molecules/FormsList';
@@ -26,7 +26,7 @@ const App = () => {
     <Router>
       <QueryClientProvider client={queryClient}>
         <UsersProvider>
-          <Header />
+          <HeaderEntry />
           <MainContentWrapper>
             <Switch>
               <Route exact path="/">
