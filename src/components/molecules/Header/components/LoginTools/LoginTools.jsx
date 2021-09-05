@@ -4,7 +4,7 @@ import { authorizedUser } from './const';
 import HeaderBtn from '../HeaderBtn/HeaderBtn';
 import HeaderImg from '../HeaderImg/HeaderImg';
 import { TYPES } from '../HeaderImg/const';
-import userIcon from '../../../../icons/user.svg';
+import userIcon from '../../../../../icons/user.svg';
 import classNames from 'classnames';
 
 export default function LoginTools({ classes }) {

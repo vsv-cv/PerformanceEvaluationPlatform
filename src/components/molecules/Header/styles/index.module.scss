@@ -8,7 +8,6 @@
   top: 0;
   left: 0;
   width: 100vw;
-  z-index: 100;
   box-sizing: border-box;
   box-shadow: 0 0 20px -10px black;
 }
@@ -42,19 +41,19 @@
   .nav {
     grid-area: nav;
     display: block;
-    z-index: 20;
     height: calc(100vh - 70px);
-    width: 100vw;
-    background: rgba(0, 0, 0, 0.6);
+    width: 300px;
+    background: #007bc7;
     backdrop-filter: blur(10px);
     margin-top: 10px;
     position: absolute;
-    top: 0;
-    left: -10px;
-    transition: 0.8s;
+    top: -10px;
+    left: 0;
+    transition: 0.4s;
+    box-shadow: 0 10px 20px -10px black;
   }
 
   .nav_close {
-    transform: translateX(-100vw);
+    transform: translateX(-300px);
   }
 }

@@ -8,7 +8,7 @@ import classNames from 'classnames';
 export const Navbar = ({ classes }) => {
   const { location } = useHistory();
   const history = useHistory();
-  const [currentPath, setCurrentPath] = useState(location.pathname); //eslint-disable-line
+  const [, setCurrentPath] = useState(location.pathname);
   const navStyles = classNames(styles.navbar, classes);
 
   useEffect(() => {
@@ -18,7 +18,12 @@ export const Navbar = ({ classes }) => {
   }, [history]); //eslint-disable-line
 
   return (
-    <nav className={navStyles}>
+    <nav
+      className={navStyles}
+      onClickCapture={event => {
+        event.nativeEvent.stopImmediatePropagation();
+      }}
+    >
       {navItems?.map(navItem => {
         const isActive = location.pathname === navItem.link;
         return (
