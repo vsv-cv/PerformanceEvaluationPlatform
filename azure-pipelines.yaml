@@ -1,0 +1,64 @@
+trigger:
+  branches:
+    include:
+    - master
+
+pr:
+  branches:
+    include:
+    - master
+
+stages:
+  - stage: build
+    displayName: Build react app
+
+    jobs:
+      - job: Build
+        displayName: Build
+        pool: Default
+
+        steps:
+          - checkout: self
+
+          - script: |
+              yarn install
+            displayName: Install packages
+
+          - script: |
+              yarn build
+            displayName: Build react app
+          
+          - task: PublishBuildArtifacts@1
+            inputs:
+              pathtoPublish: $(Build.SourcesDirectory)/build
+              artifactName: drop
+            displayName: Publish react app
+
+  - stage: deploy_to_qa
+    displayName: Deploy to QA
+    dependsOn: build
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+
+    jobs:
+      - deployment: DeployToQA
+        displayName: Deploy to QA
+        environment: qa
+        pool: default
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+              - checkout: self
+
+              - download: current
+                artifact: drop
+
+              - task: AzureFileCopy@2
+                displayName: Deploy to Blob storage
+                inputs:
+                  SourcePath: $(Pipeline.Workspace)/drop
+                  azureSubscription: PayAsYouGo
+                  Destination: AzureBlob
+                  storage: pepuiqa 
+                  ContainerName: $web
+                  cleanTargetBeforeCopy: true

@@ -27,6 +27,7 @@ export const SurveysList = () => {
   const { data: surveysStatesData } = useQuery(SURVEYS_STATES_QUERY_KEY, () =>
     axios.get(SURVEYS_STATES_QUERY_URL).then(response => response.data)
   );
+  
   const states = surveysStatesData?.map(state => ({
     key: state.id,
     text: state.name,
