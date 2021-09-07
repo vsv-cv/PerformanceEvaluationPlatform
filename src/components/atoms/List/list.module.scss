@@ -3,32 +3,29 @@ $text-color-1: grey;
 $disabled-color: #acaeb4;
 $main-color: #007cc7;
 
-.table__container{
+.table__container {
   height: 100%;
   overflow: scroll;
 }
 
-.table{
+.table {
   display: grid;
   border-collapse: collapse;
   min-width: 100%;
 }
 
-thead,
-tbody,
-tr {
+.thead,
+.tbody,
+.tr {
   display: contents;
 }
 
-th,
-td {
+.th,
+.td {
   padding: 15px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
-th {
+.th {
   position: sticky;
   top: 0;
   background: $main-color;
@@ -39,44 +36,69 @@ th {
   cursor: default;
 }
 
-th:last-child {
+.th:last-child {
   border: 0;
 }
 
-td {
+.td {
   padding-top: 10px;
   padding-bottom: 10px;
   color: #808080;
   cursor: default;
 }
 
-.table tr th:hover{
+.table .tr .th:hover {
   color: #ccd3d8;
 }
 
-tr:nth-child(even) td {
+.tr:nth-child(even) .td {
   background: #f8f6ff;
 }
 
-tr:hover td{
+.tr:hover .td {
   background: #e4e4e4 !important;
 }
 
-.sort_column{
+.sort_column {
   cursor: pointer;
   display: flex;
 }
 
-.sort_icon{
+.sort_icon {
   margin-left: 20px;
   height: 100%;
-  width: 10px;
+  width: 20px;
+  right: 0;
+  top: 0;
+  position: absolute;
+  display: block;
 }
 
-.sort_icon_uncheck{
-  opacity: .4;
+.sort_icon_uncheck {
+  opacity: 0.4;
 }
 
-.sort_icon img{
+.sort_icon img {
   height: 100%;
+}
+
+.sort_block {
+  position: relative;
+  width: 100%;
+}
+
+.sort_text,
+.theader_text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}
+
+.sort_text {
+  width: calc(100% - 30px);
+}
+
+.theader_text {
+  width: 100%;
 }

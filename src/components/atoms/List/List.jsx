@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import styles from './list.module.scss';
 import PropTypes from 'prop-types';
 
-import descendingSortIcon from './descending-sort.svg';
-import ascendingSortIcon from './ascending-sort.svg';
+import descendingSortIcon from '../../../icons/descending-sort.svg';
+import ascendingSortIcon from '../../../icons/ascending-sort.svg';
 import { getDataForTable } from './tools';
 
 export const sortUp = 'up';
 export const sortDown = 'down';
 
-export default function List({
+export const List = ({
   columns,
   rows,
   sortedColumn,
@@ -17,7 +17,7 @@ export default function List({
   onSortChange,
   onRowClick,
   hasNextPage = true,
-}) {
+}) => {
   const [isDataLoad, setIsDataLoad] = useState(true);
   useEffect(() => {
     setIsDataLoad(true);
@@ -49,7 +49,6 @@ export default function List({
   };
 
   const grid = getDataForTable(columns, rows);
-  // console.log(rows);
 
   return (
     <div className={styles.table__container} onScroll={onTableScroll}>
@@ -60,54 +59,64 @@ export default function List({
             'repeat(' + columns.length + ', minmax(100px, auto))',
         }}
       >
-        <thead>
-          <tr>
+        <thead className={styles.thead}>
+          <tr className={styles.tr}>
             {columns.map(item => {
               const { id, name, sort } = item;
               return sort ? (
                 <th
                   key={id}
-                  className={styles.sort_column}
+                  className={styles.sort_column + ' ' + styles.th}
                   onClick={() => onClickSort(id)}
                 >
-                  <span>{name}</span>
-                  {sortedColumn.columnId === id ? (
-                    sortedColumn.type === sortUp ? (
-                      <span className={styles.sort_icon}>
-                        <img src={descendingSortIcon} alt="" />
-                      </span>
-                    ) : (
-                      sortedColumn.type === sortDown && (
+                  <div className={styles.sort_block}>
+                    <span className={styles.sort_text}>{name}</span>
+                    {sortedColumn.columnId === id ? (
+                      sortedColumn.type === sortUp ? (
                         <span className={styles.sort_icon}>
-                          <img src={ascendingSortIcon} alt="" />
+                          <img src={descendingSortIcon} alt="" />
                         </span>
+                      ) : (
+                        sortedColumn.type === sortDown && (
+                          <span className={styles.sort_icon}>
+                            <img src={ascendingSortIcon} alt="" />
+                          </span>
+                        )
                       )
-                    )
-                  ) : (
-                    <span
-                      className={
-                        styles.sort_icon + ' ' + styles.sort_icon_uncheck
-                      }
-                    >
-                      <img src={ascendingSortIcon} alt="" />
-                    </span>
-                  )}
+                    ) : (
+                      <span
+                        className={
+                          styles.sort_icon + ' ' + styles.sort_icon_uncheck
+                        }
+                      >
+                        <img src={ascendingSortIcon} alt="" />
+                      </span>
+                    )}
+                  </div>
                 </th>
               ) : (
-                <th key={id}>
-                  <span>{name}</span>
+                <th key={id} className={styles.th}>
+                  <span className={styles.theader_text}>{name}</span>
                 </th>
               );
             })}
           </tr>
         </thead>
-        <tbody>
+        <tbody className={styles.tbody}>
           {grid.map(row => {
             return (
-              <tr key={row.id} onClick={e => rowClick(row.id, e)}>
+              <tr
+                className={styles.tr}
+                key={row.id}
+                onClick={e => rowClick(row.id, e)}
+              >
                 {columns.map(column => {
                   const key = row.id + ' ' + column.id;
-                  return <td key={key}>{row.items[column.id]}</td>;
+                  return (
+                    <td className={styles.td} key={key}>
+                      {row.items[column.id]}
+                    </td>
+                  );
                 })}
               </tr>
             );
@@ -117,7 +126,7 @@ export default function List({
       {hasNextPage && !isDataLoad && <span>LOADING...</span>}
     </div>
   );
-}
+};
 
 List.propTypes = {
   columns: PropTypes.arrayOf(
