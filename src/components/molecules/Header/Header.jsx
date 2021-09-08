@@ -32,7 +32,6 @@ export const Header = () => {
     setShowTopBarNav(window.innerWidth > WIDTH_BREAKPOINT);
     window.addEventListener('resize', () => {
       setShowTopBarNav(window.innerWidth > WIDTH_BREAKPOINT);
-      handleMenuClose();
     });
   }, []); //eslint-disable-line
 
@@ -74,6 +73,11 @@ export const Header = () => {
     }, 400);
     setCloseSetTimeout(close);
   };
+
+  if (!isMenuClosed && window.innerWidth > WIDTH_BREAKPOINT) {
+    setCanAnimateMenu(false);
+    setIsMenuClosed(true);
+  }
 
   return (
     <div className={styles.header}>
