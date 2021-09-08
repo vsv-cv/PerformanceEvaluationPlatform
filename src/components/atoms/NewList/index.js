@@ -1,1 +1,0 @@
-export { NewList } from './NewList';
