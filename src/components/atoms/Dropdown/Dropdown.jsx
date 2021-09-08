@@ -21,7 +21,7 @@ export const Dropdown = ({
   multiselect = false,
   hasSearch = false,
 }) => {
-  if (!multiselect && keys.length > 1) {
+  if (!multiselect && keys?.length > 1) {
     throw new Error('Expected only one selected option in dropdown');
   }
 
@@ -50,7 +50,6 @@ export const Dropdown = ({
     }
 
     createPortalContainer();
-
     setIsOpen(true);
   };
 

@@ -31,7 +31,7 @@ export const DropdownContent = ({
       setSearchValue('');
       nextKeys = manageMultiselectKeys(keys, key);
     } else {
-      nextKeys = [key];
+      nextKeys = keys.includes(key) ? [] : [key];
       handleClose();
     }
 
