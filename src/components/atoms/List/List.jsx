@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import descendingSortIcon from '../../../icons/descending-sort.svg';
 import ascendingSortIcon from '../../../icons/ascending-sort.svg';
 import { getDataForTable } from './tools';
+import classNames from 'classnames';
 
 export const sortUp = 'up';
 export const sortDown = 'down';
@@ -19,9 +20,6 @@ export const List = ({
   hasNextPage = true,
 }) => {
   const [isDataLoad, setIsDataLoad] = useState(true);
-  useEffect(() => {
-    setIsDataLoad(true);
-  }, [rows.length]);
 
   const onClickSort = id => {
     let newSorting = { columnId: id };
@@ -50,6 +48,10 @@ export const List = ({
 
   const grid = getDataForTable(columns, rows);
 
+  useEffect(() => {
+    setIsDataLoad(true);
+  }, [rows.length]);
+
   return (
     <div className={styles.table__container} onScroll={onTableScroll}>
       <table
@@ -71,25 +73,28 @@ export const List = ({
                 >
                   <div className={styles.sort_block}>
                     <span className={styles.sort_text}>{name}</span>
-                    {sortedColumn.columnId === id ? (
-                      sortedColumn.type === sortUp ? (
-                        <span className={styles.sort_icon}>
-                          <img src={descendingSortIcon} alt="" />
-                        </span>
-                      ) : (
-                        sortedColumn.type === sortDown && (
-                          <span className={styles.sort_icon}>
-                            <img src={ascendingSortIcon} alt="" />
-                          </span>
-                        )
-                      )
-                    ) : (
+
+                    {sortedColumn.columnId === id && (
+                      <span className={styles.sort_icon}>
+                        <img
+                          src={
+                            sortedColumn.type === sortUp
+                              ? descendingSortIcon
+                              : ascendingSortIcon
+                          }
+                          alt=""
+                        />
+                      </span>
+                    )}
+
+                    {sortedColumn.columnId !== id && (
                       <span
-                        className={
-                          styles.sort_icon + ' ' + styles.sort_icon_uncheck
-                        }
+                        className={classNames(
+                          styles.sort_icon,
+                          styles.sort_icon_uncheck
+                        )}
                       >
-                        <img src={ascendingSortIcon} alt="" />
+                        <img src={descendingSortIcon} alt="" />
                       </span>
                     )}
                   </div>
