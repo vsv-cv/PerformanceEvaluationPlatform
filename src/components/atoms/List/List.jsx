@@ -58,7 +58,7 @@ export const List = ({
         className={styles['table']}
         style={{
           gridTemplateColumns:
-            'repeat(' + columns.length + ', minmax(100px, auto))',
+            'repeat(' + columns.length + ', minmax(auto, auto))',
         }}
       >
         <thead className={styles.thead}>
@@ -70,6 +70,7 @@ export const List = ({
                   key={id}
                   className={styles.sort_column + ' ' + styles.th}
                   onClick={() => onClickSort(id)}
+                  title={name}
                 >
                   <div className={styles.sort_block}>
                     <span className={styles.sort_text}>{name}</span>
@@ -100,7 +101,7 @@ export const List = ({
                   </div>
                 </th>
               ) : (
-                <th key={id} className={styles.th}>
+                <th key={id} className={styles.th} title={name}>
                   <span className={styles.theader_text}>{name}</span>
                 </th>
               );
