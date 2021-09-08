@@ -75,6 +75,7 @@ export const Header = () => {
   };
 
   if (!isMenuClosed && window.innerWidth > WIDTH_BREAKPOINT) {
+    document.querySelector('.navbar-portal')?.remove();
     setCanAnimateMenu(false);
     setIsMenuClosed(true);
   }
