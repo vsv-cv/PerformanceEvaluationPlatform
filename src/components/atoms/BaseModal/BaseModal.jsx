@@ -8,13 +8,13 @@ ReactModal.setAppElement('#root');
 export const BaseModal = props => {
   const { size } = props;
 
-  const overlayClassNames = {
+  const overlayClasses = {
     base: classes.modalOverlay,
     afterOpen: classes.modalOverlay_open,
     beforeClose: classes.modalOverlay_closed,
   };
 
-  const modalContentClassNames = classNames(classes.modalContent, {
+  const modalContentClasses = classNames(classes.modalContent, {
     [classes.modalContent_tiny]: size === 'tiny',
     [classes.modalContent_small]: size === 'small',
     [classes.modalContent_medium]: size === 'medium',
@@ -24,8 +24,8 @@ export const BaseModal = props => {
 
   return (
     <ReactModal
-      overlayClassName={overlayClassNames}
-      className={modalContentClassNames}
+      overlayClassName={overlayClasses}
+      className={modalContentClasses}
       closeTimeoutMS={200}
       {...props}
     >

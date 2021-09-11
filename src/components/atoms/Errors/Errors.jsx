@@ -1,24 +1,23 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import styles from './errors.module.scss'
+import classes from './errors.module.scss';
 
-export const Errors = ({errors}) => {
-    return (
-        <div className={styles.errors}>
-            {errors.map(e => {
-                return (
-                    <div key={e.id} className={styles.error} >
-                        {e.icon && <i className={e.icon} />}
-                        {e.message}</div>
-                )
-            })} 
-        </div>
-    )
-}
+export const Errors = ({ errors }) => {
+  return (
+    <div className={classes.errors}>
+      {errors.map(e => {
+        return (
+          <div key={e.id} className={classes.error}>
+            {e.icon && <i className={e.icon} />}
+            {e.message}
+          </div>
+        );
+      })}
+    </div>
+  );
+};
 
 Errors.propTypes = {
-    errors: PropTypes.array.isRequired,
-}
-
-
+  errors: PropTypes.array.isRequired,
+};

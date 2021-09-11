@@ -35,11 +35,11 @@ export const Dropdown = ({
   }, [searchValue, options]);
 
   const createPortalContainer = () => {
-    if (document.querySelector('.dropdown-portal')) {
+    if (document.querySelector('dropdown-portal')) {
       return;
     }
     const portalContainer = document.createElement('div');
-    portalContainer.className = 'dropdown-portal';
+    portalContainer.className = classes.dropdownPortal;
 
     document.body.appendChild(portalContainer);
   };

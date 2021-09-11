@@ -36,7 +36,7 @@ export const Wizard = ({
     isSelected: screen.id === activeScreenId,
   }));
 
-  const buttonWrapperClassNames = classNames(classes.buttonWrapper, {
+  const buttonWrapperClasses = classNames(classes.buttonWrapper, {
     [classes.buttonWrapper_atFirstScreen]: isFirstScreen,
   });
 
@@ -53,7 +53,7 @@ export const Wizard = ({
           </button>
         </div>
         {activeScreenComponent}
-        <div className={buttonWrapperClassNames}>
+        <div className={buttonWrapperClasses}>
           {!isFirstScreen && (
             <Button disabled={!allowPrevious}>
               {previousButtonText || 'previous'}

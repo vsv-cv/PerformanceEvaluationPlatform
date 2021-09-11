@@ -1,102 +1,46 @@
-import React from 'react';
-import LoginTools from './components/LoginTools/LoginTools';
-import { Navbar, VerticalNavbarPortal } from './components/Navbar';
-import styles from './styles/index.module.scss';
-import mainLogo from '../../../icons/mainLogo.png';
-import closeImg from '../../../icons/close.svg';
-import menuImg from '../../../icons/menu.svg';
-import HeaderImg from './components/HeaderImg/HeaderImg';
-import { useState, useEffect } from 'react';
-import classNames from 'classnames';
-import { useHistory } from 'react-router-dom';
-import { WIDTH_BREAKPOINT } from './const';
+import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
+import { FlexGrid } from '../../atoms/FlexGrid';
+import { HeaderLeftNavigation } from './components/HeaderLeftNavigation/HeaderLeftNavigation';
+import { HeaderTopNavigation } from './components/HeaderTopNavigation';
+import { HeaderUserSection } from './components/HeaderUserSection';
+import {
+  SHOW_TOP_NAV_WIDTH_BREAKPOINT,
+  SHOW_LOGO_WIDTH_BREAKPOINT,
+} from './const';
+import { HeaderLogo } from './components/HeaderLogo';
+import classes from './styles/index.module.scss';
 
-export const Header = () => {
-  const history = useHistory();
-  const [isMenuClosed, setIsMenuClosed] = useState(true);
-  const [showTopBarNav, setShowTopBarNav] = useState();
-  const [canAnimateMenu, setCanAnimateMenu] = useState(false);
-  const [closeSetTimeout, setCloseSetTimeout] = useState();
-  const navStyles = classNames(styles.nav, {
-    [styles.nav_close]: !canAnimateMenu,
-  });
-  const icon = isMenuClosed ? menuImg : closeImg;
+const HeaderContent = () => {
+  const [showTopNavigation, setShowTopNavigation] = useState(
+    window.innerWidth > SHOW_TOP_NAV_WIDTH_BREAKPOINT
+  );
+  const [showLogo, setShowLogo] = useState(
+    window.innerWidth > SHOW_LOGO_WIDTH_BREAKPOINT
+  );
 
   useEffect(() => {
-    return history.listen(() => {
-      handleMenuClose();
+    return window.addEventListener('resize', () => {
+      setShowTopNavigation(window.innerWidth > SHOW_TOP_NAV_WIDTH_BREAKPOINT);
+      setShowLogo(window.innerWidth > SHOW_LOGO_WIDTH_BREAKPOINT);
     });
-  }, [history]); //eslint-disable-line
-
-  useEffect(() => {
-    setShowTopBarNav(window.innerWidth > WIDTH_BREAKPOINT);
-    window.addEventListener('resize', () => {
-      setShowTopBarNav(window.innerWidth > WIDTH_BREAKPOINT);
-      handleMenuClose();
-    });
-  }, []); //eslint-disable-line
-
-  const createPortalContainer = () => {
-    if (document.querySelector('.navbar-portal')) {
-      return;
-    }
-
-    const portalContainer = document.createElement('div');
-    portalContainer.className = 'navbar-portal';
-    portalContainer.addEventListener('click', handleMenuClose);
-
-    document.body.appendChild(portalContainer);
-  };
-
-  const handleClickOnBurgerButton = () => {
-    isMenuClosed && !canAnimateMenu && handleMenuOpen();
-    !isMenuClosed && canAnimateMenu && handleMenuClose();
-
-    if (!isMenuClosed && !canAnimateMenu) {
-      clearTimeout(closeSetTimeout);
-      handleMenuOpen();
-    }
-  };
-
-  const handleMenuOpen = () => {
-    setIsMenuClosed(false);
-    createPortalContainer();
-    setTimeout(() => {
-      setCanAnimateMenu(true);
-    });
-  };
-
-  const handleMenuClose = () => {
-    setCanAnimateMenu(false);
-    const close = setTimeout(() => {
-      document.querySelector('.navbar-portal')?.remove();
-      setIsMenuClosed(true);
-    }, 400);
-    setCloseSetTimeout(close);
-  };
+  }, []);
 
   return (
-    <div className={styles.header}>
-      <HeaderImg
-        classes={styles.burger}
-        image={icon}
-        style={{ display: 'none' }}
-        onClick={handleClickOnBurgerButton}
-      />
-      <HeaderImg
-        classes={styles.logo}
-        link="/main"
-        image={mainLogo}
-        style={{
-          background: '#ffffff',
-          padding: '5px',
-          boxSizing: 'border-box',
-          borderRadius: '3px',
-        }}
-      />
-      {showTopBarNav && <Navbar classes={navStyles} />}
-      {!isMenuClosed && <VerticalNavbarPortal classes={navStyles} />}
-      <LoginTools classes={styles.profile} />
-    </div>
+    <FlexGrid spaceBetween className={classes.headerWrapper}>
+      <FlexGrid gap="1rem">
+        {!showTopNavigation && <HeaderLeftNavigation />}
+        {showLogo && <HeaderLogo />}
+      </FlexGrid>
+      {showTopNavigation && <HeaderTopNavigation />}
+      <HeaderUserSection />
+    </FlexGrid>
+  );
+};
+
+export const Header = () => {
+  return ReactDOM.createPortal(
+    <HeaderContent />,
+    document.getElementById('header')
   );
 };

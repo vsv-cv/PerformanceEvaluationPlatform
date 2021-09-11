@@ -7,13 +7,13 @@ export const Breadcrumbs = ({ items }) => {
   return (
     <ul className={classes.container}>
       {items?.map((item, index) => {
-        const itemClassNames = classNames(classes.item, classes.item_canGrow, {
+        const itemClasses = classNames(classes.item, classes.item_canGrow, {
           [classes.item_selected]: item.isSelected,
         });
 
         return (
           <React.Fragment key={item.text}>
-            <li className={itemClassNames}>{item.text}</li>
+            <li className={itemClasses}>{item.text}</li>
             {items.length !== index + 1 && (
               <li className={classes.item}>{'>'}</li>
             )}
