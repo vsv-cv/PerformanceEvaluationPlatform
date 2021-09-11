@@ -1,4 +1,4 @@
-import { BASE_API_URL } from '../../api/const';
+import { BASE_API_URL } from '../../../api';
 
 export const PROJECTS_LIST_QUERY_KEY = 'projectsList';
 export const PROJECTS_LIST_QUERY_URL = `${BASE_API_URL}/projects`;

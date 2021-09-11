@@ -1,4 +1,4 @@
-import { BASE_API_URL } from '../../api/const';
+import { BASE_API_URL } from '../../../api';
 
 export const FORM_TEMPLATES_STATUS_QUERY_KEY = 'formTemplatesStates';
 export const FORM_TEMPLATES_STATUS_QUERY_URL = `${BASE_API_URL}/formtemplates/statuses`;

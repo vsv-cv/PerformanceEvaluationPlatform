@@ -1,4 +1,4 @@
-import { BASE_API_URL } from '../../api/const';
+import { BASE_API_URL } from '../../../api';
 
 export const ROLES_LIST_QUERY_KEY = 'rolesList';
 export const ROLES_LIST_QUERY_URL = `${BASE_API_URL}/roles`;

@@ -1,4 +1,4 @@
-import { BASE_API_URL } from '../../api/const';
+import { BASE_API_URL } from '../../../api';
 
 export const FIELDS_LIST_QUERY_KEY = 'fieldsList';
 export const FIELDS_LIST_QUERY_URL = `${BASE_API_URL}/fields`;

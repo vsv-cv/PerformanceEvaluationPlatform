@@ -1,4 +1,4 @@
-import { BASE_API_URL } from '../../api/const';
+import { BASE_API_URL } from '../../../api';
 
 export const DEEPLINKS_STATES_QUERY_KEY = 'deeplinksStates';
 export const DEEPLINKS_STATES_QUERY_URL = `${BASE_API_URL}/deeplinks/states`;
