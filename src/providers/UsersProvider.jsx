@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import { BASE_API_URL } from '../components/api/const';
+import { BASE_API_URL } from '../api';
 
 export const UsersContext = React.createContext();
 
