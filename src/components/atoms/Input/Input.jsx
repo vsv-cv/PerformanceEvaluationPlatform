@@ -1,8 +1,7 @@
 import React from 'react';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
-
-import classes from './input.module.scss';
+import classNames from 'classnames';
+import classes from './styles/index.module.scss';
 
 export const Input = ({
   icon,
@@ -13,7 +12,7 @@ export const Input = ({
   disabled,
   handleChange,
 }) => {
-  const containerClasses = classNames([classes.conteiner], {
+  const containerClasses = classNames([classes.container], {
     [classes.disabled]: disabled,
   });
 

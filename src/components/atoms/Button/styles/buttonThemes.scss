@@ -1,0 +1,54 @@
+.primary {
+  color: $withe-color;
+  background: $main-color;
+  border: 1px solid $main-color;
+  transition: color 0.3s ease, background 0.3s ease;
+
+  &:hover {
+    color: $withe-color;
+    background: $primary-hover;
+  }
+
+  &:disabled {
+    color: $grey-dark-color;
+    background: $withe-color;
+    border-color: $grey-light-color;
+  }
+}
+
+.secondary {
+  color: $withe-color;
+  background: $secondary-color;
+  border: 1px solid $secondary-color;
+  transition: color 0.3s ease, background 0.3s ease;
+
+  &:hover {
+    color: $withe-color;
+    background: $secondary-hover;
+    border: 1px solid $secondary-hover;
+  }
+
+  &:disabled {
+    color: $grey-dark-color;
+    background: $withe-color;
+    border-color: $grey-light-color;
+  }
+}
+
+.success {
+  color: $withe-color;
+  background: $success-color;
+  border: 1px solid $success-color;
+  transition: color 0.3s ease, background 0.3s ease;
+
+  &:hover {
+    color: $withe-color;
+    background: $success-hover;
+  }
+
+  &:disabled {
+    color: $grey-dark-color;
+    background: $withe-color;
+    border-color: $grey-light-color;
+  }
+}

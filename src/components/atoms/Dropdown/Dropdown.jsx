@@ -27,6 +27,7 @@ export const Dropdown = ({
 
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+  const dropdownPortalRef = useRef();
   const dropdownButtonRef = useRef(null);
   const filteredBySearchOptions = useMemo(() => {
     return options?.filter(option => {
@@ -35,13 +36,13 @@ export const Dropdown = ({
   }, [searchValue, options]);
 
   const createPortalContainer = () => {
-    if (document.querySelector('dropdown-portal')) {
+    if (dropdownPortalRef.current) {
       return;
     }
-    const portalContainer = document.createElement('div');
-    portalContainer.className = classes.dropdownPortal;
+    dropdownPortalRef.current = document.createElement('div');
+    dropdownPortalRef.current.className = classes.dropdownPortal;
 
-    document.body.appendChild(portalContainer);
+    document.body.appendChild(dropdownPortalRef.current);
   };
 
   const handleDropdownButtonClick = e => {
@@ -54,7 +55,8 @@ export const Dropdown = ({
   };
 
   const handleClose = useCallback(() => {
-    document.querySelector('.dropdown-portal')?.remove();
+    dropdownPortalRef.current?.remove();
+    dropdownPortalRef.current = null;
     setSearchValue('');
     setIsOpen(false);
   }, [setIsOpen]);
@@ -91,7 +93,7 @@ export const Dropdown = ({
       />
 
       {isOpen && (
-        <DropdownPortal>
+        <DropdownPortal ref={dropdownPortalRef}>
           <DropdownContent
             options={filteredBySearchOptions}
             callingComponent={dropdownButtonRef.current}

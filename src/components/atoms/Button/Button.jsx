@@ -1,27 +1,9 @@
 import React from 'react';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
-
-import classes from './button.module.scss';
-
-export const ButtonType = {
-  RESET: 'reset',
-  BUTTON: 'button',
-  SUBMIT: 'submit',
-};
-
-export const ButtonTheme = {
-  SUCCESS: 'success',
-  PRIMARY: 'primary',
-  SECONDARY: 'secondary',
-};
-
-export const ButtonSize = {
-  SMALL: 'small',
-  MEDIUM: 'medium',
-  LARGE: 'large',
-  DEFAULT: 'default',
-};
+import classNames from 'classnames';
+import { BaseButton } from '../BaseButton';
+import { ButtonType, ButtonTheme, ButtonSize } from './const';
+import classes from './styles/index.module.scss';
 
 export const Button = ({
   icon,
@@ -31,17 +13,17 @@ export const Button = ({
   onClick,
   children,
   disabled,
-  iconType,
+  iconOnly,
   fullwidth,
   className,
 }) => {
   const sizeType = {
-    small: iconType ? 'circleSmall' : 'small',
-    medium: iconType ? 'circleMedium' : 'medium',
-    large: iconType ? 'circleLarge' : 'large',
+    small: iconOnly ? 'circleSmall' : 'small',
+    medium: iconOnly ? 'circleMedium' : 'medium',
+    large: iconOnly ? 'circleLarge' : 'large',
   };
 
-  const classProps = classNames(
+  const buttonClasses = classNames(
     classes.button,
     classes[theme],
     classes[sizeType[size]],
@@ -53,16 +35,15 @@ export const Button = ({
 
   return (
     <>
-      <button
-        title={iconType ? children : 'button'}
+      <BaseButton
         type={type}
         onClick={onClick}
         disabled={disabled}
-        className={classProps}
+        className={buttonClasses}
       >
         {icon && <i className={icon} />}
-        {!iconType && children}
-      </button>
+        {!iconOnly && children}
+      </BaseButton>
     </>
   );
 };
@@ -72,7 +53,7 @@ Button.propTypes = {
   type: PropTypes.string,
   size: PropTypes.string,
   theme: PropTypes.string,
-  iconType: PropTypes.bool,
+  iconOnly: PropTypes.bool,
   disabled: PropTypes.bool,
   fullwidth: PropTypes.bool,
   children: PropTypes.string,
@@ -84,7 +65,7 @@ Button.defaultProps = {
   icon: '',
   children: '',
   className: '',
-  iconType: false,
+  iconOnly: false,
   disabled: false,
   fullwidth: false,
   onClick: () => {},
