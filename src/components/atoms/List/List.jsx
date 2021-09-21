@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import classes from './list.module.scss';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-
+import classNames from 'classnames';
+import { getDataForTable } from './utils';
 import descendingSortIcon from '../../../icons/descending-sort.svg';
 import ascendingSortIcon from '../../../icons/ascending-sort.svg';
-import { getDataForTable } from './tools';
-import classNames from 'classnames';
+import classes from './styles/index.module.scss';
 
-export const sortUp = 'up';
-export const sortDown = 'down';
+import { SORT_TYPE_UP, SORT_TYPE_DOWN, SCROLL_HEIGHT_TRIGGER } from './const';
 
 export const List = ({
   columns,
@@ -19,37 +17,39 @@ export const List = ({
   onRowClick,
   hasNextPage = true,
 }) => {
-  const [isDataLoad, setIsDataLoad] = useState(true);
+  const canFetchMoreOnScrollRef = useRef(true);
 
-  const onClickSort = id => {
+  const handleClickOnSort = id => {
     let newSorting = { columnId: id };
+
     if (sortedColumn.columnId === id) {
-      newSorting.type = sortedColumn.type === sortUp ? sortDown : sortUp;
+      newSorting.type =
+        sortedColumn.type === SORT_TYPE_UP ? SORT_TYPE_DOWN : SORT_TYPE_UP;
     } else {
-      newSorting.type = sortUp;
+      newSorting.type = SORT_TYPE_UP;
     }
+
     onSortChange(newSorting);
   };
 
   const onTableScroll = e => {
     const { clientHeight, scrollHeight, scrollTop } = e.target;
-    const space = 50;
-    if (clientHeight + scrollTop >= scrollHeight - space && isDataLoad) {
-      setIsDataLoad(false);
+
+    if (
+      canFetchMoreOnScrollRef.current &&
+      clientHeight + scrollTop >= scrollHeight - SCROLL_HEIGHT_TRIGGER
+    ) {
+      canFetchMoreOnScrollRef.current = false;
       onScrollToGetNewData();
     }
   };
 
-  const rowClick = id => {
-    if (onRowClick) {
-      onRowClick(id);
-    }
+  const handleClickOnRow = id => {
+    onRowClick && onRowClick(id);
   };
 
-  const grid = getDataForTable(columns, rows);
-
   useEffect(() => {
-    setIsDataLoad(true);
+    canFetchMoreOnScrollRef.current = true;
   }, [rows.length]);
 
   return (
@@ -69,7 +69,7 @@ export const List = ({
                 <th
                   key={id}
                   className={classes.sort_column + ' ' + classes.th}
-                  onClick={() => onClickSort(id)}
+                  onClick={() => handleClickOnSort(id)}
                   title={name}
                 >
                   <div className={classes.sort_block}>
@@ -79,7 +79,7 @@ export const List = ({
                       <span className={classes.sort_icon}>
                         <img
                           src={
-                            sortedColumn.type === sortUp
+                            sortedColumn.type === SORT_TYPE_UP
                               ? descendingSortIcon
                               : ascendingSortIcon
                           }
@@ -109,12 +109,12 @@ export const List = ({
           </tr>
         </thead>
         <tbody className={classes.tbody}>
-          {grid.map(row => {
+          {getDataForTable(columns, rows).map(row => {
             return (
               <tr
                 className={classes.tr}
                 key={row.id}
-                onClick={e => rowClick(row.id, e)}
+                onClick={e => handleClickOnRow(row.id, e)}
               >
                 {columns.map(column => {
                   const key = row.id + ' ' + column.id;
@@ -129,7 +129,9 @@ export const List = ({
           })}
         </tbody>
       </table>
-      {hasNextPage && !isDataLoad && <span>LOADING...</span>}
+      {hasNextPage && !canFetchMoreOnScrollRef.current && (
+        <span>LOADING...</span>
+      )}
     </div>
   );
 };
@@ -161,7 +163,7 @@ List.propTypes = {
   onSortChange: PropTypes.func,
   sortedColumn: PropTypes.shape({
     columnId: PropTypes.string,
-    type: PropTypes.oneOf([sortUp, sortDown]),
+    type: PropTypes.oneOf([SORT_TYPE_UP, SORT_TYPE_DOWN]),
   }),
 };
 
